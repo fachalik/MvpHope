@@ -3,11 +3,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-
-import Home from '../pages/Home';
-import Splash from '../pages/Splash';
-import Account from '../pages/Account';
-import ChatBot from '../pages/ChatBot';
+import {Home, Splash, Account, ChatBot} from '../pages';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -24,7 +20,7 @@ const MainApp = () => {
 
 const Router = () => {
   return (
-    <Stack.Navigator initialRouterName="MainApp">
+    <Stack.Navigator initialRouterName="Splash">
       <Stack.Screen
         name="Splash"
         component={Splash}
