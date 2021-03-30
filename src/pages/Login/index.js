@@ -1,20 +1,20 @@
 import React from 'react'
 import { Button, StyleSheet, Text, View } from 'react-native'
 
-const Onboarding = ({navigation}) => {
+const Login = ({navigation}) => {
     return (
         <View style="styles.container">
-            <Text>Onboarding</Text>
+            <Text>Login</Text>
             <Button
             title="Click Here"
-            onPress={() => navigation.navigate("Login")}>
+            onPress={() => navigation.navigate("MainApp")}>
 
             </Button>
         </View>
     )
 }
 
-export default Onboarding
+export default Login
 
 const styles = StyleSheet.create({
     container:{

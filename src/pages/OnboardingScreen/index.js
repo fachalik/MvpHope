@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Button,
   StyleSheet,
@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import colors from '../../assets/colors';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const slides = [
   {
@@ -33,6 +34,18 @@ const slides = [
 ];
 
 const OnboardingScreen = () => {
+  _retrieveData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('alreadyLaunched');
+      if (value !== null) {
+        // We have data!!
+        console.log(value);
+      }
+    } catch (error) {
+      // Error retrieving data
+    }
+  };
+
   const renderItem = ({item}) => {
     return (
       <View style={styles.slide}>
@@ -91,6 +104,7 @@ const OnboardingScreen = () => {
         dotStyle={styles.dotStyle}
         activeDotStyle={styles.activeDotStyle}
         data={slides}
+        onDone={_retrieveData}
       />
     </View>
   );
@@ -128,8 +142,8 @@ const styles = StyleSheet.create({
   RightButton: {
     width: 40,
     height: 40,
-    justifyContent:'center',
-    alignItems:'center',
+    justifyContent: 'center',
+    alignItems: 'center',
     fontSize: 24,
     fontWeight: '900',
   },
@@ -141,8 +155,8 @@ const styles = StyleSheet.create({
   LeftButton: {
     width: 40,
     height: 40,
-    justifyContent:'center',
-    alignItems:'center',
+    justifyContent: 'center',
+    alignItems: 'center',
     fontSize: 24,
     fontWeight: '900',
   },
@@ -151,10 +165,10 @@ const styles = StyleSheet.create({
     fontFamily: 'Karla-SemiBold',
     fontSize: 14,
   },
-  dotStyle:{
-      backgroundColor:colors.gray,
+  dotStyle: {
+    backgroundColor: colors.gray,
   },
-  activeDotStyle:{
-      backgroundColor:colors.blue,
-  }
+  activeDotStyle: {
+    backgroundColor: colors.blue,
+  },
 });

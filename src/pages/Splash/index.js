@@ -3,10 +3,27 @@ import {StyleSheet, Text, View, ImageBackground} from 'react-native';
 import {SplashBackground} from '../../assets';
 
 const Splash = ({navigation}) => {
+  _retrieveData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('alreadyLaunched');
+      if (value !== null) {
+        // We have data!!
+        console.log(value);
+      }
+    } catch (error) {
+      // Error retrieving data
+    }
+  };
   useEffect(() => {
-    setTimeout(() => {
-      navigation.replace('OnboardingScreen');
-    }, 2000);
+    if (_retrieveData == null && _retrieveData == false) {
+      setTimeout(() => {
+        navigation.replace('OnboardingScreen');
+      }, 2000);
+    } else {
+      setTimeout(() => {
+        navigation.replace('Login');
+      }, 2000);
+    }
   }, [navigation]);
 
   return (
