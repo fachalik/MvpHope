@@ -1,2 +1,5 @@
 import SplashBackground from './splash.png';
-export {SplashBackground};
+import ImageOnboard1 from './1.png';
+import ImageOnboard2 from './2.png';
+import ImageOnboard3 from './3.png';
+export {SplashBackground, ImageOnboard1,ImageOnboard2,ImageOnboard3};

@@ -12,6 +12,14 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		A18FEE868E694965A3A737B6 /* Karla-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 626CC34E005A4C85864C75D4 /* Karla-Bold.ttf */; };
+		22B82651C1094ABF96C3AD25 /* Karla-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2BD9333CA15B4575BB6EC82D /* Karla-Medium.ttf */; };
+		E11CB209810F49A8B6600206 /* Karla-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AE571D85951B42F6B1BD896E /* Karla-Regular.ttf */; };
+		13D226437E8E4F8DAD0F3134 /* Karla-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4345EE5D8DB4593BC3ADB40 /* Karla-SemiBold.ttf */; };
+		872E7B3083A14DF8B503716F /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 21FD5A1B8C3E40508EC87E82 /* Roboto-Black.ttf */; };
+		7A46448ABE75484EABB7FC6E /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 24881FA6AB4D4A459CE8B1A2 /* Roboto-Bold.ttf */; };
+		CEB588818980439AA25AAB6B /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0D956811620B422997D4810C /* Roboto-Medium.ttf */; };
+		72BE2912D5E248F9870C8D97 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 983DEC0968EE49B5B527863C /* Roboto-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +44,14 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = hopeMvp/main.m; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = hopeMvp/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		626CC34E005A4C85864C75D4 /* Karla-Bold.ttf */ = {isa = PBXFileReference; name = "Karla-Bold.ttf"; path = "../src/assets/fonts/Karla-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		2BD9333CA15B4575BB6EC82D /* Karla-Medium.ttf */ = {isa = PBXFileReference; name = "Karla-Medium.ttf"; path = "../src/assets/fonts/Karla-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		AE571D85951B42F6B1BD896E /* Karla-Regular.ttf */ = {isa = PBXFileReference; name = "Karla-Regular.ttf"; path = "../src/assets/fonts/Karla-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		D4345EE5D8DB4593BC3ADB40 /* Karla-SemiBold.ttf */ = {isa = PBXFileReference; name = "Karla-SemiBold.ttf"; path = "../src/assets/fonts/Karla-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		21FD5A1B8C3E40508EC87E82 /* Roboto-Black.ttf */ = {isa = PBXFileReference; name = "Roboto-Black.ttf"; path = "../src/assets/fonts/Roboto-Black.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		24881FA6AB4D4A459CE8B1A2 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; name = "Roboto-Bold.ttf"; path = "../src/assets/fonts/Roboto-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		0D956811620B422997D4810C /* Roboto-Medium.ttf */ = {isa = PBXFileReference; name = "Roboto-Medium.ttf"; path = "../src/assets/fonts/Roboto-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		983DEC0968EE49B5B527863C /* Roboto-Regular.ttf */ = {isa = PBXFileReference; name = "Roboto-Regular.ttf"; path = "../src/assets/fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +125,7 @@
 				00E356EF1AD99517003FC87E /* hopeMvpTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
+				780B36FAAACF4D2697DC9783 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -123,6 +140,22 @@
 			);
 			name = Products;
 			sourceTree = "<group>";
+		};
+		780B36FAAACF4D2697DC9783 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				626CC34E005A4C85864C75D4 /* Karla-Bold.ttf */,
+				2BD9333CA15B4575BB6EC82D /* Karla-Medium.ttf */,
+				AE571D85951B42F6B1BD896E /* Karla-Regular.ttf */,
+				D4345EE5D8DB4593BC3ADB40 /* Karla-SemiBold.ttf */,
+				21FD5A1B8C3E40508EC87E82 /* Roboto-Black.ttf */,
+				24881FA6AB4D4A459CE8B1A2 /* Roboto-Bold.ttf */,
+				0D956811620B422997D4810C /* Roboto-Medium.ttf */,
+				983DEC0968EE49B5B527863C /* Roboto-Regular.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -214,6 +247,14 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				A18FEE868E694965A3A737B6 /* Karla-Bold.ttf in Resources */,
+				22B82651C1094ABF96C3AD25 /* Karla-Medium.ttf in Resources */,
+				E11CB209810F49A8B6600206 /* Karla-Regular.ttf in Resources */,
+				13D226437E8E4F8DAD0F3134 /* Karla-SemiBold.ttf in Resources */,
+				872E7B3083A14DF8B503716F /* Roboto-Black.ttf in Resources */,
+				7A46448ABE75484EABB7FC6E /* Roboto-Bold.ttf in Resources */,
+				CEB588818980439AA25AAB6B /* Roboto-Medium.ttf in Resources */,
+				72BE2912D5E248F9870C8D97 /* Roboto-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

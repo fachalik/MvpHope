@@ -1,27 +1,27 @@
-import React, {useEffect} from 'react'
-import { StyleSheet, Text, View, ImageBackground } from 'react-native'
+import React, {useEffect} from 'react';
+import {StyleSheet, Text, View, ImageBackground} from 'react-native';
 import {SplashBackground} from '../../assets';
 
 const Splash = ({navigation}) => {
+  useEffect(() => {
+    setTimeout(() => {
+      navigation.replace('OnboardingScreen');
+    }, 2000);
+  }, [navigation]);
 
-    useEffect(() => {
-        setTimeout(() => {
-            navigation.replace('MainApp');
-        }, 2000);
-    }, [navigation]);
+  return (
+    <ImageBackground
+      source={SplashBackground}
+      style={styles.background}></ImageBackground>
+  );
+};
 
-    return (
-        <ImageBackground source={SplashBackground} style={styles.background}>
-        </ImageBackground>
-    )
-}
-
-export default Splash
+export default Splash;
 
 const styles = StyleSheet.create({
-    background:{
-        flex:1,
-        alignItems : 'center',
-        justifyContent: 'center',
-    }
-})
+  background: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
