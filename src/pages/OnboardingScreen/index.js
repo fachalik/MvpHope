@@ -1,17 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import {
-  Button,
-  StyleSheet,
-  Text,
-  View,
-  StatusBar,
-  Slider,
-  Image,
-} from 'react-native';
+import {Button, StyleSheet, Text, View, StatusBar, Image} from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import colors from '../../assets/colors';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import {Login} from '../../pages';
 const slides = [
   {
     title: 'Make Health Better',
@@ -34,16 +26,10 @@ const slides = [
 ];
 
 const OnboardingScreen = () => {
-  _retrieveData = async () => {
-    try {
-      const value = await AsyncStorage.getItem('alreadyLaunched');
-      if (value !== null) {
-        // We have data!!
-        console.log(value);
-      }
-    } catch (error) {
-      // Error retrieving data
-    }
+  const [alreadylaunch, setAlreadyLaunch] = useState(false);
+
+  _onDone = () => {
+    setAlreadyLaunch(true);
   };
 
   const renderItem = ({item}) => {
@@ -89,25 +75,29 @@ const OnboardingScreen = () => {
     );
   };
 
-  return (
-    <View style={{flex: 1}}>
-      <StatusBar translucent backgroundColor="transparent" />
-      <AppIntroSlider
-        keyExtractor={keyExtractor}
-        renderItem={renderItem}
-        renderDoneButton={renderDoneButton}
-        renderNextButton={renderNextButton}
-        renderPrevButton={renderPrevButton}
-        renderSkipButton={renderSkipButton}
-        showPrevButton
-        showSkipButton
-        dotStyle={styles.dotStyle}
-        activeDotStyle={styles.activeDotStyle}
-        data={slides}
-        onDone={_retrieveData}
-      />
-    </View>
-  );
+  if (alreadylaunch) {
+    return <Login/>
+  } else {
+    return (
+      <View style={{flex: 1}}>
+        <StatusBar translucent backgroundColor="transparent" />
+        <AppIntroSlider
+          keyExtractor={keyExtractor}
+          renderItem={renderItem}
+          renderDoneButton={renderDoneButton}
+          renderNextButton={renderNextButton}
+          renderPrevButton={renderPrevButton}
+          renderSkipButton={renderSkipButton}
+          showPrevButton
+          showSkipButton
+          dotStyle={styles.dotStyle}
+          activeDotStyle={styles.activeDotStyle}
+          data={slides}
+          onDone={_onDone}
+        />
+      </View>
+    );
+  }
 };
 
 export default OnboardingScreen;

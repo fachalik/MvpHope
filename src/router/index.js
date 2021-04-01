@@ -3,7 +3,14 @@ import {StyleSheet, Text, View} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Home, Splash, Account, ChatBot, OnboardingScreen, Login} from '../pages';
+import {
+  Home,
+  Splash,
+  Account,
+  ChatBot,
+  OnboardingScreen,
+  Login,
+} from '../pages';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createStackNavigator();
@@ -20,24 +27,23 @@ const MainApp = () => {
 };
 
 const Router = () => {
-  const [showOnBoard, setShowOnBoard] = useState(null);
+  const [isFirstLaunch, setIsFirstLaunch] = useState(null);
 
   useEffect(() => {
-    AsyncStorage.getItem('alreadyLaunched').then(value => {
+    AsyncStorage.getItem('alreadyLaunch').then(value => {
       if (value == null) {
-        AsyncStorage.setItem('alreadyLaunched', 'true');
-        setShowOnBoard(true);
+        AsyncStorage.setItem('alreadyLaunch', 'true'); 
+        setIsFirstLaunch(true);
       } else {
-        setShowOnBoard(false);
+        setIsFirstLaunch(false);
       }
     });
   }, []);
-
-  if (showOnBoard == null) {
+  if (isFirstLaunch == null) {
     return null;
-  } else if (showOnBoard == false) {
+  } else if (isFirstLaunch == true) {
     return (
-      <Stack.Navigator initialRouterName="Login">
+      <Stack.Navigator initialRouterName="Splash">
         <Stack.Screen
           name="Splash"
           component={Splash}
@@ -60,9 +66,10 @@ const Router = () => {
         />
       </Stack.Navigator>
     );
-  }else{
+  } else {
+    AsyncStorage.setItem('alreadyLaunch', 'false')
     return (
-      <Stack.Navigator initialRouterName="MainApp">
+      <Stack.Navigator initialRouterName="Login">
         <Stack.Screen
           name="Splash"
           component={Splash}
@@ -81,7 +88,6 @@ const Router = () => {
       </Stack.Navigator>
     );
   }
-
 };
 
 export default Router;

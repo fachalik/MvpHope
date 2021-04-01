@@ -1,30 +1,25 @@
 import React, {useEffect} from 'react';
 import {StyleSheet, Text, View, ImageBackground} from 'react-native';
 import {SplashBackground} from '../../assets';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Splash = ({navigation}) => {
-  _retrieveData = async () => {
-    try {
-      const value = await AsyncStorage.getItem('alreadyLaunched');
-      if (value !== null) {
-        // We have data!!
-        console.log(value);
-      }
-    } catch (error) {
-      // Error retrieving data
-    }
-  };
+
   useEffect(() => {
-    if (_retrieveData == null && _retrieveData == false) {
-      setTimeout(() => {
-        navigation.replace('OnboardingScreen');
-      }, 2000);
-    } else {
-      setTimeout(() => {
-        navigation.replace('Login');
-      }, 2000);
-    }
+    AsyncStorage.getItem('alreadyLaunch').then(value => {
+      if (value == 'true') {
+        AsyncStorage.setItem('alreadyLaunch', 'true');
+        setTimeout(() => {
+          navigation.navigate('OnboardingScreen');
+        }, 2000);
+      } else if(value == 'false') {
+        setTimeout(() => {
+          navigation.navigate('Login');
+        }, 2000);
+      }
+    });
   }, [navigation]);
+
 
   return (
     <ImageBackground
