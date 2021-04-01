@@ -3,7 +3,7 @@ import {Button, StyleSheet, Text, View, StatusBar, Image} from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import colors from '../../assets/colors';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Login} from '../../pages';
+import {LoginOrRegist} from '../../pages';
 const slides = [
   {
     title: 'Make Health Better',
@@ -76,7 +76,7 @@ const OnboardingScreen = () => {
   };
 
   if (alreadylaunch) {
-    return <Login/>
+    return <LoginOrRegist/>
   } else {
     return (
       <View style={{flex: 1}}>

@@ -9,6 +9,7 @@ import {
   Account,
   ChatBot,
   OnboardingScreen,
+  LoginOrRegist,
   Login,
 } from '../pages';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -32,7 +33,7 @@ const Router = () => {
   useEffect(() => {
     AsyncStorage.getItem('alreadyLaunch').then(value => {
       if (value == null) {
-        AsyncStorage.setItem('alreadyLaunch', 'true'); 
+        AsyncStorage.setItem('alreadyLaunch', 'true');
         setIsFirstLaunch(true);
       } else {
         setIsFirstLaunch(false);
@@ -55,6 +56,11 @@ const Router = () => {
           options={{headerShown: false}}
         />
         <Stack.Screen
+          name="LoginOrRegist"
+          component={LoginOrRegist}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
           name="Login"
           component={Login}
           options={{headerShown: false}}
@@ -67,12 +73,17 @@ const Router = () => {
       </Stack.Navigator>
     );
   } else {
-    AsyncStorage.setItem('alreadyLaunch', 'false')
+    AsyncStorage.setItem('alreadyLaunch', 'false');
     return (
-      <Stack.Navigator initialRouterName="Login">
+      <Stack.Navigator initialRouterName="LoginOrRegist">
         <Stack.Screen
           name="Splash"
           component={Splash}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="LoginOrRegist"
+          component={LoginOrRegist}
           options={{headerShown: false}}
         />
         <Stack.Screen

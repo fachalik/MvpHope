@@ -5,11 +5,6 @@ const Login = ({navigation}) => {
     return (
         <View style="styles.container">
             <Text>Login</Text>
-            <Button
-            title="Click Here"
-            onPress={() => navigation.navigate("MainApp")}>
-
-            </Button>
         </View>
     )
 }
