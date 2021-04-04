@@ -11,7 +11,7 @@ import color from '../../assets/colors';
 import {logo} from '../../assets';
 import LinearGradient from 'react-native-linear-gradient';
 
-const Login = ({navigation}) => {
+const LoginOrRegist = ({navigation}) => {
   return (
     <LinearGradient
       colors={['#F9D976', '#F39F86']}
@@ -26,29 +26,38 @@ const Login = ({navigation}) => {
         <Text style={styles.text}>
           Personal Asistant Health and Mental Care
         </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-          <LinearGradient
-            colors={['#F9DB7E', '#F4A186']}
-            style={styles.textDaftar}>
-            <Text style={styles.buttonText}>DAFTAR</Text>
-          </LinearGradient>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => alert('click')}>
-          <View 
-            style={styles.textLogin}>
-            <Text style={styles.buttonText}>MASUK</Text>
-          </View>
-        </TouchableOpacity>
+        <View style={styles.ViewButton}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate('Register')}>
+            <View style={styles.textLogin}>
+              <Text style={styles.buttonTextLogin}>DAFTAR</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate('Login')}>
+            
+            <LinearGradient
+              colors={['#F2C94C', '#F4A186']}
+              style={styles.textDaftar}>
+              <Text style={styles.buttonTextRegister}>MASUK</Text>
+            </LinearGradient>
+          </TouchableOpacity>
+        </View>
       </View>
     </LinearGradient>
   );
 };
 
-export default Login;
+export default LoginOrRegist;
 
 const windowHeight = Dimensions.get('screen').height;
+const windowWidth = Dimensions.get('screen').width;
 const height_logo = windowHeight * 0.28;
-
+const width_button = windowWidth - 30;
+const radius_size = 15;
+const button_height = 50;
 const styles = StyleSheet.create({
   linearGradient: {
     flex: 1,
@@ -90,33 +99,46 @@ const styles = StyleSheet.create({
     color: 'grey',
     marginTop: 5,
   },
+  ViewButton: {
+    marginTop: 90,
+  },
+  button: {
+    paddingVertical: 5,
+  },
   textDaftar: {
     color: color.white,
     fontWeight: 'bold',
     alignItems: 'center',
     justifyContent: 'center',
-    width: 261,
-    height: 41,
-    borderTopLeftRadius: 25,
-    borderTopRightRadius: 25,
-    borderBottomLeftRadius: 25,
-    borderBottomRightRadius: 25,
+    width: width_button,
+    height: button_height,
+    borderTopLeftRadius: radius_size,
+    borderTopRightRadius: radius_size,
+    borderBottomLeftRadius: radius_size,
+    borderBottomRightRadius: radius_size,
   },
-  textLogin:{
+  textLogin: {
     color: color.white,
     fontWeight: 'bold',
     alignItems: 'center',
     justifyContent: 'center',
-    width: 261,
-    height: 41,
-    borderTopLeftRadius: 25,
-    borderTopRightRadius: 25,
-    borderBottomLeftRadius: 25,
-    borderBottomRightRadius: 25,
-    backgroundColor:'white',
+    width: width_button,
+    height: button_height,
+    borderTopLeftRadius: radius_size,
+    borderTopRightRadius: radius_size,
+    borderBottomLeftRadius: radius_size,
+    borderBottomRightRadius: radius_size,
+    borderWidth: 3,
+    borderColor: '#F2C94C',
   },
-  buttonText: {
+  buttonTextLogin: {
     fontSize: 16,
     fontFamily: 'Roboto-Bold',
+    color: '#F9DB7E',
+  },
+    buttonTextRegister: {
+    fontSize: 16,
+    fontFamily: 'Roboto-Bold',
+    color:color.white,
   },
 });

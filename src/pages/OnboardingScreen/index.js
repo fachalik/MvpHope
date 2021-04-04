@@ -25,11 +25,13 @@ const slides = [
   },
 ];
 
-const OnboardingScreen = () => {
-  const [alreadylaunch, setAlreadyLaunch] = useState(false);
+const OnboardingScreen = ({navigation}) => {
+  const [itsDone, setItsDone] = useState(null);
 
   _onDone = () => {
-    setAlreadyLaunch(true);
+    setItsDone(false);
+    AsyncStorage.setItem('alreadyLaunch', 'false');
+    navigation.navigate('LoginOrRegist')
   };
 
   const renderItem = ({item}) => {
@@ -74,10 +76,6 @@ const OnboardingScreen = () => {
       </View>
     );
   };
-
-  if (alreadylaunch) {
-    return <LoginOrRegist/>
-  } else {
     return (
       <View style={{flex: 1}}>
         <StatusBar translucent backgroundColor="transparent" />
@@ -97,7 +95,6 @@ const OnboardingScreen = () => {
         />
       </View>
     );
-  }
 };
 
 export default OnboardingScreen;
