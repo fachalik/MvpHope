@@ -1,10 +1,11 @@
 import React from 'react'
-import { Button, StyleSheet, Text, View } from 'react-native'
+import { Button, StyleSheet, Text, View, Image } from 'react-native'
+import {loginImage} from '../../assets';
 
 const Login = ({navigation}) => {
     return (
-        <View style="styles.container">
-            <Text>Login</Text>
+        <View style={styles.container}>
+            <Image source={loginImage}/>
         </View>
     )
 }

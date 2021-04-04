@@ -11,8 +11,10 @@ import {
   OnboardingScreen,
   LoginOrRegist,
   Login,
+  Register,
 } from '../pages';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -43,6 +45,8 @@ const Router = () => {
   if (isFirstLaunch == null) {
     return null;
   } else if (isFirstLaunch == true) {
+    AsyncStorage.setItem('alreadyLaunch', 'true');
+    console.log(isFirstLaunch)
     return (
       <Stack.Navigator initialRouterName="Splash">
         <Stack.Screen
@@ -66,6 +70,11 @@ const Router = () => {
           options={{headerShown: false}}
         />
         <Stack.Screen
+          name="Register"
+          component={Register}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
           name="MainApp"
           component={MainApp}
           options={{headerShown: false}}
@@ -74,6 +83,7 @@ const Router = () => {
     );
   } else {
     AsyncStorage.setItem('alreadyLaunch', 'false');
+    console.log(isFirstLaunch)
     return (
       <Stack.Navigator initialRouterName="LoginOrRegist">
         <Stack.Screen
@@ -89,6 +99,11 @@ const Router = () => {
         <Stack.Screen
           name="Login"
           component={Login}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Register"
+          component={Register}
           options={{headerShown: false}}
         />
         <Stack.Screen

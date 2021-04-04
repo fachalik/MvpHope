@@ -5,5 +5,6 @@ import Splash from './Splash';
 import OnboardingScreen from './OnboardingScreen';
 import Login from './Login';
 import LoginOrRegist from './LoginOrRegist';
+import Register from './Register';
 
-export {Home, ChatBot, Account, Splash, OnboardingScreen, Login, LoginOrRegist};
+export {Home, ChatBot, Account, Splash, OnboardingScreen, Login, LoginOrRegist, Register};
