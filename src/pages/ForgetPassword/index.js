@@ -12,7 +12,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
 import LinearGradient from 'react-native-linear-gradient';
 
-const ForgetPassword = () => {
+const ForgetPassword = ({navigation}) => {
   const [data, setData] = useState({
     email: '',
     check_TextEmail: false,
