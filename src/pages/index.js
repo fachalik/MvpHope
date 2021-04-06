@@ -6,5 +6,15 @@ import OnboardingScreen from './OnboardingScreen';
 import Login from './Login';
 import LoginOrRegist from './LoginOrRegist';
 import Register from './Register';
-
-export {Home, ChatBot, Account, Splash, OnboardingScreen, Login, LoginOrRegist, Register};
+import ForgetPassword from './ForgetPassword';
+export {
+  Home,
+  ChatBot,
+  Account,
+  Splash,
+  OnboardingScreen,
+  Login,
+  LoginOrRegist,
+  Register,
+  ForgetPassword,
+};

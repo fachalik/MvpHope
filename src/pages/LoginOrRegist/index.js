@@ -37,7 +37,6 @@ const LoginOrRegist = ({navigation}) => {
           <TouchableOpacity
             style={styles.button}
             onPress={() => navigation.navigate('Login')}>
-            
             <LinearGradient
               colors={['#F2C94C', '#F4A186']}
               style={styles.textDaftar}>
@@ -100,7 +99,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   ViewButton: {
-    marginTop: 90,
+    marginTop: windowHeight * 0.028,
   },
   button: {
     paddingVertical: 5,
@@ -136,9 +135,9 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Bold',
     color: '#F9DB7E',
   },
-    buttonTextRegister: {
+  buttonTextRegister: {
     fontSize: 16,
     fontFamily: 'Roboto-Bold',
-    color:color.white,
+    color: color.white,
   },
 });

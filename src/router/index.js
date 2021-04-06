@@ -12,6 +12,7 @@ import {
   LoginOrRegist,
   Login,
   Register,
+  ForgetPassword,
 } from '../pages';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -75,6 +76,11 @@ const Router = () => {
           options={{headerShown: false}}
         />
         <Stack.Screen
+          name="ForgetPassword"
+          component={ForgetPassword}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
           name="MainApp"
           component={MainApp}
           options={{headerShown: false}}
@@ -104,6 +110,11 @@ const Router = () => {
         <Stack.Screen
           name="Register"
           component={Register}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="ForgetPassword"
+          component={ForgetPassword}
           options={{headerShown: false}}
         />
         <Stack.Screen
