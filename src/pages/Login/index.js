@@ -9,11 +9,11 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import {loginImage} from '../../assets';
 import color from '../../assets/colors';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
 import LinearGradient from 'react-native-linear-gradient';
+import BackButton from '../../components/BackButton';
 
 const Login = ({navigation}) => {
   const [data, setData] = useState({
@@ -70,14 +70,7 @@ const Login = ({navigation}) => {
   };
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.navigate('LoginOrRegist')}>
-        <Icon
-          style={styles.IconStyle}
-          name="arrowleft"
-          size={32}
-          color={color.yellow}
-        />
-      </TouchableOpacity>
+      <BackButton navigation={navigation} where="LoginOrRegist" />
       <Text style={styles.title}>Selamat Datang!</Text>
       <Text style={styles.text}>
         Masuk dengan menggunakan Username atau salah satu opsi dibawah ini
@@ -170,10 +163,6 @@ const radius_size = 15;
 const button_height = 50;
 const width_button = windowWidth - 60;
 const styles = StyleSheet.create({
-  IconStyle: {
-    marginTop: 20,
-    marginLeft: 20,
-  },
   container: {
     height: '100%',
     backgroundColor: color.white,

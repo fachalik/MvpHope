@@ -11,6 +11,7 @@ import color from '../../assets/colors';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
 import LinearGradient from 'react-native-linear-gradient';
+import BackButton from '../../components/BackButton';
 
 const ForgetPassword = ({navigation}) => {
   const [data, setData] = useState({
@@ -34,14 +35,7 @@ const ForgetPassword = ({navigation}) => {
   };
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.navigate('LoginOrRegist')}>
-        <Icon
-          style={styles.IconStyle}
-          name="arrowleft"
-          size={32}
-          color={color.yellow}
-        />
-      </TouchableOpacity>
+      <BackButton navigation={navigation} where="Login" />
       <View style={styles.Row}>
         <Text style={styles.title}>Lupa kata sandi?</Text>
         <Text style={styles.text}>
@@ -84,14 +78,10 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: color.white,
   },
-  Row:{
-      flex:1,
-      alignItems:'center',
-      justifyContent:'center',
-  },
-  IconStyle: {
-    marginTop: 20,
-    marginLeft: 20,
+  Row: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   title: {
     color: '#05375a',

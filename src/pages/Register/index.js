@@ -13,6 +13,7 @@ import color from '../../assets/colors';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
 import LinearGradient from 'react-native-linear-gradient';
+import BackButton from '../../components/BackButton';
 
 const Register = ({navigation}) => {
   const [data, setData] = useState({
@@ -87,17 +88,11 @@ const Register = ({navigation}) => {
   };
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.navigate('LoginOrRegist')}>
-        <Icon
-          style={styles.IconStyle}
-          name="arrowleft"
-          size={32}
-          color={color.yellow}
-        />
-      </TouchableOpacity>
+      <BackButton navigation={navigation} where="LoginOrRegist" />
       <Text style={styles.title}>Selamat Datang di Hope!</Text>
       <Text style={styles.text}>
-        Buat akun menggunakan email dan username, atau pilih salah satu opsi dibawah
+        Buat akun menggunakan email dan username, atau pilih salah satu opsi
+        dibawah
       </Text>
       <View style={styles.form}>
         {/* // Input Form for Username */}
@@ -170,12 +165,12 @@ const Register = ({navigation}) => {
           </TouchableOpacity>
         </View>
       </View>
-      <TouchableOpacity onPress={()=> alert('buat akun')}>
-      <LinearGradient
-        colors={['#F2C94C', '#F4A186']}
-        style={styles.buttonMasuk}>
-        <Text style={styles.buttonTextMasuk}>Buat akun baru</Text>
-      </LinearGradient>
+      <TouchableOpacity onPress={() => alert('buat akun')}>
+        <LinearGradient
+          colors={['#F2C94C', '#F4A186']}
+          style={styles.buttonMasuk}>
+          <Text style={styles.buttonTextMasuk}>Buat akun baru</Text>
+        </LinearGradient>
       </TouchableOpacity>
     </View>
   );
@@ -187,10 +182,6 @@ const radius_size = 15;
 const button_height = 50;
 const width_button = windowWidth - 60;
 const styles = StyleSheet.create({
-  IconStyle: {
-    marginTop: 20,
-    marginLeft: 20,
-  },
   container: {
     height: '100%',
     backgroundColor: color.white,
