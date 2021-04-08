@@ -137,7 +137,7 @@ const Login = ({navigation}) => {
           </TouchableOpacity>
         </View>
       </View>
-      <TouchableOpacity onPress={() => alert('login')}>
+      <TouchableOpacity onPress={() => navigation.navigate('MainApp')}>
         <LinearGradient
           colors={['#F2C94C', '#F4A186']}
           style={styles.buttonMasuk}>

@@ -15,6 +15,7 @@ import {
   ForgetPassword,
 } from '../pages';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { BottomNavigator } from '../components';
 
 
 const Stack = createStackNavigator();
@@ -22,7 +23,7 @@ const Tab = createBottomTabNavigator();
 
 const MainApp = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator tabBar={props => <BottomNavigator {...props}/>}>
       <Tab.Screen name="ChatBot" component={ChatBot} />
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Account" component={Account} />
