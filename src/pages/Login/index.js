@@ -14,6 +14,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
 import LinearGradient from 'react-native-linear-gradient';
 import BackButton from '../../components/BackButton';
+import {AuthContext} from '../../router/context';
 
 const Login = ({navigation}) => {
   const [data, setData] = useState({
@@ -24,6 +25,8 @@ const Login = ({navigation}) => {
     secureTextEntry: true,
     secureTextEntryConfirm: true,
   });
+
+  const { SignIn } = React.useContext(AuthContext);
 
   const textInputChange = val => {
     if (val.length != 0) {
@@ -130,7 +133,7 @@ const Login = ({navigation}) => {
           </TouchableOpacity>
         </View>
       </View>
-      <TouchableOpacity onPress={() => navigation.navigate('MainApp')}>
+      <TouchableOpacity onPress={() => {SignIn()}}>
         <LinearGradient
           colors={['#F2C94C', '#F4A186']}
           style={styles.buttonMasuk}>

@@ -1,38 +1,32 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {
-  Home,
-  Splash,
-  Account,
-  ChatBot,
-  OnboardingScreen,
-  LoginOrRegist,
-  Login,
-  Register,
-  ForgetPassword,
-} from '../pages';
+import {StyleSheet, Text, View, Image, Dimensions} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { BottomNavigator } from '../components';
+import {NavigationContainer} from '@react-navigation/native';
+import {AuthContext} from './context';
+import AuthStack from './AuthStack';
+import MainStack from './MainStack';
+import FirstLaunchStack from './FirstLaunchStack';
+import {Splash} from '../pages';
 
-
-const Stack = createStackNavigator();
-const Tab = createBottomTabNavigator();
-
-const MainApp = () => {
-  return (
-    <Tab.Navigator tabBar={props => <BottomNavigator {...props}/>}>
-      <Tab.Screen name="ChatBot" component={ChatBot} />
-      <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Account" component={Account} />
-    </Tab.Navigator>
-  );
-};
-
-const Router = () => {
+const Router = ({navigation}) => {
   const [isFirstLaunch, setIsFirstLaunch] = useState(null);
+  const [isToken, setIsToken] = useState(null);
+  const [isSplash, setIsSplash] = useState(true);
+
+  const authContext = React.useMemo(() => ({
+    SignIn: () => {
+      setIsToken('asd');
+      AsyncStorage.setItem('_Token', 'asd');
+    },
+    SignUp: () => {
+      setIsToken('asd');
+      AsyncStorage.setItem('_Token', 'asd');
+    },
+    SignOut: () => {
+      setIsToken(null);
+      AsyncStorage.setItem('_Token', null);
+    },
+  }));
 
   useEffect(() => {
     AsyncStorage.getItem('alreadyLaunch').then(value => {
@@ -44,90 +38,31 @@ const Router = () => {
       }
     });
   }, []);
-  if (isFirstLaunch == null) {
-    return null;
-  } else if (isFirstLaunch == true) {
-    AsyncStorage.setItem('alreadyLaunch', 'true');
-    console.log(isFirstLaunch)
-    return (
-      <Stack.Navigator initialRouterName="Splash">
-        <Stack.Screen
-          name="Splash"
-          component={Splash}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="OnboardingScreen"
-          component={OnboardingScreen}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="LoginOrRegist"
-          component={LoginOrRegist}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="Login"
-          component={Login}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="Register"
-          component={Register}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="ForgetPassword"
-          component={ForgetPassword}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="MainApp"
-          component={MainApp}
-          options={{headerShown: false}}
-        />
-      </Stack.Navigator>
-    );
-  } else {
-    AsyncStorage.setItem('alreadyLaunch', 'false');
-    console.log(isFirstLaunch)
-    return (
-      <Stack.Navigator initialRouterName="LoginOrRegist">
-        <Stack.Screen
-          name="Splash"
-          component={Splash}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="LoginOrRegist"
-          component={LoginOrRegist}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="Login"
-          component={Login}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="Register"
-          component={Register}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="ForgetPassword"
-          component={ForgetPassword}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="MainApp"
-          component={MainApp}
-          options={{headerShown: false}}
-        />
-      </Stack.Navigator>
-    );
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsSplash(false);
+    }, 1500);
+  }, []);
+
+  if (isSplash) {
+    return <Splash />;
   }
+
+  return (
+    <AuthContext.Provider value={authContext}>
+      <NavigationContainer>
+        {isFirstLaunch ? (
+          <FirstLaunchStack />
+        ) : isToken != null ? (
+          <MainStack />
+        ) : (
+          <AuthStack />
+        )}
+      </NavigationContainer>
+    </AuthContext.Provider>
+  );
 };
 
 export default Router;
-
 const styles = StyleSheet.create({});

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {
   Button,
   StyleSheet,
@@ -14,6 +14,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
 import LinearGradient from 'react-native-linear-gradient';
 import BackButton from '../../components/BackButton';
+import {AuthContext} from '../../router/context';
 
 const Register = ({navigation}) => {
   const [data, setData] = useState({
@@ -26,6 +27,8 @@ const Register = ({navigation}) => {
     secureTextEntry: true,
     secureTextEntryConfirm: true,
   });
+
+  const {SignUp} = useContext(AuthContext);
 
   const textInputChange = val => {
     if (val.length != 0) {
@@ -165,7 +168,7 @@ const Register = ({navigation}) => {
           </TouchableOpacity>
         </View>
       </View>
-      <TouchableOpacity onPress={() => alert('buat akun')}>
+      <TouchableOpacity onPress={() => {SignUp()}}>
         <LinearGradient
           colors={['#F2C94C', '#F4A186']}
           style={styles.buttonMasuk}>

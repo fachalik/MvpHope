@@ -1,25 +1,10 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View, Image, Dimensions} from 'react-native';
 import {SplashBackground, logo} from '../../assets';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import color from '../../assets/colors';
 
-const Splash = ({navigation}) => {
-  useEffect(() => {
-    AsyncStorage.getItem('alreadyLaunch').then(value => {
-      if (value == 'true') {
-        AsyncStorage.setItem('alreadyLaunch', 'true');
-        setTimeout(() => {
-          navigation.replace('OnboardingScreen');
-        }, 1000);
-      } else if (value == 'false') {
-        setTimeout(() => {
-          navigation.replace('LoginOrRegist');
-        }, 1000);
-      }
-    });
-  }, [navigation]);
-
+const Splash = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -51,8 +36,8 @@ const styles = StyleSheet.create({
   },
   footer: {
     flex: 1,
-    justifyContent:'center',
-    alignItems:'center'
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   logo: {
     height: height_logo,
