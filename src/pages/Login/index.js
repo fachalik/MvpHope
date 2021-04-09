@@ -26,19 +26,19 @@ const Login = ({navigation}) => {
     secureTextEntryConfirm: true,
   });
 
-  const { SignIn } = React.useContext(AuthContext);
+  const {SignIn} = React.useContext(AuthContext);
 
   const textInputChange = val => {
     if (val.length != 0) {
       setData({
         ...data,
-        email: val,
+        username: val,
         check_TextUsername: true,
       });
     } else {
       setData({
         ...data,
-        email: val,
+        username: val,
         check_TextUsername: false,
       });
     }
@@ -71,6 +71,12 @@ const Login = ({navigation}) => {
       secureTextEntryConfirm: !data.secureTextEntryConfirm,
     });
   };
+
+  const loginHandle = (username, password, ConfirmPassword) => {
+    console.log(username, password, ConfirmPassword);
+    SignIn(username, password, ConfirmPassword);
+  };
+
   return (
     <View style={styles.container}>
       <BackButton navigation={navigation} where="LoginOrRegist" />
@@ -133,7 +139,10 @@ const Login = ({navigation}) => {
           </TouchableOpacity>
         </View>
       </View>
-      <TouchableOpacity onPress={() => {SignIn()}}>
+      <TouchableOpacity
+        onPress={() => {
+          loginHandle(data.username, data.password, data.ConfirmPassword);
+        }}>
         <LinearGradient
           colors={['#F2C94C', '#F4A186']}
           style={styles.buttonMasuk}>
