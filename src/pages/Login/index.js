@@ -79,7 +79,7 @@ const Login = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <BackButton navigation={navigation} where="LoginOrRegist" />
+      <BackButton navigation={navigation}/>
       <Text style={styles.title}>Selamat Datang!</Text>
       <Text style={styles.text}>
         Masuk dengan menggunakan Username atau salah satu opsi dibawah ini
