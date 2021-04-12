@@ -35,7 +35,7 @@ const ForgetPassword = ({navigation}) => {
   };
   return (
     <View style={styles.container}>
-      <BackButton navigation={navigation} where="Login" />
+      <BackButton navigation={navigation}/>
       <View style={styles.Row}>
         <Text style={styles.title}>Lupa kata sandi?</Text>
         <Text style={styles.text}>

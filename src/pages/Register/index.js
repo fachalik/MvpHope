@@ -91,7 +91,7 @@ const Register = ({navigation}) => {
   };
   return (
     <View style={styles.container}>
-      <BackButton navigation={navigation} where="LoginOrRegist" />
+      <BackButton navigation={navigation}/>
       <Text style={styles.title}>Selamat Datang di Hope!</Text>
       <Text style={styles.text}>
         Buat akun menggunakan email dan username, atau pilih salah satu opsi

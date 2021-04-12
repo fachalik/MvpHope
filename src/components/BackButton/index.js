@@ -3,9 +3,9 @@ import {StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import color from '../../assets/colors';
 
-const BackButton = ({navigation, where}) => {
+const BackButton = ({navigation}) => {
   const GoBack = () => {
-      navigation.navigate(where);
+      navigation.pop();
   };
   return (
     <TouchableOpacity onPress={() => GoBack()}>

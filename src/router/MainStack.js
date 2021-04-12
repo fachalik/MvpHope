@@ -1,9 +1,11 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
+import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 import {BottomNavigator} from '../components';
-import {Home, Splash, Account, ChatBot} from '../pages';
+import {Home, Splash, Account, ChatBot, ChatBotScreen} from '../pages';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {useRoute} from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -11,7 +13,7 @@ const HomeStack = createStackNavigator();
 const ChatStack = createStackNavigator();
 const AccountStack = createStackNavigator();
 
-const HomeStackScreen = ({navigatio}) => {
+const HomeStackScreen = ({navigation}) => {
   return (
     <HomeStack.Navigator>
       <HomeStack.Screen
@@ -24,12 +26,21 @@ const HomeStackScreen = ({navigatio}) => {
 };
 
 const ChatStackScreen = ({navigation}) => {
+  const route = useRoute();
   return (
-    <ChatStack.Navigator>
+    <ChatStack.Navigator initialRouteName="Chatbot">
       <ChatStack.Screen
         name="ChatBot"
         component={ChatBot}
         options={{headerShown: false}}
+      />
+      <ChatStack.Screen
+        name="Konsultasi"
+        component={ChatBotScreen}
+        options={({route}) => ({
+          title: route.name,
+          headerShown: true,
+        })}
       />
     </ChatStack.Navigator>
   );
@@ -47,25 +58,27 @@ const AccountStackScreen = ({navigation}) => {
   );
 };
 
-const MainApp = ({navigation}) => {
+const MainStack = ({}) => {
   return (
     <Tab.Navigator tabBar={props => <BottomNavigator {...props} />}>
-      <Tab.Screen name="ChatBot" component={ChatStackScreen} />
+      <Tab.Screen
+        name="ChatBot"
+        component={ChatStackScreen}
+        options={({route}) => ({
+          tabBarVisible: (route => {
+            const routeName = getFocusedRouteNameFromRoute(route) ?? '';
+
+            if (routeName === 'Konsultasi') {
+              return false;
+            }
+
+            return true;
+          })(route),
+        })}
+      />
       <Tab.Screen name="Home" component={HomeStackScreen} />
       <Tab.Screen name="Account" component={AccountStackScreen} />
     </Tab.Navigator>
-  );
-};
-
-const MainStack = ({navigation}) => {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="MainApp"
-        component={MainApp}
-        options={{headerShown: false}}
-      />
-    </Stack.Navigator>
   );
 };
 

@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native'
 
 const Home = () => {
     return (
-        <View>
+        <View style={styles.container}>
             <Text>Beranda</Text>
         </View>
     )
@@ -11,4 +11,10 @@ const Home = () => {
 
 export default Home
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    container:{
+        flex:1,
+        justifyContent:'center',
+        alignItems:'center',
+    }
+})
