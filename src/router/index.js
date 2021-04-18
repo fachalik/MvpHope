@@ -12,8 +12,9 @@ import {NavigationContainer} from '@react-navigation/native';
 import {AuthContext} from './context';
 import AuthStack from './AuthStack';
 import MainStack from './MainStack';
-import FirstLaunchStack from './FirstLaunchStack';
 import {Splash} from '../pages';
+import config from '../../config';
+import axios from 'react-native-axios';
 
 const Router = ({navigation}) => {
   const [isFirstLaunch, setIsFirstLaunch] = useState(null);
@@ -63,18 +64,24 @@ const Router = ({navigation}) => {
   );
   const authContext = React.useMemo(() => ({
     SignIn: async (userName, password, Confirmpassword) => {
-      // setIsToken('asd');
       let userToken;
       userToken = null;
-      if (userName == 'user' && password == 'user') {
-        if (password == Confirmpassword) {
-          try {
-            userToken = 'asd';
-            await AsyncStorage.setItem('userToken', userToken);
-          } catch (e) {
-            console.log(e);
-          }
-        }
+      console.log(config.API_URL + 'auth/login/');
+      if (password == Confirmpassword) {
+        await axios
+          .post(config.API_URL + 'auth/login/', {
+            username: userName,
+            password: password,
+          })
+          .then(function (response) {
+            console.log(response.data.key);
+            userToken = response.data.key
+            AsyncStorage.setItem('userToken', userToken)
+            console.log(userToken)
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
       }
       dispatch({type: 'LOGIN', id: userName, token: userToken});
     },

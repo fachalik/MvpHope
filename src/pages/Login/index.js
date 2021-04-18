@@ -15,7 +15,6 @@ import Feather from 'react-native-vector-icons/Feather';
 import LinearGradient from 'react-native-linear-gradient';
 import BackButton from '../../components/BackButton';
 import {AuthContext} from '../../router/context';
-
 const Login = ({navigation}) => {
   const [data, setData] = useState({
     username: '',
@@ -27,7 +26,6 @@ const Login = ({navigation}) => {
   });
 
   const {SignIn} = React.useContext(AuthContext);
-
   const textInputChange = val => {
     if (val.length != 0) {
       setData({
