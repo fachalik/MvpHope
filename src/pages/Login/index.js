@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
   },
   InputText: {
-    flex:1,
+    flex: 1,
     alignItems: 'center',
     width: 270,
     paddingHorizontal: 10,

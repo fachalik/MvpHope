@@ -66,7 +66,6 @@ const Router = ({navigation}) => {
     SignIn: async (userName, password, Confirmpassword) => {
       let userToken;
       userToken = null;
-      console.log(config.API_URL + 'auth/login/');
       if (password == Confirmpassword) {
         await axios
           .post(config.API_URL + 'auth/login/', {
@@ -75,9 +74,9 @@ const Router = ({navigation}) => {
           })
           .then(function (response) {
             console.log(response.data.key);
-            userToken = response.data.key
-            AsyncStorage.setItem('userToken', userToken)
-            console.log(userToken)
+            userToken = response.data.key;
+            AsyncStorage.setItem('userToken', userToken);
+            console.log(userToken);
           })
           .catch(function (error) {
             console.log(error);
@@ -85,9 +84,29 @@ const Router = ({navigation}) => {
       }
       dispatch({type: 'LOGIN', id: userName, token: userToken});
     },
-    SignUp: () => {
-      setIsToken('asd');
-      AsyncStorage.setItem('_Token', 'asd');
+    SignUp: async (userName, email, password, Confirmpassword) => {
+      let userToken;
+      userToken = null;
+      console.log(config.API_URL + 'auth/register/');
+      if (password == Confirmpassword) {
+        await axios
+          .post(config.API_URL + 'auth/register/', {
+            username: userName,
+            email: email,
+            password1: password,
+            password2: Confirmpassword,
+          })
+          .then(function (response) {
+            console.log(response.data.key);
+            userToken = response.data.key;
+            AsyncStorage.setItem('userToken', userToken);
+            console.log(userToken);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
+      dispatch({type: 'LOGIN', id: userName, token: userToken});
     },
     SignOut: async () => {
       try {

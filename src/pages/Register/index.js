@@ -89,6 +89,11 @@ const Register = ({navigation}) => {
       secureTextEntryConfirm: !data.secureTextEntryConfirm,
     });
   };
+
+  const RegisterHandle = (username, email, password, ConfirmPassword) => {
+    console.log(username, email, password, ConfirmPassword);
+    SignUp(username, email, password, ConfirmPassword);
+  };
   return (
     <View style={styles.container}>
       <View style={{marginVertical: 50}}>
@@ -171,7 +176,12 @@ const Register = ({navigation}) => {
         </View>
         <TouchableOpacity
           onPress={() => {
-            SignUp();
+            RegisterHandle(
+              data.username,
+              data.email,
+              data.password,
+              data.ConfirmPassword,
+            );
           }}>
           <LinearGradient
             colors={['#F2C94C', '#F4A186']}
