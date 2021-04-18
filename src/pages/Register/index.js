@@ -91,90 +91,95 @@ const Register = ({navigation}) => {
   };
   return (
     <View style={styles.container}>
-      <BackButton navigation={navigation}/>
-      <Text style={styles.title}>Selamat Datang di Hope!</Text>
-      <Text style={styles.text}>
-        Buat akun menggunakan email dan username, atau pilih salah satu opsi
-        dibawah
-      </Text>
-      <View style={styles.form}>
-        {/* // Input Form for Username */}
-        <View style={styles.ViewInput}>
-          <Icon name="user" size={20} color={color.yellow} />
-          <TextInput
-            style={styles.InputText}
-            placeholder="Username kamu"
-            placeholderTextColor="grey"
-            autoCapitalize="none"
-            onChangeText={val => textInputChange(val)}
-          />
+      <View style={{marginVertical: 50}}>
+        <BackButton navigation={navigation} />
+        <Text style={styles.title}>Selamat Datang di Hope!</Text>
+        <Text style={styles.text}>
+          Buat akun menggunakan email dan username, atau pilih salah satu opsi
+          dibawah
+        </Text>
+        <View style={styles.form}>
+          {/* // Input Form for Username */}
+          <View style={styles.ViewInput}>
+            <Icon name="user" size={20} color={color.yellow} />
+            <TextInput
+              style={styles.InputText}
+              placeholder="Username kamu"
+              placeholderTextColor="grey"
+              autoCapitalize="none"
+              onChangeText={val => textInputChange(val)}
+            />
 
-          {data.check_TextUsername ? (
-            <Feather name="check-circle" size={20} color={color.yellow} />
-          ) : null}
+            {data.check_TextUsername ? (
+              <Feather name="check-circle" size={20} color={color.yellow} />
+            ) : null}
+          </View>
+
+          {/* // Input Form for Email */}
+          <View style={styles.ViewInput}>
+            <Icon name="mail" size={20} color={color.yellow} />
+            <TextInput
+              style={styles.InputText}
+              placeholder="Email kamu"
+              placeholderTextColor="grey"
+              autoCapitalize="none"
+              onChangeText={val => textInputChangeEmail(val)}
+            />
+
+            {data.check_TextEmail ? (
+              <Feather name="check-circle" size={20} color={color.yellow} />
+            ) : null}
+          </View>
+
+          {/* // Input Form for Password */}
+          <View style={styles.ViewInput}>
+            <Icon name="lock" size={20} color={color.yellow} />
+            <TextInput
+              secureTextEntry={data.secureTextEntry ? true : false}
+              style={styles.InputText}
+              placeholder="Password kamu"
+              placeholderTextColor="grey"
+              onChangeText={val => handlePassword(val)}
+            />
+            <TouchableOpacity onPress={updateSecureTextEntry}>
+              {data.secureTextEntry ? (
+                <Feather name="eye-off" size={20} color="grey" />
+              ) : (
+                <Feather name="eye" size={20} color={color.yellow} />
+              )}
+            </TouchableOpacity>
+          </View>
+
+          {/* // Input Form for ConfirmPassword */}
+          <View style={styles.ViewInput}>
+            <Icon name="lock" size={20} color={color.yellow} />
+            <TextInput
+              secureTextEntry={data.secureTextEntryConfirm ? true : false}
+              style={styles.InputText}
+              placeholder="Konfirmasi password"
+              placeholderTextColor="grey"
+              onChangeText={val => handleConfirmPassword(val)}
+            />
+            <TouchableOpacity onPress={updateSecureTextEntryConfirm}>
+              {data.secureTextEntryConfirm ? (
+                <Feather name="eye-off" size={20} color="grey" />
+              ) : (
+                <Feather name="eye" size={20} color={color.yellow} />
+              )}
+            </TouchableOpacity>
+          </View>
         </View>
-
-        {/* // Input Form for Email */}
-        <View style={styles.ViewInput}>
-          <Icon name="mail" size={20} color={color.yellow} />
-          <TextInput
-            style={styles.InputText}
-            placeholder="Email kamu"
-            placeholderTextColor="grey"
-            autoCapitalize="none"
-            onChangeText={val => textInputChangeEmail(val)}
-          />
-
-          {data.check_TextEmail ? (
-            <Feather name="check-circle" size={20} color={color.yellow} />
-          ) : null}
-        </View>
-
-        {/* // Input Form for Password */}
-        <View style={styles.ViewInput}>
-          <Icon name="lock" size={20} color={color.yellow} />
-          <TextInput
-            secureTextEntry={data.secureTextEntry ? true : false}
-            style={styles.InputText}
-            placeholder="Password kamu"
-            placeholderTextColor="grey"
-            onChangeText={val => handlePassword(val)}
-          />
-          <TouchableOpacity onPress={updateSecureTextEntry}>
-            {data.secureTextEntry ? (
-              <Feather name="eye-off" size={20} color="grey" />
-            ) : (
-              <Feather name="eye" size={20} color={color.yellow} />
-            )}
-          </TouchableOpacity>
-        </View>
-
-        {/* // Input Form for ConfirmPassword */}
-        <View style={styles.ViewInput}>
-          <Icon name="lock" size={20} color={color.yellow} />
-          <TextInput
-            secureTextEntry={data.secureTextEntryConfirm ? true : false}
-            style={styles.InputText}
-            placeholder="Konfirmasi password"
-            placeholderTextColor="grey"
-            onChangeText={val => handleConfirmPassword(val)}
-          />
-          <TouchableOpacity onPress={updateSecureTextEntryConfirm}>
-            {data.secureTextEntryConfirm ? (
-              <Feather name="eye-off" size={20} color="grey" />
-            ) : (
-              <Feather name="eye" size={20} color={color.yellow} />
-            )}
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity
+          onPress={() => {
+            SignUp();
+          }}>
+          <LinearGradient
+            colors={['#F2C94C', '#F4A186']}
+            style={styles.buttonMasuk}>
+            <Text style={styles.buttonTextMasuk}>Buat akun baru</Text>
+          </LinearGradient>
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity onPress={() => {SignUp()}}>
-        <LinearGradient
-          colors={['#F2C94C', '#F4A186']}
-          style={styles.buttonMasuk}>
-          <Text style={styles.buttonTextMasuk}>Buat akun baru</Text>
-        </LinearGradient>
-      </TouchableOpacity>
     </View>
   );
 };

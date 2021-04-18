@@ -35,34 +35,36 @@ const ForgetPassword = ({navigation}) => {
   };
   return (
     <View style={styles.container}>
-      <BackButton navigation={navigation}/>
-      <View style={styles.Row}>
-        <Text style={styles.title}>Lupa kata sandi?</Text>
-        <Text style={styles.text}>
-          Masukkan alamat emailmu untuk menerima tautan pengaturan ulang sandi
-        </Text>
-        {/* // Input Form for Email */}
-        <View style={styles.ViewInput}>
-          <Icon name="mail" size={20} color={color.yellow} />
-          <TextInput
-            style={styles.InputText}
-            placeholder="Email kamu"
-            placeholderTextColor="grey"
-            autoCapitalize="none"
-            onChangeText={val => textInputChangeEmail(val)}
-          />
+      <View style={{marginVertical: 50}}>
+        <BackButton navigation={navigation} />
+        <View style={styles.Row}>
+          <Text style={styles.title}>Lupa kata sandi?</Text>
+          <Text style={styles.text}>
+            Masukkan alamat emailmu untuk menerima tautan pengaturan ulang sandi
+          </Text>
+          {/* // Input Form for Email */}
+          <View style={styles.ViewInput}>
+            <Icon name="mail" size={20} color={color.yellow} />
+            <TextInput
+              style={styles.InputText}
+              placeholder="Email kamu"
+              placeholderTextColor="grey"
+              autoCapitalize="none"
+              onChangeText={val => textInputChangeEmail(val)}
+            />
 
-          {data.check_TextEmail ? (
-            <Feather name="check-circle" size={20} color={color.yellow} />
-          ) : null}
+            {data.check_TextEmail ? (
+              <Feather name="check-circle" size={20} color={color.yellow} />
+            ) : null}
+          </View>
+          <TouchableOpacity onPress={() => alert('Kirim Email')}>
+            <LinearGradient
+              colors={['#F2C94C', '#F4A186']}
+              style={styles.buttonMasuk}>
+              <Text style={styles.buttonTextMasuk}>Kirim Email</Text>
+            </LinearGradient>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity onPress={() => alert('Kirim Email')}>
-          <LinearGradient
-            colors={['#F2C94C', '#F4A186']}
-            style={styles.buttonMasuk}>
-            <Text style={styles.buttonTextMasuk}>Kirim Email</Text>
-          </LinearGradient>
-        </TouchableOpacity>
       </View>
     </View>
   );
@@ -72,14 +74,15 @@ export default ForgetPassword;
 const windowWidth = Dimensions.get('screen').width;
 const radius_size = 15;
 const button_height = 50;
-const width_button = windowWidth - 60;
+const width_button = windowWidth -60;
+const makeitcenter = windowWidth*0.5;
 const styles = StyleSheet.create({
   container: {
     height: '100%',
     backgroundColor: color.white,
   },
   Row: {
-    flex: 1,
+    marginVertical:makeitcenter,
     alignItems: 'center',
     justifyContent: 'center',
   },

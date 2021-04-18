@@ -1,14 +1,14 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {Splash, LoginOrRegist, Login, Register, ForgetPassword} from '../pages';
+import {LoginOrRegist,LoginRegistOnBoard, Login, Register, ForgetPassword} from '../pages';
 const Stack = createStackNavigator();
 const AuthStack = ({navigation}) => {
   return (
-    <Stack.Navigator initialRouterName="LoginOrRegist">
+    <Stack.Navigator initialRouterName="LoginRegistOnBoard">
       <Stack.Screen
-        name="LoginOrRegist"
-        component={LoginOrRegist}
+        name="LoginRegistOnBoard"
+        component={LoginRegistOnBoard}
         options={{headerShown: false}}
       />
       <Stack.Screen

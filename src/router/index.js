@@ -14,11 +14,9 @@ import AuthStack from './AuthStack';
 import MainStack from './MainStack';
 import FirstLaunchStack from './FirstLaunchStack';
 import {Splash} from '../pages';
-import {act} from 'react-test-renderer';
 
 const Router = ({navigation}) => {
   const [isFirstLaunch, setIsFirstLaunch] = useState(null);
-  // const [isToken, setIsToken] = useState(null);
   const [isSplash, setIsSplash] = useState(true);
 
   const intialLoginState = {
@@ -33,24 +31,28 @@ const Router = ({navigation}) => {
         return {
           ...prevState,
           userToken: action.token,
+          isLoading: false,
         };
       case 'LOGIN':
         return {
           ...prevState,
           userName: action.id,
           userToken: action.token,
+          isLoading: false,
         };
       case 'REGIST':
         return {
           ...prevState,
           userName: action.id,
           userToken: action.token,
+          isLoading: false,
         };
       case 'LOGOUT':
         return {
           ...prevState,
           userName: null,
           userToken: null,
+          isLoading: false,
         };
     }
   };
@@ -112,29 +114,26 @@ const Router = ({navigation}) => {
       let userToken;
       userToken = null;
       try {
-        await AsyncStorage.setItem('alreadyLaunch', 'true');
         userToken = await AsyncStorage.getItem('userToken');
       } catch (e) {
         console.log(e);
       }
-      dispatch({type: 'REGIST', token: userToken});
+      dispatch({type: 'RETRIVE_TOKEN', token: userToken});
     }, 1000);
   }, []);
 
   if (isSplash) {
     return <Splash />;
   }
-
+  {
+    loginState.userToken !== null
+      ? console.log('mainStack')
+      : console.log('null');
+  }
   return (
     <AuthContext.Provider value={authContext}>
       <NavigationContainer>
-        {isFirstLaunch ? (
-          <FirstLaunchStack />
-        ) : loginState.userToken === null ? (
-          <AuthStack />
-        ) : (
-          <MainStack />
-        )}
+        {loginState.userToken !== null ? <MainStack /> : <AuthStack />}
       </NavigationContainer>
     </AuthContext.Provider>
   );

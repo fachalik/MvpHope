@@ -79,92 +79,94 @@ const Login = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <BackButton navigation={navigation}/>
-      <Text style={styles.title}>Selamat Datang!</Text>
-      <Text style={styles.text}>
-        Masuk dengan menggunakan Username atau salah satu opsi dibawah ini
-      </Text>
-      <View style={styles.form}>
-        {/* // Input Form for Username */}
-        <View style={styles.ViewInput}>
-          <Icon name="user" size={20} color={color.yellow} />
-          <TextInput
-            style={styles.InputText}
-            placeholder="Username kamu"
-            placeholderTextColor="grey"
-            autoCapitalize="none"
-            onChangeText={val => textInputChange(val)}
-          />
-
-          {data.check_TextUsername ? (
-            <Feather name="check-circle" size={20} color={color.yellow} />
-          ) : null}
-        </View>
-
-        {/* // Input Form for Password */}
-        <View style={styles.ViewInput}>
-          <Icon name="lock" size={20} color={color.yellow} />
-          <TextInput
-            secureTextEntry={data.secureTextEntry ? true : false}
-            style={styles.InputText}
-            placeholder="Password kamu"
-            placeholderTextColor="grey"
-            onChangeText={val => handlePassword(val)}
-          />
-          <TouchableOpacity onPress={updateSecureTextEntry}>
-            {data.secureTextEntry ? (
-              <Feather name="eye-off" size={20} color="grey" />
-            ) : (
-              <Feather name="eye" size={20} color={color.yellow} />
-            )}
-          </TouchableOpacity>
-        </View>
-
-        {/* // Input Form for ConfirmPassword */}
-        <View style={styles.ViewInput}>
-          <Icon name="lock" size={20} color={color.yellow} />
-          <TextInput
-            secureTextEntry={data.secureTextEntryConfirm ? true : false}
-            style={styles.InputText}
-            placeholder="Konfirmasi password"
-            placeholderTextColor="grey"
-            onChangeText={val => handleConfirmPassword(val)}
-          />
-          <TouchableOpacity onPress={updateSecureTextEntryConfirm}>
-            {data.secureTextEntryConfirm ? (
-              <Feather name="eye-off" size={20} color="grey" />
-            ) : (
-              <Feather name="eye" size={20} color={color.yellow} />
-            )}
-          </TouchableOpacity>
-        </View>
-      </View>
-      <TouchableOpacity
-        onPress={() => {
-          loginHandle(data.username, data.password, data.ConfirmPassword);
-        }}>
-        <LinearGradient
-          colors={['#F2C94C', '#F4A186']}
-          style={styles.buttonMasuk}>
-          <Text style={styles.buttonTextMasuk}>MASUK</Text>
-        </LinearGradient>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('ForgetPassword')}>
-        <Text style={{alignSelf: 'center', marginVertical: 10}}>
-          Lupa Password?
+      <View style={{marginVertical: 50}}>
+        <BackButton navigation={navigation} />
+        <Text style={styles.title}>Selamat Datang!</Text>
+        <Text style={styles.text}>
+          Masuk dengan menggunakan Username atau salah satu opsi dibawah ini
         </Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-        <Text
-          style={{
-            alignSelf: 'center',
-            marginVertical: 5,
-            fontWeight: 'bold',
-            marginVertical: 5,
+        <View style={styles.form}>
+          {/* // Input Form for Username */}
+          <View style={styles.ViewInput}>
+            <Icon name="user" size={20} color={color.yellow} />
+            <TextInput
+              style={styles.InputText}
+              placeholder="Username kamu"
+              placeholderTextColor="grey"
+              autoCapitalize="none"
+              onChangeText={val => textInputChange(val)}
+            />
+
+            {data.check_TextUsername ? (
+              <Feather name="check-circle" size={20} color={color.yellow} />
+            ) : null}
+          </View>
+
+          {/* // Input Form for Password */}
+          <View style={styles.ViewInput}>
+            <Icon name="lock" size={20} color={color.yellow} />
+            <TextInput
+              secureTextEntry={data.secureTextEntry ? true : false}
+              style={styles.InputText}
+              placeholder="Password kamu"
+              placeholderTextColor="grey"
+              onChangeText={val => handlePassword(val)}
+            />
+            <TouchableOpacity onPress={updateSecureTextEntry}>
+              {data.secureTextEntry ? (
+                <Feather name="eye-off" size={20} color="grey" />
+              ) : (
+                <Feather name="eye" size={20} color={color.yellow} />
+              )}
+            </TouchableOpacity>
+          </View>
+
+          {/* // Input Form for ConfirmPassword */}
+          <View style={styles.ViewInput}>
+            <Icon name="lock" size={20} color={color.yellow} />
+            <TextInput
+              secureTextEntry={data.secureTextEntryConfirm ? true : false}
+              style={styles.InputText}
+              placeholder="Konfirmasi password"
+              placeholderTextColor="grey"
+              onChangeText={val => handleConfirmPassword(val)}
+            />
+            <TouchableOpacity onPress={updateSecureTextEntryConfirm}>
+              {data.secureTextEntryConfirm ? (
+                <Feather name="eye-off" size={20} color="grey" />
+              ) : (
+                <Feather name="eye" size={20} color={color.yellow} />
+              )}
+            </TouchableOpacity>
+          </View>
+        </View>
+        <TouchableOpacity
+          onPress={() => {
+            loginHandle(data.username, data.password, data.ConfirmPassword);
           }}>
-          Belum Punya Akun? <Text style={{color: color.yellow}}>Daftar</Text>
-        </Text>
-      </TouchableOpacity>
+          <LinearGradient
+            colors={['#F2C94C', '#F4A186']}
+            style={styles.buttonMasuk}>
+            <Text style={styles.buttonTextMasuk}>MASUK</Text>
+          </LinearGradient>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('ForgetPassword')}>
+          <Text style={{alignSelf: 'center', marginVertical: 10}}>
+            Lupa Password?
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+          <Text
+            style={{
+              alignSelf: 'center',
+              marginVertical: 5,
+              fontWeight: 'bold',
+              marginVertical: 5,
+            }}>
+            Belum Punya Akun? <Text style={{color: color.yellow}}>Daftar</Text>
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -212,6 +214,7 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
   },
   InputText: {
+    flex:1,
     alignItems: 'center',
     width: 270,
     paddingHorizontal: 10,

@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {
   Splash,
@@ -9,6 +9,7 @@ import {
   Register,
   ForgetPassword,
 } from '../pages';
+import AuthStack from '../router/AuthStack';
 const Stack = createStackNavigator();
 const FirstLaunchStack = ({navigation}) => {
   return (
@@ -19,23 +20,8 @@ const FirstLaunchStack = ({navigation}) => {
         options={{headerShown: false}}
       />
       <Stack.Screen
-        name="LoginOrRegist"
-        component={LoginOrRegist}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="Login"
-        component={Login}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="Register"
-        component={Register}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="ForgetPassword"
-        component={ForgetPassword}
+        name="AuthStack"
+        component={AuthStack}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
