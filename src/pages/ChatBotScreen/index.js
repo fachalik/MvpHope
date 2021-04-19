@@ -10,28 +10,76 @@ import colors from '../../assets/colors';
 import {color} from 'react-native-reanimated';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {logo2} from '../../assets';
+import config from '../../../config';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'react-native-axios';
+import uuid from 'react-native-uuid';
+
 const ChatBotScreen = ({navigation}) => {
   const [messages, setMessages] = useState([]);
-  const BOT = {
-    _id:2,
-    name:'Hope',
-    avatar:logo2,
-  }
-  useEffect(() => {
-    setMessages([
-      {
-        _id: 1,
-        text: 'Halo, ada yang bisa saya bantu?',
-        createdAt: new Date(),
-        user: BOT,
+  const [responTempMsg, setresponTempMsg] = useState([]);
+  const [user, setUser] = useState(null);
+  const [responseMessage, setResponseMessage] = useState([
+    {
+      _id: '',
+      text: '',
+      createdAt: new Date(),
+      user: {
+        _id: '',
+        name: '',
+        avatar: '',
       },
-    ]);
+    },
+  ]);
+
+  const BOT = {
+    _id: 'bot_' + user,
+    name: 'Hope',
+    avatar: logo2,
+  };
+
+  useEffect(async () => {
+    let username;
+    username = null;
+    try {
+      username = await AsyncStorage.getItem('userName');
+      setUser(username);
+      console.log(user);
+    } catch (e) {
+      console.log(e);
+    }
   }, []);
 
-  const onSend = useCallback((messages = []) => {
+  useEffect(() => {
+    setMessages([]);
+  }, []);
+
+  const onSend = useCallback(async (messages = []) => {
     setMessages(previousMessages =>
       GiftedChat.append(previousMessages, messages),
     );
+    axios
+      .post(config.API_CHAT_URL, {
+        sender: messages[0].user._id,
+        message: messages[0].text,
+      })
+      .then(function (response) {
+        response.data.map(item => {
+          setMessages(previousMessages =>
+            GiftedChat.append(previousMessages, [
+              {
+                _id: uuid.v4(),
+                text: item.text,
+                createdAt: new Date(),
+                user: BOT,
+              },
+            ]),
+          );
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }, []);
 
   const renderBubble = props => {
@@ -71,20 +119,20 @@ const ChatBotScreen = ({navigation}) => {
   };
 
   return (
-    <View style={{flex:1, backgroundColor:colors.white}}>
-    <GiftedChat
-      messages={messages}
-      onSend={messages => onSend(messages)}
-      user={{
-        _id: 1,
-      }}
-      renderBubble={renderBubble}
-      alwaysShowSend
-      renderSend={renderSend}
-      renderInputToolbar={renderInputToolbar}
-      textInputStyle={{color: colors.black}}
-      placeholderTextColor={Colors.gray}
-    />
+    <View style={{flex: 1, backgroundColor: colors.white}}>
+      <GiftedChat
+        messages={messages}
+        onSend={messages => onSend(messages)}
+        user={{
+          _id: 'user_' + user,
+        }}
+        renderBubble={renderBubble}
+        alwaysShowSend
+        renderSend={renderSend}
+        renderInputToolbar={renderInputToolbar}
+        textInputStyle={{color: colors.black}}
+        placeholderTextColor={Colors.gray}
+      />
     </View>
   );
 };

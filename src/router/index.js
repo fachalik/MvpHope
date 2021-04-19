@@ -76,6 +76,7 @@ const Router = ({navigation}) => {
             console.log(response.data.key);
             userToken = response.data.key;
             AsyncStorage.setItem('userToken', userToken);
+            AsyncStorage.setItem('userName', userName);
             console.log(userToken);
           })
           .catch(function (error) {
@@ -147,14 +148,15 @@ const Router = ({navigation}) => {
       dispatch({type: 'RETRIVE_TOKEN', token: userToken});
     }, 1000);
   }, []);
-
   if (isSplash) {
     return <Splash />;
   }
-  {
-    loginState.userToken !== null
-      ? console.log('mainStack')
-      : console.log('null');
+  if (loginState.isLoading) {
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
   }
   return (
     <AuthContext.Provider value={authContext}>

@@ -20,7 +20,7 @@ const ChatBot = ({navigation}) => {
               <Text style={styles.BoxText}>Chat Bot</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={()=>{navigation.navigate('Konsultasi')}}>
+          <TouchableOpacity onPress={()=>{navigation.navigate('Konsultasi Dokter')}}>
             <View style={styles.Box}>
               <Text style={styles.BoxText}>Chat Dokter</Text>
             </View>

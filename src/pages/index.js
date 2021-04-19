@@ -1,6 +1,7 @@
 import Home from './Home';
 import ChatBot from './ChatBot';
 import ChatBotScreen from './ChatBotScreen';
+import ChatDoctorScreen from './ChatDoctorScreen';
 import Account from './Account';
 import Splash from './Splash';
 import Login from './Login';
@@ -18,5 +19,6 @@ export {
   Register,
   ForgetPassword,
   ChatBotScreen,
+  ChatDoctorScreen,
   LoginRegistOnBoard,
 };

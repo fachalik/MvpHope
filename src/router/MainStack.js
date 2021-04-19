@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 import {BottomNavigator} from '../components';
-import {Home, Splash, Account, ChatBot, ChatBotScreen} from '../pages';
+import {Home, Splash, Account, ChatBot, ChatBotScreen, ChatDoctorScreen} from '../pages';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {useRoute} from '@react-navigation/native';
@@ -37,6 +37,14 @@ const ChatStackScreen = ({navigation}) => {
       <ChatStack.Screen
         name="Konsultasi"
         component={ChatBotScreen}
+        options={({route}) => ({
+          title: route.name,
+          headerShown: true,
+        })}
+      />
+      <ChatStack.Screen
+        name="Konsultasi Dokter"
+        component={ChatDoctorScreen}
         options={({route}) => ({
           title: route.name,
           headerShown: true,
