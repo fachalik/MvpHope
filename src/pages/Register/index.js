@@ -26,6 +26,10 @@ const Register = ({navigation}) => {
     check_TextEmail: false,
     secureTextEntry: true,
     secureTextEntryConfirm: true,
+    usernameIsEmpty: false,
+    emailIsEmpty: false,
+    passwordIsEmpty: false,
+    confirmPasswordIsEmpty: false,
   });
 
   const {SignUp} = useContext(AuthContext);
@@ -36,12 +40,14 @@ const Register = ({navigation}) => {
         ...data,
         username: val,
         check_TextUsername: true,
+        usernameIsEmpty: true,
       });
     } else {
       setData({
         ...data,
         username: val,
         check_TextUsername: false,
+        usernameIsEmpty: false,
       });
     }
   };
@@ -52,28 +58,48 @@ const Register = ({navigation}) => {
         ...data,
         email: val,
         check_TextEmail: true,
+        emailIsEmpty: true,
       });
     } else {
       setData({
         ...data,
         email: val,
         check_TextEmail: false,
+        emailIsEmpty: false,
       });
     }
   };
 
   const handlePassword = val => {
-    setData({
-      ...data,
-      password: val,
-    });
+    if (val.length != 0) {
+      setData({
+        ...data,
+        password: val,
+        passwordIsEmpty: true,
+      });
+    } else {
+      setData({
+        ...data,
+        password: val,
+        passwordIsEmpty: false,
+      });
+    }
   };
 
   const handleConfirmPassword = val => {
-    setData({
-      ...data,
-      ConfirmPassword: val,
-    });
+    if (val.length != 0) {
+      setData({
+        ...data,
+        ConfirmPassword: val,
+        confirmPasswordIsEmpty: true,
+      });
+    } else {
+      setData({
+        ...data,
+        ConfirmPassword: val,
+        confirmPasswordIsEmpty: false,
+      });
+    }
   };
 
   const updateSecureTextEntry = val => {
@@ -174,7 +200,16 @@ const Register = ({navigation}) => {
             </TouchableOpacity>
           </View>
         </View>
+
         <TouchableOpacity
+          disabled={
+            data.usernameIsEmpty &&
+            data.passwordIsEmpty &&
+            data.emailIsEmpty &&
+            data.confirmPasswordIsEmpty
+              ? false
+              : true
+          }
           onPress={() => {
             RegisterHandle(
               data.username,
@@ -183,11 +218,17 @@ const Register = ({navigation}) => {
               data.ConfirmPassword,
             );
           }}>
-          <LinearGradient
-            colors={['#F2C94C', '#F4A186']}
-            style={styles.buttonMasuk}>
+          <View
+            style={
+              data.usernameIsEmpty &&
+              data.passwordIsEmpty &&
+              data.emailIsEmpty &&
+              data.confirmPasswordIsEmpty
+                ? styles.buttonMasuk
+                : styles.buttonMasukDisable
+            }>
             <Text style={styles.buttonTextMasuk}>Buat akun baru</Text>
-          </LinearGradient>
+          </View>
         </TouchableOpacity>
       </View>
     </View>
@@ -243,7 +284,20 @@ const styles = StyleSheet.create({
   },
   buttonMasuk: {
     alignSelf: 'center',
-    color: color.white,
+    backgroundColor: color.yellow,
+    fontWeight: 'bold',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: width_button,
+    height: button_height,
+    borderTopLeftRadius: radius_size,
+    borderTopRightRadius: radius_size,
+    borderBottomLeftRadius: radius_size,
+    borderBottomRightRadius: radius_size,
+  },
+  buttonMasukDisable: {
+    alignSelf: 'center',
+    backgroundColor: color.gray,
     fontWeight: 'bold',
     alignItems: 'center',
     justifyContent: 'center',

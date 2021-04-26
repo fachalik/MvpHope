@@ -1,11 +1,18 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {LoginOrRegist,LoginRegistOnBoard, Login, Register, ForgetPassword} from '../pages';
+import {
+  LoginOrRegist,
+  LoginRegistOnBoard,
+  Login,
+  Register,
+  ForgetPassword,
+  RegistComplete,
+} from '../pages';
 const Stack = createStackNavigator();
 const AuthStack = ({navigation}) => {
   return (
-    <Stack.Navigator initialRouterName="LoginRegistOnBoard">
+    <Stack.Navigator>
       <Stack.Screen
         name="LoginRegistOnBoard"
         component={LoginRegistOnBoard}
@@ -24,6 +31,11 @@ const AuthStack = ({navigation}) => {
       <Stack.Screen
         name="ForgetPassword"
         component={ForgetPassword}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="RegistComplete"
+        component={RegistComplete}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

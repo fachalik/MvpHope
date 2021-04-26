@@ -9,6 +9,7 @@ import LoginOrRegist from './LoginOrRegist';
 import LoginRegistOnBoard from './LoginRegistOnBoard';
 import Register from './Register';
 import ForgetPassword from './ForgetPassword';
+import RegistComplete from './RegistComplete'
 export {
   Home,
   ChatBot,
@@ -21,4 +22,5 @@ export {
   ChatBotScreen,
   ChatDoctorScreen,
   LoginRegistOnBoard,
+  RegistComplete,
 };

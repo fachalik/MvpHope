@@ -6,6 +6,8 @@ import {
   Image,
   Dimensions,
   ActivityIndicator,
+  ToastAndroid,
+  Alert,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {NavigationContainer} from '@react-navigation/native';
@@ -15,13 +17,15 @@ import MainStack from './MainStack';
 import {Splash} from '../pages';
 import config from '../../config';
 import axios from 'react-native-axios';
-
+import {Colors} from 'react-native/Libraries/NewAppScreen';
+import colors from '../assets/colors';
+import {sleep} from '../utils/sleep';
 const Router = ({navigation}) => {
   const [isFirstLaunch, setIsFirstLaunch] = useState(null);
   const [isSplash, setIsSplash] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const intialLoginState = {
-    isLoading: true,
     userName: null,
     userToken: null,
   };
@@ -32,28 +36,24 @@ const Router = ({navigation}) => {
         return {
           ...prevState,
           userToken: action.token,
-          isLoading: false,
         };
       case 'LOGIN':
         return {
           ...prevState,
           userName: action.id,
           userToken: action.token,
-          isLoading: false,
         };
       case 'REGIST':
         return {
           ...prevState,
           userName: action.id,
           userToken: action.token,
-          isLoading: false,
         };
       case 'LOGOUT':
         return {
           ...prevState,
           userName: null,
           userToken: null,
-          isLoading: false,
         };
     }
   };
@@ -63,32 +63,36 @@ const Router = ({navigation}) => {
     intialLoginState,
   );
   const authContext = React.useMemo(() => ({
-    SignIn: async (userName, password, Confirmpassword) => {
+    SignIn: async (userName, password) => {
+      await sleep(2000);
       let userToken;
       userToken = null;
-      if (password == Confirmpassword) {
-        await axios
-          .post(config.API_URL + 'auth/login/', {
-            username: userName,
-            password: password,
-          })
-          .then(function (response) {
-            console.log(response.data.key);
-            userToken = response.data.key;
-            AsyncStorage.setItem('userToken', userToken);
-            AsyncStorage.setItem('userName', userName);
-            console.log(userToken);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-      }
+      setIsLoading(true);
+      await axios
+        .post(config.API_URL + 'auth/login/', {
+          username: userName,
+          password: password,
+        })
+        .then(function (response) {
+          console.log(response.data);
+          userToken = response.data.key;
+          AsyncStorage.setItem('userToken', userToken);
+          AsyncStorage.setItem('userName', userName);
+          console.log(userToken);
+          setIsLoading(false);
+        })
+        .catch(function (error) {
+          setIsLoading(false);
+          ToastAndroid.show(
+            'Username dan Password yang anda masukkan tidak terdaftar',
+            ToastAndroid.LONG,
+          );
+        });
       dispatch({type: 'LOGIN', id: userName, token: userToken});
     },
     SignUp: async (userName, email, password, Confirmpassword) => {
       let userToken;
       userToken = null;
-      console.log(config.API_URL + 'auth/register/');
       if (password == Confirmpassword) {
         await axios
           .post(config.API_URL + 'auth/register/', {
@@ -98,10 +102,7 @@ const Router = ({navigation}) => {
             password2: Confirmpassword,
           })
           .then(function (response) {
-            console.log(response.data.key);
-            userToken = response.data.key;
-            AsyncStorage.setItem('userToken', userToken);
-            console.log(userToken);
+            console.log(response.data);
           })
           .catch(function (error) {
             console.log(error);
@@ -111,6 +112,10 @@ const Router = ({navigation}) => {
     },
     SignOut: async () => {
       try {
+        setIsLoading(true);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 1000);
         await AsyncStorage.removeItem('userToken');
       } catch (e) {
         console.log(e);
@@ -151,13 +156,9 @@ const Router = ({navigation}) => {
   if (isSplash) {
     return <Splash />;
   }
-  if (loginState.isLoading) {
-    return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <ActivityIndicator size="large" />
-      </View>
-    );
-  }
+  // if (isLoading) {
+  //   return <ActivityIndicator size="large" color={colors.yellow} />;
+  // }
   return (
     <AuthContext.Provider value={authContext}>
       <NavigationContainer>

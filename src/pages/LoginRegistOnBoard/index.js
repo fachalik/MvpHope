@@ -33,13 +33,9 @@ const OnboardingScreen = ({navigation}) => {
           <TouchableOpacity
             style={styles.buttonfooter}
             onPress={() => navigation.navigate('Register')}>
-            {/* <LinearGradient
-              colors={['#F2C94C', '#F4A186']}
-              style={styles.textDaftar}> */}
             <View style={styles.textRegist}>
               <Text style={styles.buttonTextLogin}>DAFTAR</Text>
             </View>
-            {/* </LinearGradient> */}
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.buttonfooter}

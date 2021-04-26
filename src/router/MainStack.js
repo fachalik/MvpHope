@@ -2,7 +2,14 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 import {BottomNavigator} from '../components';
-import {Home, Splash, Account, ChatBot, ChatBotScreen, ChatDoctorScreen} from '../pages';
+import {
+  Home,
+  Splash,
+  Account,
+  ChatBot,
+  ChatBotScreen,
+  ChatDoctorScreen,
+} from '../pages';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {useRoute} from '@react-navigation/native';
@@ -76,7 +83,10 @@ const MainStack = ({}) => {
           tabBarVisible: (route => {
             const routeName = getFocusedRouteNameFromRoute(route) ?? '';
 
-            if (routeName === 'Konsultasi') {
+            if (
+              routeName === 'Konsultasi' ||
+              routeName === 'Konsultasi Dokter'
+            ) {
               return false;
             }
 

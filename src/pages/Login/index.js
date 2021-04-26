@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Button,
   StyleSheet,
@@ -15,45 +15,52 @@ import Feather from 'react-native-vector-icons/Feather';
 import LinearGradient from 'react-native-linear-gradient';
 import BackButton from '../../components/BackButton';
 import {AuthContext} from '../../router/context';
+import Loading from '../../components/Loading';
 const Login = ({navigation}) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = React.useState('');
   const [data, setData] = useState({
     username: '',
     password: '',
     ConfirmPassword: '',
     check_TextUsername: false,
     secureTextEntry: true,
-    secureTextEntryConfirm: true,
+    usernameIsEmpty: false,
+    passwordIsEmpty: false,
   });
-
   const {SignIn} = React.useContext(AuthContext);
   const textInputChange = val => {
     if (val.length != 0) {
       setData({
         ...data,
         username: val,
+        usernameIsEmpty: true,
         check_TextUsername: true,
       });
     } else {
       setData({
         ...data,
         username: val,
+        usernameIsEmpty: false,
         check_TextUsername: false,
       });
     }
   };
 
   const handlePassword = val => {
-    setData({
-      ...data,
-      password: val,
-    });
-  };
-
-  const handleConfirmPassword = val => {
-    setData({
-      ...data,
-      ConfirmPassword: val,
-    });
+    if (val.length != 0) {
+      setData({
+        ...data,
+        password: val,
+        passwordIsEmpty: true,
+      });
+    } else {
+      setData({
+        ...data,
+        password: val,
+        passwordIsEmpty: false,
+      });
+    }
   };
 
   const updateSecureTextEntry = val => {
@@ -63,16 +70,11 @@ const Login = ({navigation}) => {
     });
   };
 
-  const updateSecureTextEntryConfirm = val => {
-    setData({
-      ...data,
-      secureTextEntryConfirm: !data.secureTextEntryConfirm,
-    });
-  };
-
-  const loginHandle = (username, password, ConfirmPassword) => {
+  const loginHandle = async (username, password, ConfirmPassword) => {
+    setIsLoading(true);
     console.log(username, password, ConfirmPassword);
-    SignIn(username, password, ConfirmPassword);
+    await SignIn(username, password, ConfirmPassword);
+    setIsLoading(false);
   };
 
   return (
@@ -118,36 +120,23 @@ const Login = ({navigation}) => {
               )}
             </TouchableOpacity>
           </View>
-
-          {/* // Input Form for ConfirmPassword */}
-          <View style={styles.ViewInput}>
-            <Icon name="lock" size={20} color={color.yellow} />
-            <TextInput
-              secureTextEntry={data.secureTextEntryConfirm ? true : false}
-              style={styles.InputText}
-              placeholder="Konfirmasi password"
-              placeholderTextColor="grey"
-              onChangeText={val => handleConfirmPassword(val)}
-            />
-            <TouchableOpacity onPress={updateSecureTextEntryConfirm}>
-              {data.secureTextEntryConfirm ? (
-                <Feather name="eye-off" size={20} color="grey" />
-              ) : (
-                <Feather name="eye" size={20} color={color.yellow} />
-              )}
-            </TouchableOpacity>
-          </View>
         </View>
+
         <TouchableOpacity
+          disabled={data.usernameIsEmpty && data.passwordIsEmpty ? false : true}
           onPress={() => {
             loginHandle(data.username, data.password, data.ConfirmPassword);
           }}>
-          <LinearGradient
-            colors={['#F2C94C', '#F4A186']}
-            style={styles.buttonMasuk}>
-            <Text style={styles.buttonTextMasuk}>MASUK</Text>
-          </LinearGradient>
+          <View
+            style={
+              data.usernameIsEmpty && data.passwordIsEmpty
+                ? styles.buttonMasuk
+                : styles.buttonMasukDisable
+            }>
+            <Text style={styles.buttonTextMasukDisable}>MASUK</Text>
+          </View>
         </TouchableOpacity>
+
         <TouchableOpacity onPress={() => navigation.navigate('ForgetPassword')}>
           <Text style={{alignSelf: 'center', marginVertical: 10}}>
             Lupa Password?
@@ -165,6 +154,7 @@ const Login = ({navigation}) => {
           </Text>
         </TouchableOpacity>
       </View>
+      {isLoading ? <Loading loading={isLoading} /> : null}
     </View>
   );
 };
@@ -220,7 +210,20 @@ const styles = StyleSheet.create({
   },
   buttonMasuk: {
     alignSelf: 'center',
-    color: color.white,
+    backgroundColor: color.yellow,
+    fontWeight: 'bold',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: width_button,
+    height: button_height,
+    borderTopLeftRadius: radius_size,
+    borderTopRightRadius: radius_size,
+    borderBottomLeftRadius: radius_size,
+    borderBottomRightRadius: radius_size,
+  },
+  buttonMasukDisable: {
+    alignSelf: 'center',
+    backgroundColor: color.gray,
     fontWeight: 'bold',
     alignItems: 'center',
     justifyContent: 'center',
@@ -232,6 +235,11 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: radius_size,
   },
   buttonTextMasuk: {
+    fontSize: 16,
+    fontFamily: 'Roboto-Bold',
+    color: color.white,
+  },
+  buttonTextMasukDisable: {
     fontSize: 16,
     fontFamily: 'Roboto-Bold',
     color: color.white,

@@ -1,4 +1,4 @@
 import BottomNavigator from './BottomNavigatior';
 import TabItem from './TabItem';
-
-export {BottomNavigator, TabItem};
+import Loading from './Loading'
+export {BottomNavigator, TabItem, Loading};
