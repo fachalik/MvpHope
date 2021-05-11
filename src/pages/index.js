@@ -1,4 +1,5 @@
 import Home from './Home';
+import Search from './Search';
 import ChatBot from './ChatBot';
 import ChatBotScreen from './ChatBotScreen';
 import ChatDoctorScreen from './ChatDoctorScreen';
@@ -12,6 +13,7 @@ import ForgetPassword from './ForgetPassword';
 import RegistComplete from './RegistComplete'
 export {
   Home,
+  Search,
   ChatBot,
   Account,
   Splash,

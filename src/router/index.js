@@ -10,6 +10,7 @@ import {
   Alert,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {NavigationActions} from '@react-navigation/compat';
 import {NavigationContainer} from '@react-navigation/native';
 import {AuthContext} from './context';
 import AuthStack from './AuthStack';
@@ -17,13 +18,10 @@ import MainStack from './MainStack';
 import {Splash} from '../pages';
 import config from '../../config';
 import axios from 'react-native-axios';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
 import colors from '../assets/colors';
-import {sleep} from '../utils/sleep';
+import {RegistComplete} from '../pages';
 const Router = ({navigation}) => {
-  const [isFirstLaunch, setIsFirstLaunch] = useState(null);
   const [isSplash, setIsSplash] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
 
   const intialLoginState = {
     userName: null,
@@ -64,10 +62,8 @@ const Router = ({navigation}) => {
   );
   const authContext = React.useMemo(() => ({
     SignIn: async (userName, password) => {
-      await sleep(2000);
       let userToken;
       userToken = null;
-      setIsLoading(true);
       await axios
         .post(config.API_URL + 'auth/login/', {
           username: userName,
@@ -79,10 +75,8 @@ const Router = ({navigation}) => {
           AsyncStorage.setItem('userToken', userToken);
           AsyncStorage.setItem('userName', userName);
           console.log(userToken);
-          setIsLoading(false);
         })
         .catch(function (error) {
-          setIsLoading(false);
           ToastAndroid.show(
             'Username dan Password yang anda masukkan tidak terdaftar',
             ToastAndroid.LONG,
@@ -91,31 +85,63 @@ const Router = ({navigation}) => {
       dispatch({type: 'LOGIN', id: userName, token: userToken});
     },
     SignUp: async (userName, email, password, Confirmpassword) => {
-      let userToken;
-      userToken = null;
-      if (password == Confirmpassword) {
-        await axios
-          .post(config.API_URL + 'auth/register/', {
-            username: userName,
-            email: email,
-            password1: password,
-            password2: Confirmpassword,
-          })
-          .then(function (response) {
-            console.log(response.data);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-      }
-      dispatch({type: 'LOGIN', id: userName, token: userToken});
+      // if (password == Confirmpassword) {
+      //   await axios
+      //     .post(config.API_URL + 'auth/register/', {
+      //       username: userName,
+      //       email: email,
+      //       password1: password,
+      //       password2: Confirmpassword,
+      //     })
+      //     .then(function (response) {
+      //       console.log(response.data);
+      //       ToastAndroid.show(
+      //         'Registrasi Berhasil, silahkan menuju ke menu Masuk',
+      //         ToastAndroid.LONG,
+      //       );
+      //     })
+      //     .catch(function (error) {
+      //       console.log(error.response.data.password1);
+      //       if (error.response.data.username) {
+      //         console.log(error.response.data.username);
+      //         ToastAndroid.show(
+      //           error.response.data.username[0],
+      //           ToastAndroid.LONG,
+      //         );
+      //       } else {
+      //         console.log('username not error');
+      //       }
+      //       if (error.response.data.email) {
+      //         ToastAndroid.show(
+      //           error.response.data.email[0],
+      //           ToastAndroid.LONG,
+      //         );
+      //         console.log(error.response.data.email);
+      //       } else {
+      //         console.log('email not error');
+      //       }
+      //       if (error.response.data.password1) {
+      //         let pass =
+      //           error.response.data.password1[0] +
+      //           ' ' +
+      //           error.response.data.password1[1];
+      //         ToastAndroid.show(pass, ToastAndroid.LONG);
+      //         console.log(pass);
+      //       } else {
+      //         console.log('password not error');
+      //       }
+      //     });
+      // } else {
+      //   ToastAndroid.show(
+      //     'Kata sandi dan Konfirmasi kata sandi tidak cocok',
+      //     ToastAndroid.LONG,
+      //   );
+      // }
+
+      dispatch({type: 'REGIST', id: userName, token: userToken});
     },
     SignOut: async () => {
       try {
-        setIsLoading(true);
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 1000);
         await AsyncStorage.removeItem('userToken');
       } catch (e) {
         console.log(e);
@@ -125,28 +151,24 @@ const Router = ({navigation}) => {
   }));
 
   useEffect(() => {
-    AsyncStorage.getItem('alreadyLaunch').then(value => {
-      if (value == null) {
-        AsyncStorage.setItem('alreadyLaunch', 'true');
-        setIsFirstLaunch(true);
-      } else {
-        setIsFirstLaunch(false);
-      }
-    });
+    let isUnmount = false;
+    if (!isUnmount) {
+      setTimeout(() => {
+        setIsSplash(false);
+      }, 1500);
+    }
+    return () => {
+      isUnmount = true;
+    };
   }, []);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setIsSplash(false);
-    }, 1500);
-  }, []);
-
+  console.log(loginState.userToken);
   useEffect(() => {
     setTimeout(async () => {
       let userToken;
       userToken = null;
       try {
         userToken = await AsyncStorage.getItem('userToken');
+        console.log(userToken);
       } catch (e) {
         console.log(e);
       }
@@ -156,13 +178,15 @@ const Router = ({navigation}) => {
   if (isSplash) {
     return <Splash />;
   }
-  // if (isLoading) {
-  //   return <ActivityIndicator size="large" color={colors.yellow} />;
-  // }
+
   return (
     <AuthContext.Provider value={authContext}>
       <NavigationContainer>
-        {loginState.userToken !== null ? <MainStack /> : <AuthStack />}
+        {loginState.userToken !== null || loginState == undefined ? (
+          <MainStack />
+        ) : (
+          <AuthStack />
+        )}
       </NavigationContainer>
     </AuthContext.Provider>
   );

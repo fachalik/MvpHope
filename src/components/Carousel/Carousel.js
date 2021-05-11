@@ -17,7 +17,6 @@ const Carousel = ({data}) => {
   const scrollX = new Animated.Value(0);
   let position = Animated.divide(scrollX, width);
   const [dataList, setDataList] = useState(data);
-  console.log(dataList);
   useEffect(async () => {
     let userToken;
     userToken = null;

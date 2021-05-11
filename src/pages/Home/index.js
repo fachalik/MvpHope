@@ -1,13 +1,31 @@
 import React from 'react';
-import {StyleSheet, Text, View, StatusBar} from 'react-native';
-import { color } from 'react-native-reanimated';
+import {
+  StyleSheet,
+  Text,
+  View,
+  StatusBar,
+  TouchableOpacity,
+} from 'react-native';
+import {color} from 'react-native-reanimated';
 import colors from '../../assets/colors';
-const Home = () => {
+
+const Home = ({navigation}) => {
+  const onChangeSearch = query => setSearchQuery(query);
   return (
     <View style={styles.container}>
-      <StatusBar translucent backgroundColor="white" barStyle="dark-content" />
-      <Text style={{fontFamily:'Karla-Bold', fontSize:24, textAlign:'center', marginHorizontal:50}}>Tidak dapat menampilkan halaman ini</Text>
-      <Text style={{fontFamily:'Karla-regular', fontSize:16, textAlign:'center', marginHorizontal:10}}>Dalam masa pengembangan</Text>
+      <View style={{marginVertical: 50}}>
+        <StatusBar
+          translucent
+          backgroundColor="white"
+          barStyle="dark-content"
+        />
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('Search');
+          }}>
+          <View style={styles.box}></View>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -17,8 +35,7 @@ export default Home;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor:colors.white,
+    backgroundColor: colors.white,
   },
+  box: {backgroundColor: 'black', height: 100, width: 100},
 });

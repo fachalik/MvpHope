@@ -9,6 +9,7 @@ import {
   ChatBot,
   ChatBotScreen,
   ChatDoctorScreen,
+  Search,
 } from '../pages';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -22,10 +23,15 @@ const AccountStack = createStackNavigator();
 
 const HomeStackScreen = ({navigation}) => {
   return (
-    <HomeStack.Navigator>
+    <HomeStack.Navigator initialRouteName="Home">
       <HomeStack.Screen
         name="Home"
         component={Home}
+        options={{headerShown: false}}
+      />
+      <HomeStack.Screen
+        name="Search"
+        component={Search}
         options={{headerShown: false}}
       />
     </HomeStack.Navigator>
@@ -75,7 +81,9 @@ const AccountStackScreen = ({navigation}) => {
 
 const MainStack = ({}) => {
   return (
-    <Tab.Navigator tabBar={props => <BottomNavigator {...props} />}>
+    <Tab.Navigator
+      initialRouteName="Home"
+      tabBar={props => <BottomNavigator {...props} />}>
       <Tab.Screen
         name="ChatBot"
         component={ChatStackScreen}
@@ -94,7 +102,21 @@ const MainStack = ({}) => {
           })(route),
         })}
       />
-      <Tab.Screen name="Home" component={HomeStackScreen} />
+      <Tab.Screen
+        name="Home"
+        component={HomeStackScreen}
+        options={({route}) => ({
+          tabBarVisible: (route => {
+            const routeName = getFocusedRouteNameFromRoute(route) ?? '';
+
+            if (routeName === 'Search') {
+              return false;
+            }
+
+            return true;
+          })(route),
+        })}
+      />
       <Tab.Screen name="Account" component={AccountStackScreen} />
     </Tab.Navigator>
   );
