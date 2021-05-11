@@ -10,7 +10,9 @@ import loginImage from './login.png';
 import Option1 from './Option1.png';
 import Option2 from './Option2.png';
 import Option3 from './Option3.png';
+import Avatar from './icon.png';
 export {
+  Avatar,
   SplashBackground,
   ImageOnboard1,
   ImageOnboard2,

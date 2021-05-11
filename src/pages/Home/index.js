@@ -5,25 +5,34 @@ import {
   View,
   StatusBar,
   TouchableOpacity,
+  Image,
 } from 'react-native';
-import {color} from 'react-native-reanimated';
+import Avatar from '../../assets/images';
 import colors from '../../assets/colors';
-
+import Icon from 'react-native-vector-icons/FontAwesome';
 const Home = ({navigation}) => {
   const onChangeSearch = query => setSearchQuery(query);
   return (
     <View style={styles.container}>
-      <View style={{marginVertical: 50}}>
+      <View style={styles.wrapper}>
         <StatusBar
           translucent
           backgroundColor="white"
           barStyle="dark-content"
         />
+        <View style={styles.headear}>
+          <View>
+            <Icon name="phone" style={styles.icon} size={32} />
+          </View>
+          <View>
+            <Image source={Avatar}></Image>
+          </View>
+        </View>
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('Search');
           }}>
-          <View style={styles.box}></View>
+          <View style={styles.searchBar}></View>
         </TouchableOpacity>
       </View>
     </View>
@@ -37,5 +46,16 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.white,
   },
-  box: {backgroundColor: 'black', height: 100, width: 100},
+  wrapper: {
+    marginVertical: 50,
+    marginHorizontal: 30,
+  },
+  searchBar: {
+    backgroundColor: 'black',
+    height: 40,
+    width: 310,
+    borderRadius: 15,
+    backgroundColor: '#ECECEC',
+    alignSelf: 'center',
+  },
 });
