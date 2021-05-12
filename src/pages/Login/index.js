@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Button,
   StyleSheet,
@@ -8,6 +8,8 @@ import {
   Dimensions,
   TextInput,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  ScrollView,
 } from 'react-native';
 import color from '../../assets/colors';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -15,45 +17,52 @@ import Feather from 'react-native-vector-icons/Feather';
 import LinearGradient from 'react-native-linear-gradient';
 import BackButton from '../../components/BackButton';
 import {AuthContext} from '../../router/context';
+import Loading from '../../components/Loading';
 const Login = ({navigation}) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = React.useState('');
   const [data, setData] = useState({
     username: '',
     password: '',
     ConfirmPassword: '',
     check_TextUsername: false,
     secureTextEntry: true,
-    secureTextEntryConfirm: true,
+    usernameIsEmpty: false,
+    passwordIsEmpty: false,
   });
-
   const {SignIn} = React.useContext(AuthContext);
   const textInputChange = val => {
     if (val.length != 0) {
       setData({
         ...data,
         username: val,
+        usernameIsEmpty: true,
         check_TextUsername: true,
       });
     } else {
       setData({
         ...data,
         username: val,
+        usernameIsEmpty: false,
         check_TextUsername: false,
       });
     }
   };
 
   const handlePassword = val => {
-    setData({
-      ...data,
-      password: val,
-    });
-  };
-
-  const handleConfirmPassword = val => {
-    setData({
-      ...data,
-      ConfirmPassword: val,
-    });
+    if (val.length != 0) {
+      setData({
+        ...data,
+        password: val,
+        passwordIsEmpty: true,
+      });
+    } else {
+      setData({
+        ...data,
+        password: val,
+        passwordIsEmpty: false,
+      });
+    }
   };
 
   const updateSecureTextEntry = val => {
@@ -63,109 +72,104 @@ const Login = ({navigation}) => {
     });
   };
 
-  const updateSecureTextEntryConfirm = val => {
-    setData({
-      ...data,
-      secureTextEntryConfirm: !data.secureTextEntryConfirm,
-    });
-  };
-
-  const loginHandle = (username, password, ConfirmPassword) => {
+  const loginHandle = async (username, password, ConfirmPassword) => {
+    setIsLoading(true);
     console.log(username, password, ConfirmPassword);
-    SignIn(username, password, ConfirmPassword);
+    await SignIn(username, password, ConfirmPassword);
+    setIsLoading(false);
   };
 
   return (
-    <View style={styles.container}>
-      <View style={{marginVertical: 50}}>
-        <BackButton navigation={navigation} />
-        <Text style={styles.title}>Selamat Datang!</Text>
-        <Text style={styles.text}>
-          Masuk dengan menggunakan Username atau salah satu opsi dibawah ini
-        </Text>
-        <View style={styles.form}>
-          {/* // Input Form for Username */}
-          <View style={styles.ViewInput}>
-            <Icon name="user" size={20} color={color.yellow} />
-            <TextInput
-              style={styles.InputText}
-              placeholder="Username kamu"
-              placeholderTextColor="grey"
-              autoCapitalize="none"
-              onChangeText={val => textInputChange(val)}
-            />
-
-            {data.check_TextUsername ? (
-              <Feather name="check-circle" size={20} color={color.yellow} />
-            ) : null}
-          </View>
-
-          {/* // Input Form for Password */}
-          <View style={styles.ViewInput}>
-            <Icon name="lock" size={20} color={color.yellow} />
-            <TextInput
-              secureTextEntry={data.secureTextEntry ? true : false}
-              style={styles.InputText}
-              placeholder="Password kamu"
-              placeholderTextColor="grey"
-              onChangeText={val => handlePassword(val)}
-            />
-            <TouchableOpacity onPress={updateSecureTextEntry}>
-              {data.secureTextEntry ? (
-                <Feather name="eye-off" size={20} color="grey" />
-              ) : (
-                <Feather name="eye" size={20} color={color.yellow} />
-              )}
-            </TouchableOpacity>
-          </View>
-
-          {/* // Input Form for ConfirmPassword */}
-          <View style={styles.ViewInput}>
-            <Icon name="lock" size={20} color={color.yellow} />
-            <TextInput
-              secureTextEntry={data.secureTextEntryConfirm ? true : false}
-              style={styles.InputText}
-              placeholder="Konfirmasi password"
-              placeholderTextColor="grey"
-              onChangeText={val => handleConfirmPassword(val)}
-            />
-            <TouchableOpacity onPress={updateSecureTextEntryConfirm}>
-              {data.secureTextEntryConfirm ? (
-                <Feather name="eye-off" size={20} color="grey" />
-              ) : (
-                <Feather name="eye" size={20} color={color.yellow} />
-              )}
-            </TouchableOpacity>
-          </View>
-        </View>
-        <TouchableOpacity
-          onPress={() => {
-            loginHandle(data.username, data.password, data.ConfirmPassword);
-          }}>
-          <LinearGradient
-            colors={['#F2C94C', '#F4A186']}
-            style={styles.buttonMasuk}>
-            <Text style={styles.buttonTextMasuk}>MASUK</Text>
-          </LinearGradient>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('ForgetPassword')}>
-          <Text style={{alignSelf: 'center', marginVertical: 10}}>
-            Lupa Password?
+    <KeyboardAvoidingView style={styles.container} behavior="height">
+      <ScrollView>
+        <View style={{marginVertical: 50}}>
+          <BackButton navigation={navigation} />
+          <Text style={styles.title}>Selamat Datang!</Text>
+          <Text style={styles.text}>
+            Masuk dengan menggunakan Username atau salah satu opsi dibawah ini
           </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-          <Text
-            style={{
-              alignSelf: 'center',
-              marginVertical: 5,
-              fontWeight: 'bold',
-              marginVertical: 5,
+          <View style={styles.form}>
+            {/* // Input Form for Username */}
+            <View style={styles.TextInput}>
+              <Text style={{fontFamily: 'Karla-Medium'}}>Email</Text>
+            </View>
+            <View style={styles.ViewInput}>
+              <Icon name="user" size={20} color={color.yellow} />
+              <TextInput
+                style={styles.InputText}
+                placeholder="Mohon masukkan nama pengguna anda"
+                placeholderTextColor="grey"
+                autoCapitalize="none"
+                onChangeText={val => textInputChange(val)}
+              />
+
+              {data.check_TextUsername ? (
+                <Feather name="check-circle" size={20} color={color.yellow} />
+              ) : null}
+            </View>
+
+            {/* // Input Form for Password */}
+            <View style={styles.TextInput}>
+              <Text style={{fontFamily: 'Karla-Medium'}}>Kata sandi</Text>
+            </View>
+            <View style={styles.ViewInput}>
+              <Icon name="lock" size={20} color={color.yellow} />
+              <TextInput
+                secureTextEntry={data.secureTextEntry ? true : false}
+                style={styles.InputText}
+                placeholder="Mohon masukkan kata sandi anda"
+                placeholderTextColor="grey"
+                onChangeText={val => handlePassword(val)}
+              />
+              <TouchableOpacity onPress={updateSecureTextEntry}>
+                {data.secureTextEntry ? (
+                  <Feather name="eye-off" size={20} color="grey" />
+                ) : (
+                  <Feather name="eye" size={20} color={color.yellow} />
+                )}
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          <TouchableOpacity
+            disabled={
+              data.usernameIsEmpty && data.passwordIsEmpty ? false : true
+            }
+            onPress={() => {
+              loginHandle(data.username, data.password, data.ConfirmPassword);
             }}>
-            Belum Punya Akun? <Text style={{color: color.yellow}}>Daftar</Text>
-          </Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+            <View
+              style={
+                data.usernameIsEmpty && data.passwordIsEmpty
+                  ? styles.buttonMasuk
+                  : styles.buttonMasukDisable
+              }>
+              <Text style={styles.buttonTextMasukDisable}>MASUK</Text>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => navigation.navigate('ForgetPassword')}>
+            <Text style={{alignSelf: 'center', marginVertical: 10}}>
+              Lupa Password?
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+            <Text
+              style={{
+                alignSelf: 'center',
+                marginVertical: 5,
+                fontWeight: 'bold',
+                marginVertical: 5,
+              }}>
+              Belum Punya Akun?{' '}
+              <Text style={{color: color.yellow}}>Daftar</Text>
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+      {isLoading ? <Loading loading={isLoading} /> : null}
+    </KeyboardAvoidingView>
   );
 };
 
@@ -208,8 +212,14 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     marginTop: 10,
     borderColor: color.yellow,
-    borderRadius: 23,
+    borderRadius: 10,
     paddingVertical: 2,
+  },
+  TextInput: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginHorizontal: 30,
+    marginTop: 10,
   },
   InputText: {
     flex: 1,
@@ -220,7 +230,20 @@ const styles = StyleSheet.create({
   },
   buttonMasuk: {
     alignSelf: 'center',
-    color: color.white,
+    backgroundColor: color.yellow,
+    fontWeight: 'bold',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: width_button,
+    height: button_height,
+    borderTopLeftRadius: radius_size,
+    borderTopRightRadius: radius_size,
+    borderBottomLeftRadius: radius_size,
+    borderBottomRightRadius: radius_size,
+  },
+  buttonMasukDisable: {
+    alignSelf: 'center',
+    backgroundColor: color.gray,
     fontWeight: 'bold',
     alignItems: 'center',
     justifyContent: 'center',
@@ -232,6 +255,11 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: radius_size,
   },
   buttonTextMasuk: {
+    fontSize: 16,
+    fontFamily: 'Roboto-Bold',
+    color: color.white,
+  },
+  buttonTextMasukDisable: {
     fontSize: 16,
     fontFamily: 'Roboto-Bold',
     color: color.white,

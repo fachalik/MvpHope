@@ -13,10 +13,10 @@ import {logo2} from '../../assets';
 const ChatDoctorScreen = ({navigation}) => {
   const [messages, setMessages] = useState([]);
   const BOT = {
-    _id:2,
-    name:'Hope',
-    avatar:logo2,
-  }
+    _id: 2,
+    name: 'Hope',
+    avatar: logo2,
+  };
   useEffect(() => {
     setMessages([
       {
@@ -71,20 +71,20 @@ const ChatDoctorScreen = ({navigation}) => {
   };
 
   return (
-    <View style={{flex:1, backgroundColor:colors.white}}>
-    <GiftedChat
-      messages={messages}
-      onSend={messages => onSend(messages)}
-      user={{
-        _id: 1,
-      }}
-      renderBubble={renderBubble}
-      alwaysShowSend
-      renderSend={renderSend}
-      renderInputToolbar={renderInputToolbar}
-      textInputStyle={{color: colors.black}}
-      placeholderTextColor={Colors.gray}
-    />
+    <View style={{flex: 1, backgroundColor: colors.white}}>
+      <GiftedChat
+        messages={messages}
+        onSend={messages => onSend(messages)}
+        user={{
+          _id: 1,
+        }}
+        renderBubble={renderBubble}
+        alwaysShowSend
+        renderSend={renderSend}
+        renderInputToolbar={renderInputToolbar}
+        textInputStyle={{color: colors.black}}
+        placeholderTextColor={Colors.gray}
+      />
     </View>
   );
 };

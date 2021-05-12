@@ -65,22 +65,49 @@ const ChatBotScreen = ({navigation}) => {
       })
       .then(function (response) {
         response.data.map(item => {
-          setMessages(previousMessages =>
-            GiftedChat.append(previousMessages, [
-              {
-                _id: uuid.v4(),
-                text: item.text,
-                createdAt: new Date(),
-                user: BOT,
-              },
-            ]),
-          );
+          if (!item.image) {
+            setMessages(previousMessages =>
+              GiftedChat.append(previousMessages, [
+                {
+                  _id: uuid.v4(),
+                  text: item.text,
+                  createdAt: new Date(),
+                  user: BOT,
+                },
+              ]),
+            );
+          } else {
+            setMessages(previousMessages =>
+              GiftedChat.append(previousMessages, [
+                {
+                  _id: uuid.v4(),
+                  image: item.image,
+                  createdAt: new Date(),
+                  user: BOT,
+                },
+              ]),
+            );
+          }
         });
       })
       .catch(function (error) {
         console.log(error);
       });
   }, []);
+  useEffect(() => {
+    setTimeout(() => {
+      setMessages(previousMessages =>
+        GiftedChat.append(previousMessages, [
+          {
+            _id: uuid.v4(),
+            text: 'Halo..',
+            createdAt: new Date(),
+            user: BOT,
+          },
+        ]),
+      );
+    }, 1000);
+  }, [null]);
 
   const renderBubble = props => {
     return (

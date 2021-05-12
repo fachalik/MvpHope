@@ -2,7 +2,17 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 import {BottomNavigator} from '../components';
-import {Home, Splash, Account, ChatBot, ChatBotScreen, ChatDoctorScreen} from '../pages';
+import {
+  Home,
+  Account,
+  ChatBot,
+  ChatBotScreen,
+  ChatDoctorScreen,
+  Search,
+  InfoObat,
+  DetailObat,
+  Develop,
+} from '../pages';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {useRoute} from '@react-navigation/native';
@@ -15,12 +25,20 @@ const AccountStack = createStackNavigator();
 
 const HomeStackScreen = ({navigation}) => {
   return (
-    <HomeStack.Navigator>
+    <HomeStack.Navigator initialRouteName="Home">
       <HomeStack.Screen
         name="Home"
         component={Home}
         options={{headerShown: false}}
       />
+      <HomeStack.Screen
+        name="Search"
+        component={Search}
+        options={{headerShown: false}}
+      />
+      <HomeStack.Screen name="InfoObat" component={InfoObat} />
+      <HomeStack.Screen name="DetailObat" component={DetailObat} />
+      <HomeStack.Screen name="Develop" component={Develop} />
     </HomeStack.Navigator>
   );
 };
@@ -68,7 +86,9 @@ const AccountStackScreen = ({navigation}) => {
 
 const MainStack = ({}) => {
   return (
-    <Tab.Navigator tabBar={props => <BottomNavigator {...props} />}>
+    <Tab.Navigator
+      initialRouteName="Home"
+      tabBar={props => <BottomNavigator {...props} />}>
       <Tab.Screen
         name="ChatBot"
         component={ChatStackScreen}
@@ -76,7 +96,10 @@ const MainStack = ({}) => {
           tabBarVisible: (route => {
             const routeName = getFocusedRouteNameFromRoute(route) ?? '';
 
-            if (routeName === 'Konsultasi') {
+            if (
+              routeName === 'Konsultasi' ||
+              routeName === 'Konsultasi Dokter'
+            ) {
               return false;
             }
 
@@ -84,7 +107,21 @@ const MainStack = ({}) => {
           })(route),
         })}
       />
-      <Tab.Screen name="Home" component={HomeStackScreen} />
+      <Tab.Screen
+        name="Home"
+        component={HomeStackScreen}
+        options={({route}) => ({
+          tabBarVisible: (route => {
+            const routeName = getFocusedRouteNameFromRoute(route) ?? '';
+
+            if (routeName === 'Search') {
+              return false;
+            }
+
+            return true;
+          })(route),
+        })}
+      />
       <Tab.Screen name="Account" component={AccountStackScreen} />
     </Tab.Navigator>
   );
