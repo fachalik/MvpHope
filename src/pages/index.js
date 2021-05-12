@@ -11,6 +11,9 @@ import LoginRegistOnBoard from './LoginRegistOnBoard';
 import Register from './Register';
 import ForgetPassword from './ForgetPassword';
 import RegistComplete from './RegistComplete'
+import DetailObat from './DetailObat';
+import InfoObat from './InfoObat';
+import Develop from './Develop';
 export {
   Home,
   Search,
@@ -25,4 +28,7 @@ export {
   ChatDoctorScreen,
   LoginRegistOnBoard,
   RegistComplete,
+  DetailObat,
+  InfoObat,
+  Develop,
 };

@@ -10,7 +10,11 @@ import loginImage from './login.png';
 import Option1 from './Option1.png';
 import Option2 from './Option2.png';
 import Option3 from './Option3.png';
-import Avatar from './icon.png';
+import Avatar from './Avatar.png';
+import CariDokter from './CariDokter.png';
+import LayananKesehatan from './LayananKesehatan.png';
+import RiwayatPenyakit from './RiwayatPenyakit.png';
+import InfoObat from './InfoObat.png';
 export {
   Avatar,
   SplashBackground,
@@ -25,4 +29,8 @@ export {
   Option3,
   ConsultationImage,
   RegistCompleteImage,
+  CariDokter,
+  LayananKesehatan,
+  RiwayatPenyakit,
+  InfoObat,
 };

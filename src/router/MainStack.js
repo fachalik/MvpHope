@@ -4,12 +4,14 @@ import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 import {BottomNavigator} from '../components';
 import {
   Home,
-  Splash,
   Account,
   ChatBot,
   ChatBotScreen,
   ChatDoctorScreen,
   Search,
+  InfoObat,
+  DetailObat,
+  Develop,
 } from '../pages';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -34,6 +36,9 @@ const HomeStackScreen = ({navigation}) => {
         component={Search}
         options={{headerShown: false}}
       />
+      <HomeStack.Screen name="InfoObat" component={InfoObat} />
+      <HomeStack.Screen name="DetailObat" component={DetailObat} />
+      <HomeStack.Screen name="Develop" component={Develop} />
     </HomeStack.Navigator>
   );
 };
