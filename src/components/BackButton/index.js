@@ -24,6 +24,5 @@ export default BackButton;
 const styles = StyleSheet.create({
   IconStyle: {
     marginTop: 20,
-    marginLeft: 20,
   },
 });

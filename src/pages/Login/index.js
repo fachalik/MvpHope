@@ -82,11 +82,11 @@ const Login = ({navigation}) => {
   return (
     <KeyboardAvoidingView style={styles.container} behavior="height">
       <ScrollView>
-        <View style={{marginVertical: 50}}>
+        <View style={styles.wrapper}>
           <BackButton navigation={navigation} />
           <Text style={styles.title}>Selamat Datang!</Text>
           <Text style={styles.text}>
-            Masuk dengan menggunakan Username atau salah satu opsi dibawah ini
+            Masuk dengan menggunakan e-mail atau salah satu opsi dibawah ini
           </Text>
           <View style={styles.form}>
             {/* // Input Form for Username */}
@@ -97,7 +97,7 @@ const Login = ({navigation}) => {
               <Icon name="user" size={20} color={color.yellow} />
               <TextInput
                 style={styles.InputText}
-                placeholder="Mohon masukkan nama pengguna anda"
+                placeholder="Mohon masukkan e-mail anda"
                 placeholderTextColor="grey"
                 autoCapitalize="none"
                 onChangeText={val => textInputChange(val)}
@@ -119,6 +119,7 @@ const Login = ({navigation}) => {
                 style={styles.InputText}
                 placeholder="Mohon masukkan kata sandi anda"
                 placeholderTextColor="grey"
+                autoCapitalize='none'
                 onChangeText={val => handlePassword(val)}
               />
               <TouchableOpacity onPress={updateSecureTextEntry}>
@@ -183,6 +184,10 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: color.white,
   },
+  wrapper: {
+    marginVertical: 50,
+    marginHorizontal: 30,
+  },
   illustrationHeader: {
     alignSelf: 'center',
     height: '40%',
@@ -199,7 +204,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 5,
     opacity: 0.4,
-    marginHorizontal: 30,
   },
   form: {
     marginVertical: 10,
@@ -207,7 +211,6 @@ const styles = StyleSheet.create({
   ViewInput: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginHorizontal: 30,
     paddingHorizontal: 10,
     borderWidth: 2,
     marginTop: 10,
@@ -218,7 +221,6 @@ const styles = StyleSheet.create({
   TextInput: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginHorizontal: 30,
     marginTop: 10,
   },
   InputText: {
