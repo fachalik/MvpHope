@@ -12,22 +12,29 @@ import {
 
 const TabItem = ({isFocused, onPress, onLongPress, label}) => {
   const Icon = () => {
-    if (label === 'ChatBot') return isFocused ? <IconChatActive /> : <IconChat />;
+    if (label === 'ChatBot')
+      return isFocused ? <IconChatActive /> : <IconChat />;
 
     if (label === 'Home') return isFocused ? <IconHomeActive /> : <IconHome />;
 
-    if (label === 'Account') return isFocused ? <IconAccountActive /> : <IconAccount />;
+    if (label === 'Account')
+      return isFocused ? <IconAccountActive /> : <IconAccount />;
 
     return <IconChat />;
   };
-  
+
   return (
     <TouchableOpacity
       onPress={onPress}
       onLongPress={onLongPress}
       style={styles.container}>
       <Icon />
-      <Text style={styles.Text(isFocused)}>{label}</Text>
+
+      {label != 'ChatBot' ? (
+        <Text style={styles.Text(isFocused)}>{label}</Text>
+      ) : (
+        <Text style={styles.Text(isFocused)}>Tanya Hope</Text>
+      )}
     </TouchableOpacity>
   );
 };
@@ -40,7 +47,7 @@ const styles = StyleSheet.create({
     backgroundColor: color.soft_gray,
   },
   Text: isFocused => ({
-    fontSize: 13,
+    fontSize: 10,
     color: isFocused ? color.yellow : '#B1B1BF',
   }),
 });

@@ -45,6 +45,14 @@ const ChatBot = ({navigation}) => {
                 <Text style={styles.BoxText}>Chat Dokter</Text>
               </View>
             </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('Konsultasi Psikologi');
+              }}>
+              <View style={styles.Box}>
+                <Text style={styles.BoxText}>Chat Psikologi</Text>
+              </View>
+            </TouchableOpacity>
           </View>
         </View>
       </View>

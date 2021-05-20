@@ -41,6 +41,11 @@ const AuthStack = ({navigation}) => {
         options={{headerShown: false}}
       />
       <Stack.Screen
+        name="RegistComplete"
+        component={RegistComplete}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
         name="ForgetPassword"
         component={ForgetPassword}
         options={{headerShown: false}}

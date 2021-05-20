@@ -8,10 +8,13 @@ import {
   ChatBot,
   ChatBotScreen,
   ChatDoctorScreen,
+  ChatPsikologScreen,
   Search,
   InfoObat,
   DetailObat,
   Develop,
+  EditProfile,
+  LayananKesehatan
 } from '../pages';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -23,27 +26,31 @@ const HomeStack = createStackNavigator();
 const ChatStack = createStackNavigator();
 const AccountStack = createStackNavigator();
 
-const HomeStackScreen = ({navigation}) => {
+const HomeStackScreen = (props, {navigation}) => {
+  console.log(props.route.params);
   return (
     <HomeStack.Navigator initialRouteName="Home">
       <HomeStack.Screen
         name="Home"
         component={Home}
+        initialParams={props.route.params}
         options={{headerShown: false}}
       />
       <HomeStack.Screen
         name="Search"
         component={Search}
+        initialParams={props.route.params}
         options={{headerShown: false}}
       />
-      <HomeStack.Screen name="InfoObat" component={InfoObat} />
-      <HomeStack.Screen name="DetailObat" component={DetailObat} />
+      <HomeStack.Screen name="Info Obat" component={InfoObat} />
+      <HomeStack.Screen name="Detail Obat" component={DetailObat} />
       <HomeStack.Screen name="Develop" component={Develop} />
+      <HomeStack.Screen name="Layanan Kesehatan" component={LayananKesehatan} />
     </HomeStack.Navigator>
   );
 };
 
-const ChatStackScreen = ({navigation}) => {
+const ChatStackScreen = (props, {navigation}) => {
   const route = useRoute();
   return (
     <ChatStack.Navigator initialRouteName="Chatbot">
@@ -68,23 +75,36 @@ const ChatStackScreen = ({navigation}) => {
           headerShown: true,
         })}
       />
+      <ChatStack.Screen
+        name="Konsultasi Psikologi"
+        component={ChatPsikologScreen}
+        options={({route}) => ({
+          title: route.name,
+          headerShown: true,
+        })}
+      />
     </ChatStack.Navigator>
   );
 };
 
-const AccountStackScreen = ({navigation}) => {
+const AccountStackScreen = (props, {navigation}) => {
   return (
-    <AccountStack.Navigator>
+    <AccountStack.Navigator initialRouteName="Account">
       <AccountStack.Screen
         name="Account"
         component={Account}
+        options={{headerShown: false}}
+      />
+      <AccountStack.Screen
+        name="Edit Profile"
+        component={EditProfile}
         options={{headerShown: false}}
       />
     </AccountStack.Navigator>
   );
 };
 
-const MainStack = ({}) => {
+const MainStack = props => {
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -92,6 +112,7 @@ const MainStack = ({}) => {
       <Tab.Screen
         name="ChatBot"
         component={ChatStackScreen}
+        initialParams={props.data}
         options={({route}) => ({
           tabBarVisible: (route => {
             const routeName = getFocusedRouteNameFromRoute(route) ?? '';
@@ -110,6 +131,7 @@ const MainStack = ({}) => {
       <Tab.Screen
         name="Home"
         component={HomeStackScreen}
+        initialParams={props.data}
         options={({route}) => ({
           tabBarVisible: (route => {
             const routeName = getFocusedRouteNameFromRoute(route) ?? '';

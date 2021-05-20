@@ -35,7 +35,7 @@ const ForgetPassword = ({navigation}) => {
   };
   return (
     <View style={styles.container}>
-      <View style={{marginVertical: 50}}>
+      <View style={styles.wrapper}>
         <BackButton navigation={navigation} />
         <View style={styles.Row}>
           <Text style={styles.title}>Lupa kata sandi?</Text>
@@ -81,6 +81,10 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: color.white,
   },
+  wrapper:{
+    marginVertical: 50,
+    marginHorizontal:30,
+  },
   Row: {
     marginVertical:makeitcenter,
     alignItems: 'center',
@@ -96,12 +100,10 @@ const styles = StyleSheet.create({
     color: 'grey',
     marginTop: 5,
     textAlign: 'center',
-    marginHorizontal: 30,
   },
   ViewInput: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginHorizontal: 30,
     paddingHorizontal: 10,
     borderWidth: 2,
     marginTop: 10,

@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {
   StyleSheet,
   View,
@@ -6,87 +6,110 @@ import {
   TouchableOpacity,
   StatusBar,
   SafeAreaView,
+  ActivityIndicator,
+  Image,
 } from 'react-native';
-import {Avatar, Title, Caption, TouchableRipple} from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Title, Caption, TouchableRipple} from 'react-native-paper';
+import {Avatar} from '../../assets';
 import {AuthContext} from '../../router/context';
+import Loading from '../../components/Loading';
 import colors from '../../assets/colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import FeatherIcon from 'react-native-vector-icons/Feather';
+import {color} from 'react-native-reanimated';
 
 const Account = ({navigation}) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [data, setData] = useState({});
   const {SignOut} = useContext(AuthContext);
+  useEffect(() => {
+    setTimeout(async () => {
+      try {
+        const jsonValue = await AsyncStorage.getItem('UserProfile');
+        await setData(JSON.parse(jsonValue));
+        console.log(JSON.parse(jsonValue));
+        await setIsLoading(false);
+      } catch (e) {
+        //   error reading value
+        console.log(e);
+      }
+    }, 1000);
+  }, [null]);
+  console.log(data);
+
+  const logOutHandle = async () => {
+    setIsLoading(true);
+    await setTimeout(() => {
+      SignOut();
+    }, 2000);
+    await setIsLoading(false);
+  };
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.userInfoSection}>
-        <View style={{flexDirection: 'row', marginTop: 15}}>
-          <Avatar.Image
-            source={{
-              uri: 'https://api.adorable.io/avatars/80/abott@adorable.png',
-            }}
-            size={80}
-          />
-          <View style={{marginLeft: 20}}>
-            <Title
-              style={[
-                styles.title,
-                {
-                  marginTop: 15,
-                  marginBottom: 5,
-                },
-              ]}>
-              John Doe
-            </Title>
-            <Caption style={styles.caption}>@j_doe</Caption>
+      <View style={styles.wrapper}>
+        <View style={styles.userInfoSection}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}>
+            <View style={{flexDirection: 'row'}}>
+              <Image source={Avatar} size={80} />
+              <View style={{marginLeft: 20}}>
+                <Title style={[styles.title, {}]}>
+                  {data.first_name === undefined && data.last_name === undefined
+                    ? null
+                    : data.first_name + ' ' + data.last_name}
+                </Title>
+              </View>
+            </View>
+            <TouchableOpacity
+              onPress={() => {
+                logOutHandle();
+              }}>
+              <Icon name="logout" style={styles.icon} size={24} />
+            </TouchableOpacity>
           </View>
         </View>
-      </View>
-
-      <View style={styles.menuWrapper}>
-        <TouchableOpacity
-          onPress={() => {
-            SignOut();
-          }}>
-          <View style={{marginVertical: 10}}>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginHorizontal: 30,
-                paddingHorizontal: 10,
-                marginTop: 10,
-                paddingVertical: 2,
-                borderBottomColor: '#dddddd',
-                borderBottomWidth: 1,
-                height: 100,
-              }}>
-              <View style={{flex: 0.2}}>
-                <View
-                  style={{
-                    width: 40,
-                    height: 40,
-                    borderRadius: 10,
-                    backgroundColor: colors.gray,
-                  }}>
-                  <Icon name="logout" style={styles.icon} size={22} />
+        <View
+          style={{
+            borderBottomColor: '#dddddd',
+            borderBottomWidth: 1,
+          }}></View>
+        <View style={styles.menuWrapper}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('Edit Profile')
+            }}>
+            <View style={{marginTop: 10}}>
+              <View style={styles.menu}>
+                <View style={styles.boxIcon}>
+                  <Ionicons name="settings" style={styles.icon} size={24} />
                 </View>
+                <Text
+                  style={{
+                    flex: 0.8,
+                    alignItems: 'center',
+                    width: 270,
+                    color: colors.black,
+                    fontFamily: 'Karla-Bold',
+                    fontSize: 16,
+                  }}>
+                  Edit Profile
+                </Text>
+                <FeatherIcon
+                  name="chevron-right"
+                  style={styles.icon}
+                  size={22}
+                />
               </View>
-              <Text
-                style={{
-                  flex: 0.8,
-                  alignItems: 'center',
-                  width: 270,
-                  paddingHorizontal: 50,
-                  color: colors.black,
-                  fontFamily: 'Karla-Bold',
-                  fontSize: 16,
-                }}>
-                Log Out
-              </Text>
-              <FeatherIcon name="chevron-right" style={styles.icon} size={22} />
             </View>
-          </View>
-        </TouchableOpacity>
+          </TouchableOpacity>
+        </View>
       </View>
+      {isLoading ? <Loading loading={isLoading} /> : null}
     </SafeAreaView>
   );
 };
@@ -97,10 +120,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.white,
-    marginTop: 30,
+    marginTop: 10,
+  },
+  wrapper: {
+    marginHorizontal: 30,
+    marginVertical: 50,
   },
   userInfoSection: {
-    paddingHorizontal: 30,
     marginBottom: 25,
   },
   title: {
@@ -113,13 +139,25 @@ const styles = StyleSheet.create({
     lineHeight: 14,
     fontWeight: '500',
   },
-  menuWrapper: {
-    marginTop: 10,
+  menu: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginVertical: 10,
   },
   icon: {
-    marginHorizontal: 10,
+    marginHorizontal: 11,
     marginVertical: 8,
     color: colors.black,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  boxIcon: {
+    height: 45,
+    width: 45,
+    backgroundColor: colors.gray,
+    borderRadius: 12,
+    marginRight: 30,
   },
 });
 {

@@ -17,7 +17,7 @@ import {
 } from '../../assets/images';
 import colors from '../../assets/colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
-const Home = ({navigation}) => {
+const Home = (props, {navigation}) => {
   const onChangeSearch = query => setSearchQuery(query);
   const LayananUtama = [
     {
@@ -28,7 +28,7 @@ const Home = ({navigation}) => {
     },
     {
       id: 2,
-      request: 'InfoObat',
+      request: 'Info Obat',
       title: 'Info Obat',
       image: InfoObat,
     },
@@ -40,7 +40,7 @@ const Home = ({navigation}) => {
     },
     {
       id: 4,
-      request: 'Develop',
+      request: 'Layanan Kesehatan',
       title: 'Layanan Kesehatan',
       image: LayananKesehatan,
     },
@@ -51,8 +51,8 @@ const Home = ({navigation}) => {
         <TouchableOpacity
           key={item.id}
           onPress={() => {
-            navigation.navigate(item.request, {request:item.request});
-            // console.log('test')
+            props.navigation.navigate(item.request, {request: item.request});
+            console.log(item.request);
           }}>
           <View
             style={{
@@ -126,7 +126,7 @@ const Home = ({navigation}) => {
         {/* nama pengguna */}
         <View style={{alignSelf: 'center', marginVertical: 10}}>
           <Text style={{fontFamily: 'Karla-Regular', fontSize: 22}}>
-            Hi, Name !
+            Hi,  {props.route.params.first_name}!
           </Text>
         </View>
 
