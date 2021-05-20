@@ -26,9 +26,6 @@ import axios from 'react-native-axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const RegisterStep1 = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [alertUsername, setAlertUsername] = useState('');
-  const [alertEmail, setAlertEmail] = useState('');
-  const [alertPassword, setAlertPassword] = useState('');
   const [data, setData] = useState({
     FirstName: '',
     LastName: '',
@@ -168,15 +165,10 @@ const RegisterStep1 = ({navigation}) => {
                 onChangeText={val => FirstNameChange(val)}
               />
 
-              {data.check_TextUsername ? (
+              {data.check_TextFirstName ? (
                 <Feather name="check-circle" size={20} color={color.yellow} />
               ) : null}
             </View>
-            {alertUsername != '' ? (
-              <View style={styles.TextInput}>
-                <Text>{alertUsername}</Text>
-              </View>
-            ) : null}
 
             {/* // Input Form for LastName */}
             <View style={styles.TextInput}>
@@ -192,22 +184,20 @@ const RegisterStep1 = ({navigation}) => {
                 onChangeText={val => LasttNameChange(val)}
               />
 
-              {data.check_TextUsername ? (
+              {data.check_TextLastName ? (
                 <Feather name="check-circle" size={20} color={color.yellow} />
               ) : null}
             </View>
-            {alertUsername != '' ? (
-              <View style={styles.TextInput}>
-                <Text>{alertUsername}</Text>
-              </View>
-            ) : null}
-
             {/* // Input Form for Job */}
             <View style={styles.TextInput}>
               <Text st>Pekerjaan</Text>
             </View>
             <View style={styles.ViewInput}>
-              <MaterialIcon name="work-outline" size={20} color={color.yellow} />
+              <MaterialIcon
+                name="work-outline"
+                size={20}
+                color={color.yellow}
+              />
               <TextInput
                 style={styles.InputText}
                 placeholder="Mohon masukkan pekerjaan anda"
@@ -216,15 +206,10 @@ const RegisterStep1 = ({navigation}) => {
                 onChangeText={val => JobChange(val)}
               />
 
-              {data.check_TextUsername ? (
+              {data.check_TextJob ? (
                 <Feather name="check-circle" size={20} color={color.yellow} />
               ) : null}
             </View>
-            {alertUsername != '' ? (
-              <View style={styles.TextInput}>
-                <Text>{alertUsername}</Text>
-              </View>
-            ) : null}
 
             {/* // Input Form for DailyActivuty */}
             <View style={styles.TextInput}>
@@ -240,15 +225,10 @@ const RegisterStep1 = ({navigation}) => {
                 onChangeText={val => DailyActivityChange(val)}
               />
 
-              {data.check_TextUsername ? (
+              {data.check_TextDailyActivity ? (
                 <Feather name="check-circle" size={20} color={color.yellow} />
               ) : null}
             </View>
-            {alertUsername != '' ? (
-              <View style={styles.TextInput}>
-                <Text>{alertUsername}</Text>
-              </View>
-            ) : null}
           </View>
         </View>
         <View style={styles.button}>
@@ -321,7 +301,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Regular',
     marginTop: 5,
     opacity: 0.4,
-    width:300,
+    width: 300,
   },
   form: {
     marginVertical: 10,
