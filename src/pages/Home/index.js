@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,6 +7,9 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  TextInput,
+  Dimensions,
+  Linking
 } from 'react-native';
 import {
   Avatar,
@@ -23,12 +26,17 @@ import colors from '../../assets/colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {dummyData} from './Data';
 import Carousel from '../../components/CarouselHome/Carousel';
-
 import {Modal, Portal, Provider, Searchbar} from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const Home = (props, {navigation}) => {
-  const [searchQuery, setSearchQuery] = React.useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+  // const [noTeman, setNoTeman] = useState({
+  //   nomer: '',
+  //   isEmpty: true,
+  // });
+  const [isLoading, setIsLoading] = useState(false);
   const onChangeSearch = query => setSearchQuery(query);
-  const [visible, setVisible] = React.useState(false);
+  const [visible, setVisible] = useState(false);
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
   const containerStyle = {
@@ -65,6 +73,47 @@ const Home = (props, {navigation}) => {
       image: LayananKesehatan,
     },
   ];
+
+  // const handleNoteman = val => {
+  //   if (val.length < 5) {
+  //     setNoTeman({
+  //       ...noTeman,
+  //       nomer: val,
+  //       isEmpty: false,
+  //     });
+  //   } else {
+  //     setNoTeman({
+  //       ...noTeman,
+  //       nomer: val,
+  //       isEmpty: true,
+  //     });
+  //   }
+  // };
+
+  // const handleTeman = async () => {
+  //   let nomerTeman;
+  //   nomerTeman = null;
+  //   try {
+  //     nomerTeman = await AsyncStorage.getItem('nomerTeman');
+  //     console.log(nomerTeman);
+  //     nomerTeman === null ? 
+  //     (
+  //       setNoTeman({...noTeman, isEmpty: false})
+  //     ) : (
+  //       setNoTeman({...noTeman, isEmpty: true , nomer=nomerTeman}),
+  //       Linking.openURL(`tel:${item.phone_number}`)
+  //     );
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
+
+  // const inputNoteman = async (noTeman) => {
+  //   try {
+  //     await AsyncStorage.setItem('nomerTeman', noTeman)
+  //   } catch (e) {
+  //   }
+  // }
   const displayLayanan = () => {
     return LayananUtama.map(item => {
       return (
@@ -182,29 +231,69 @@ const Home = (props, {navigation}) => {
               style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
               <TouchableOpacity
                 onPress={() => {
-                  alert('teman');
+                  Linking.openURL(`tel:${'0811112323'}`)
                 }}>
                 <Image style={styles.iconEmergency} source={Teman} />
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
-                  alert('teman');
+                  Linking.openURL(`tel:${'08123332123'}`)
                 }}>
                 <Image style={styles.iconEmergency} source={OrangTua} />
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
-                  alert('teman');
+                  Linking.openURL(`tel:${'212'}`)
                 }}>
                 <Image style={styles.iconEmergency} source={Ambulance} />
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
-                  alert('teman');
+                  Linking.openURL(`tel:${'020'}`)
                 }}>
                 <Image style={styles.iconEmergency} source={SOS} />
               </TouchableOpacity>
             </View>
+            {/* {noTeman.isEmpty ? null : (
+              <View style={styles.form}>
+                <View style={styles.TextInput}>
+                  <Text style={{fontFamily: 'Karla-Medium'}}>
+                    No Telpon Teman
+                  </Text>
+                </View>
+                <View style={styles.ViewInput}>
+                  <Icon name="phone" size={20} color={colors.yellow} />
+                  <TextInput
+                    style={styles.InputText}
+                    placeholder="Mohon nomer teman anda"
+                    placeholderTextColor="grey"
+                    keyboardType="phone-pad"
+                    autoCapitalize="none"
+                    onChangeText={val => {
+                      handleNoteman(val);
+                    }}
+                  />
+                </View>
+                <TouchableOpacity
+                  disabled={noTeman.isEmpty ? true : false}
+                  onPress={() => {
+                    inputNoteman(noTeman.nomer)
+                  }}>
+                  <View
+                    style={
+                      noTeman.isEmpty
+                        ? styles.buttonMasukDisable
+                        : styles.buttonMasuk
+                    }>
+                    {isLoading ? (
+                      <ActivityIndicator color={'white'} size="large" />
+                    ) : (
+                      <Text style={styles.buttonTextMasukDisable}>Input</Text>
+                    )}
+                  </View>
+                </TouchableOpacity>
+              </View>
+            )} */}
           </Modal>
         </Portal>
       </Provider>
@@ -213,7 +302,10 @@ const Home = (props, {navigation}) => {
 };
 
 export default Home;
-
+const windowWidth = Dimensions.get('screen').width;
+const radius_size = 15;
+const button_height = 50;
+const width_button = windowWidth - 60;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -273,5 +365,73 @@ const styles = StyleSheet.create({
   iconEmergency: {
     width: 50,
     height: 50,
+  },
+  form: {
+    marginVertical: 10,
+    marginHorizontal: 30,
+  },
+  ViewInput: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    borderWidth: 2,
+    marginTop: 10,
+    borderColor: colors.yellow,
+    borderRadius: 10,
+    paddingVertical: 2,
+  },
+  TextInput: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  InputText: {
+    flex: 1,
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    color: colors.black,
+  },
+  buttonMasuk: {
+    marginTop: 10,
+    alignSelf: 'center',
+    backgroundColor: colors.yellow,
+    fontWeight: 'bold',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 100,
+    height: button_height,
+    borderTopLeftRadius: radius_size,
+    borderTopRightRadius: radius_size,
+    borderBottomLeftRadius: radius_size,
+    borderBottomRightRadius: radius_size,
+  },
+  buttonMasukDisable: {
+    marginTop: 10,
+    alignSelf: 'center',
+    backgroundColor: colors.gray,
+    fontWeight: 'bold',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 100,
+    height: button_height,
+    borderTopLeftRadius: radius_size,
+    borderTopRightRadius: radius_size,
+    borderBottomLeftRadius: radius_size,
+    borderBottomRightRadius: radius_size,
+  },
+  buttonTextMasuk: {
+    fontSize: 16,
+    fontFamily: 'Roboto-Bold',
+    color: colors.white,
+  },
+  buttonTextMasukDisable: {
+    fontSize: 16,
+    fontFamily: 'Roboto-Bold',
+    color: colors.white,
+  },
+  other: {
+    marginVertical: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });
