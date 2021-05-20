@@ -25,9 +25,6 @@ import axios from 'react-native-axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const RegisterStep2 = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [alertUsername, setAlertUsername] = useState('');
-  const [alertEmail, setAlertEmail] = useState('');
-  const [alertPassword, setAlertPassword] = useState('');
   const [data, setData] = useState({
     Height: '',
     Weight: '',
@@ -141,15 +138,10 @@ const RegisterStep2 = ({navigation}) => {
                 onChangeText={val => HeightChange(val)}
               />
 
-              {data.check_TextUsername ? (
+              {data.check_TextHeight ? (
                 <Feather name="check-circle" size={20} color={color.yellow} />
               ) : null}
             </View>
-            {alertUsername != '' ? (
-              <View style={styles.TextInput}>
-                <Text>{alertUsername}</Text>
-              </View>
-            ) : null}
 
             {/* // Input Form for LastName */}
             <View style={styles.TextInput}>
@@ -166,15 +158,10 @@ const RegisterStep2 = ({navigation}) => {
                 onChangeText={val => WeightChange(val)}
               />
 
-              {data.check_TextUsername ? (
+              {data.check_TextWeight ? (
                 <Feather name="check-circle" size={20} color={color.yellow} />
               ) : null}
             </View>
-            {alertUsername != '' ? (
-              <View style={styles.TextInput}>
-                <Text>{alertUsername}</Text>
-              </View>
-            ) : null}
 
             {/* // Input Form for Job */}
             <View style={styles.TextInput}>
@@ -190,15 +177,10 @@ const RegisterStep2 = ({navigation}) => {
                 onChangeText={val => DiseaseHistoryChange(val)}
               />
 
-              {data.check_TextUsername ? (
+              {data.check_TextDiseaseHistory ? (
                 <Feather name="check-circle" size={20} color={color.yellow} />
               ) : null}
             </View>
-            {alertUsername != '' ? (
-              <View style={styles.TextInput}>
-                <Text>{alertUsername}</Text>
-              </View>
-            ) : null}
           </View>
         </View>
         <View style={styles.button}>
