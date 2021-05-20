@@ -8,30 +8,14 @@ import {
   Animated,
 } from 'react-native';
 import CarouselItem from './CarouselItem';
-import colors from '../../assets/colors';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 const {width, heigth} = Dimensions.get('window');
 const Carousel = ({data}) => {
   const scrollX = new Animated.Value(0);
   let position = Animated.divide(scrollX, width);
   const [dataList, setDataList] = useState(data);
-  useEffect(async () => {
-    let userToken;
-    userToken = null;
-    try {
-      userToken = await AsyncStorage.getItem('userToken');
-      if (userToken == null) {
-        setDataList(data);
-        infiniteScroll(dataList);
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  }, []);
-
   if (data && data.length) {
     return (
-      <View style={{}}>
+      <View>
         <FlatList
           data={data}
           keyExtractor={(item, index) => 'key' + index}
@@ -50,6 +34,7 @@ const Carousel = ({data}) => {
             {useNativeDriver: false},
           )}
         />
+
         <View style={styles.dotView}>
           {data.map((_, i) => {
             let opacity = position.interpolate({
@@ -64,7 +49,7 @@ const Carousel = ({data}) => {
                   opacity,
                   height: 10,
                   width: 10,
-                  backgroundColor: colors.yellow,
+                  backgroundColor: '#595959',
                   margin: 8,
                   borderRadius: 5,
                 }}
@@ -81,7 +66,7 @@ const Carousel = ({data}) => {
 };
 
 const styles = StyleSheet.create({
-  dotView: {flexDirection: 'row', justifyContent: 'center',marginTop:-60},
+  dotView: {flexDirection: 'row', justifyContent: 'center'},
 });
 
 export default Carousel;

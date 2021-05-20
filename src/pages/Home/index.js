@@ -14,11 +14,31 @@ import {
   InfoObat,
   RiwayatPenyakit,
   LayananKesehatan,
+  Teman,
+  SOS,
+  OrangTua,
+  Ambulance,
 } from '../../assets/images';
 import colors from '../../assets/colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {dummyData} from './Data';
+import Carousel from '../../components/CarouselHome/Carousel';
+
+import {Modal, Portal, Provider, Searchbar} from 'react-native-paper';
 const Home = (props, {navigation}) => {
+  const [searchQuery, setSearchQuery] = React.useState('');
   const onChangeSearch = query => setSearchQuery(query);
+  const [visible, setVisible] = React.useState(false);
+  const showModal = () => setVisible(true);
+  const hideModal = () => setVisible(false);
+  const containerStyle = {
+    width: 300,
+    height: 100,
+    backgroundColor: colors.white,
+    borderRadius: 10,
+    alignSelf: 'center',
+  };
+
   const LayananUtama = [
     {
       id: 1,
@@ -87,11 +107,13 @@ const Home = (props, {navigation}) => {
         <View style={styles.header}>
           {/* emergency call */}
           <View style={styles.headerItem}>
-            <Icon
-              name="phone"
-              style={{marginVertical: 10, color: colors.yellow}}
-              size={32}
-            />
+            <TouchableOpacity onPress={showModal}>
+              <Icon
+                name="phone"
+                style={{marginVertical: 10, color: colors.yellow}}
+                size={32}
+              />
+            </TouchableOpacity>
           </View>
           {/* Avatar */}
           <View style={styles.headerItem}>
@@ -126,33 +148,66 @@ const Home = (props, {navigation}) => {
         {/* nama pengguna */}
         <View style={{alignSelf: 'center', marginVertical: 10}}>
           <Text style={{fontFamily: 'Karla-Regular', fontSize: 22}}>
-            Hi,  {props.route.params.first_name}!
+            Hi, {props.route.params.first_name}!
           </Text>
         </View>
 
         {/* search bar */}
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={styles.searchBar}
           onPress={() => {
             navigation.navigate('Search');
-          }}></TouchableOpacity>
-
-        {/* slider */}
-        <View style={styles.slider}>
-          <Text
-            style={{
-              textAlign: 'center',
-              fontFamily: 'Karla-Regular',
-              fontSize: 20,
-            }}>
-            Coming Soon !
-          </Text>
+          }}></TouchableOpacity> */}
+        <View style={styles.searchBar}>
+          <Searchbar
+            style={{backgroundColor: 'white'}}
+            inputStyle={{color: 'black', fontSize: 12}}
+            value={searchQuery}
+            onChangeText={onChangeSearch}
+          />
         </View>
+        <Carousel data={dummyData} />
         <View>
           <Text style={styles.title}>Layanan Utama</Text>
         </View>
         <View style={styles.ItemLayananUtama}>{displayLayanan()}</View>
       </View>
+      <Provider>
+        <Portal>
+          <Modal
+            visible={visible}
+            onDismiss={hideModal}
+            contentContainerStyle={containerStyle}>
+            <View
+              style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
+              <TouchableOpacity
+                onPress={() => {
+                  alert('teman');
+                }}>
+                <Image style={styles.iconEmergency} source={Teman} />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  alert('teman');
+                }}>
+                <Image style={styles.iconEmergency} source={OrangTua} />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  alert('teman');
+                }}>
+                <Image style={styles.iconEmergency} source={Ambulance} />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  alert('teman');
+                }}>
+                <Image style={styles.iconEmergency} source={SOS} />
+              </TouchableOpacity>
+            </View>
+          </Modal>
+        </Portal>
+      </Provider>
     </ScrollView>
   );
 };
@@ -175,6 +230,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     backgroundColor: '#ECECEC',
     alignSelf: 'center',
+    marginVertical: 20,
     flex: 1,
   },
   header: {
@@ -192,7 +248,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: 150,
     width: 330,
-    backgroundColor: '#ECECEC',
+    backgroundColor: colors.soft_gray,
     borderRadius: 20,
     shadowColor: '#000',
     shadowOffset: {
@@ -212,5 +268,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     marginTop: 10,
     flexWrap: 'wrap',
+    height: 330,
+  },
+  iconEmergency: {
+    width: 50,
+    height: 50,
   },
 });

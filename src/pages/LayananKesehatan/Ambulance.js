@@ -7,13 +7,12 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Image,
+  Linking
 } from 'react-native';
 import colors from '../../assets/colors';
 import axios from 'react-native-axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import config from '../../../config';
-import BottomSheet from 'reanimated-bottom-sheet';
-import Animated from 'react-native-reanimated';
 const Ambulance = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setIsData] = useState([]);
@@ -23,7 +22,7 @@ const Ambulance = () => {
         <TouchableOpacity
           key={item.id}
           onPress={() => {
-            handleSnap(item);
+            Linking.openURL(`tel:${item.phone_number}`)
           }}>
           <View
             style={{
@@ -39,19 +38,23 @@ const Ambulance = () => {
             <Text
               style={{
                 fontFamily: 'Karla-Bold',
-                fontSize: 10,
+                fontSize: 14,
                 textAlign: 'center',
-                width: 100,
+                width: 120,
               }}>
               {item.name}
             </Text>
-            <Image
-              source={{uri: item.image}}
-              style={{width: 100, height: 100, resizeMode: 'contain'}}
-            />
-
-            <Text style={{fontFamily: 'Karla-Bold', fontSize: 10}}>
-              {item.price_range}
+            <Text
+              style={{
+                fontFamily: 'Karla-Bold',
+                fontSize: 12,
+                textAlign: 'center',
+                width: 100,
+              }}>
+              {item.location}
+            </Text>
+            <Text style={{fontFamily: 'Karla-Regular', fontSize: 12}}>
+              {item.phone_number}
             </Text>
           </View>
         </TouchableOpacity>

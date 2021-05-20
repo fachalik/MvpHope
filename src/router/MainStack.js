@@ -76,7 +76,7 @@ const ChatStackScreen = (props, {navigation}) => {
         })}
       />
       <ChatStack.Screen
-        name="Konsultasi Psikologi"
+        name="Konsultasi Psikolog"
         component={ChatPsikologScreen}
         options={({route}) => ({
           title: route.name,
