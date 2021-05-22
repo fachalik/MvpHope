@@ -26,20 +26,61 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const RegisterStep3 = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState({
+    firstName: '',
+    lastName: '',
     email: '',
     password: '',
     ConfirmPassword: '',
     check_TextEmail: false,
+    check_TextFirstName: false,
+    check_TextLastName: false,
     secureTextEntry: true,
     secureTextEntryConfirm: true,
     emailIsEmpty: false,
     passwordIsEmpty: false,
+    firstNameIsEmpty: false,
+    lastNameisEmpty: false,
     confirmPasswordIsEmpty: false,
     errorConfirmPassword: false,
     errorEmail: false,
   });
 
   const {SignUp} = useContext(AuthContext);
+
+  const firstNameChange = val => {
+    if (val.length != 0) {
+      setData({
+        ...data,
+        firstName: val,
+        check_TextFirstName: true,
+        firstNameIsEmpty: true,
+      });
+    } else {
+      setData({
+        ...data,
+        firstName: val,
+        check_TextFirstName: false,
+        firstNameIsEmpty: false,
+      });
+    }
+  };
+  const lasttNameChange = val => {
+    if (val.length != 0) {
+      setData({
+        ...data,
+        lastName: val,
+        check_TextLastName: true,
+        lastNameisEmpty: true,
+      });
+    } else {
+      setData({
+        ...data,
+        lastName: val,
+        check_TextLastName: false,
+        lastNameisEmpty: false,
+      });
+    }
+  };
 
   const textInputChangeEmail = val => {
     if (val.length != 0) {
@@ -110,7 +151,14 @@ const RegisterStep3 = ({navigation}) => {
     });
   };
 
-  const RegisterHandle = async (email, password, ConfirmPassword) => {
+  const RegisterHandle = async (
+    firstName,
+    lastName,
+    email,
+    password,
+    ConfirmPassword,
+  ) => {
+    console.log(firstName, lastName, email, password, ConfirmPassword);
     setIsLoading(true);
     //mergeItem to asyncstorage formstep1
     if (password != ConfirmPassword) {
@@ -134,13 +182,13 @@ const RegisterStep3 = ({navigation}) => {
             email: email,
             password: password,
             profile: {
-              first_name: parseJsonValue.FirstName,
-              last_name: parseJsonValue.LastName,
-              weight: parseJsonValue.weight,
-              height: parseJsonValue.height,
-              job: parseJsonValue.Job,
-              activities: parseJsonValue.DailyActivity,
-              disease_history: parseJsonValue.disease_history,
+              first_name: firstName,
+              last_name: lastName,
+              weight: 0,
+              height: 0,
+              job: '',
+              activities: '',
+              disease_history: '',
             },
           })
           .then(function (response) {
@@ -182,6 +230,41 @@ const RegisterStep3 = ({navigation}) => {
           <BackButton navigation={navigation} />
           <Text style={styles.title}>Informasi Umum</Text>
           <View style={styles.form}>
+            {/* // Input Form for FirstName */}
+            <View style={styles.TextInput}>
+              <Text st>Nama Depan</Text>
+            </View>
+            <View style={styles.ViewInput}>
+              <Icon name="user" size={20} color={color.yellow} />
+              <TextInput
+                style={styles.InputText}
+                placeholder="Mohon masukkan nama depan anda"
+                placeholderTextColor="grey"
+                autoCapitalize="none"
+                onChangeText={val => firstNameChange(val)}
+              />
+              {data.check_TextFirstName ? (
+                <Feather name="check-circle" size={20} color={color.yellow} />
+              ) : null}
+            </View>
+
+            {/* // Input Form for FirstName */}
+            <View style={styles.TextInput}>
+              <Text st>Nama Belakang</Text>
+            </View>
+            <View style={styles.ViewInput}>
+              <Icon name="user" size={20} color={color.yellow} />
+              <TextInput
+                style={styles.InputText}
+                placeholder="Mohon masukkan nama belakang anda"
+                placeholderTextColor="grey"
+                autoCapitalize="none"
+                onChangeText={val => lasttNameChange(val)}
+              />
+              {data.check_TextLastName ? (
+                <Feather name="check-circle" size={20} color={color.yellow} />
+              ) : null}
+            </View>
             {/* // Input Form for Email */}
             <View style={styles.TextInput}>
               <Text style={{fontFamily: 'Karla-Medium'}}>Email</Text>
@@ -283,7 +366,13 @@ const RegisterStep3 = ({navigation}) => {
                 : true
             }
             onPress={() => {
-              RegisterHandle(data.email, data.password, data.ConfirmPassword);
+              RegisterHandle(
+                data.firstName,
+                data.lastName,
+                data.email,
+                data.password,
+                data.ConfirmPassword,
+              );
             }}>
             <View
               style={

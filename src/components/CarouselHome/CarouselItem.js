@@ -1,12 +1,17 @@
 import React from 'react';
 import {View, StyleSheet, Text, Image, Dimensions} from 'react-native';
+import colors from '../../assets/colors';
 
 const {width, height} = Dimensions.get('window');
 
 const CarouselItem = ({item}) => {
   return (
     <View style={styles.cardView}>
+      <Text style={styles.itemTitle}>{item.title}</Text>
+      <View style={{flexDirection:'row',justifyContent:'center'}}>
+        <Image style={{width:80,height:80,alignSelf:'center'}} source={item.image}/>
         <Text style={styles.itemDescription}>{item.description}</Text>
+      </View>
     </View>
   );
 };
@@ -15,7 +20,7 @@ const styles = StyleSheet.create({
   cardView: {
     flex: 1,
     width: 330,
-    height: 150,
+    height: 170,
     backgroundColor: 'white',
     margin: 10,
     borderRadius: 10,
@@ -24,7 +29,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 3,
     elevation: 5,
-    justifyContent:'center'
+    justifyContent: 'center',
   },
   image: {
     width: width - 20,
@@ -32,7 +37,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   itemTitle: {
-    color: 'black',
+    color: colors.yellow,
+    textAlign: 'center',
     fontSize: 22,
     shadowColor: '#000',
     shadowOffset: {width: 0.8, height: 0.8},
@@ -43,7 +49,8 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   itemDescription: {
-    justifyContent: 'center',
+    width:220,
+    textAlign:'justify',
     padding: 10,
     color: 'black',
     fontSize: 12,

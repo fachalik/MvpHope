@@ -32,7 +32,7 @@ const OnboardingScreen = ({navigation}) => {
         <View style={styles.ViewButton}>
           <TouchableOpacity
             style={styles.buttonfooter}
-            onPress={() => navigation.navigate('RegisterStep1')}>
+            onPress={() => navigation.navigate('RegisterStep3')}>
             <View style={styles.textRegist}>
               <Text style={styles.buttonTextLogin}>DAFTAR</Text>
             </View>

@@ -21,6 +21,7 @@ import {
   SOS,
   OrangTua,
   Ambulance,
+  TelfonSOS
 } from '../../assets/images';
 import colors from '../../assets/colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -51,7 +52,7 @@ const Home = (props, {navigation}) => {
     {
       id: 1,
       request: 'Develop',
-      title: 'Riwayat Penyatkit',
+      title: 'Riwayat Penyakit',
       image: RiwayatPenyakit,
     },
     {
@@ -157,11 +158,12 @@ const Home = (props, {navigation}) => {
           {/* emergency call */}
           <View style={styles.headerItem}>
             <TouchableOpacity onPress={showModal}>
-              <Icon
+              <Image source={TelfonSOS} style={{marginVertical:10, width:22,height:40}}/>
+              {/* <Icon
                 name="phone"
                 style={{marginVertical: 10, color: colors.yellow}}
                 size={32}
-              />
+              /> */}
             </TouchableOpacity>
           </View>
           {/* Avatar */}
