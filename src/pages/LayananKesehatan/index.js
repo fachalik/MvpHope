@@ -6,6 +6,7 @@ import {
   View,
   TouchableOpacity,
   ActivityIndicator,
+  FlatList,
 } from 'react-native';
 import colors from '../../assets/colors';
 import RumahSakit from './RumahSakit';
@@ -22,18 +23,21 @@ const LayananKesehatan = () => {
     alamat: '',
     tentang: '',
     layanan: '',
-    layananpoliklinik: '',
+    layananpoliklinik: [],
   });
-
+  console.log(detail.layananpoliklinik);
+  detail.layananpoliklinik.map(item => {
+    console.log(item);
+  });
   const renderInner = () => (
     <View style={styles.panel}>
       <View style={{marginHorizontal: 30}}>
         <Text style={styles.bigTitle}>{detail.name}</Text>
         <Text style={styles.title}>No. Telpon</Text>
         <Text style={styles.contents}>{detail.notelp}</Text>
-        <Text style={styles.title}>alamat</Text>
+        <Text style={styles.title}>Alamat</Text>
         <Text style={styles.contents}>{detail.alamat}</Text>
-        <Text style={styles.title}>tentang</Text>
+        <Text style={styles.title}>Tentang</Text>
         <Text style={styles.contents}>{detail.tentang}</Text>
         {detail.layanan === undefined ? null : (
           <Text style={styles.title}>Layanan</Text>
@@ -45,7 +49,23 @@ const LayananKesehatan = () => {
           <Text style={styles.title}>Layanan Poliklink</Text>
         )}
         {detail.layananpoliklinik === undefined ? null : (
-          <Text style={styles.contents}>{detail.layananpoliklinik}</Text>
+          <FlatList
+            data={detail.layananpoliklinik}
+            renderItem={({item}) => (
+              <View style={styles.column}>
+                <View key={item} style={styles.row}>
+                  <View style={styles.bullet}>
+                    <Text>{'\u2022' + ' '}</Text>
+                  </View>
+                  <View style={styles.bulletText}>
+                    <Text>
+                      <Text style={styles.contents}>{item}</Text>
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            )}
+          />
         )}
       </View>
     </View>
@@ -200,5 +220,25 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: colors.gray,
     paddingTop: 20,
+  },
+  bullet: {
+    width: 10,
+  },
+  bulletText: {
+    flex: 1,
+  },
+  boldText: {
+    fontWeight: 'bold',
+  },
+  column: {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    width: 200,
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    flexWrap: 'wrap',
+    flex: 1,
   },
 });
