@@ -67,7 +67,7 @@ const RumahSakit = props => {
     setIsLoading(true);
     const userToken = await AsyncStorage.getItem('userToken');
     const RefreshToken = await AsyncStorage.getItem('RefreshToken');
-    await console.log(RefreshToken + ' refresh');
+    // await console.log(RefreshToken + ' refresh');
     await axios
       .post(config.API_URL + 'auth/login/refresh/', {
         refresh: RefreshToken,
@@ -87,7 +87,9 @@ const RumahSakit = props => {
       })
       .then(function (response) {
         // console.log(response.data);
-        setIsData(response.data);
+        response.data.map(item => {
+          setIsData(data => [...data, item]);
+        });
       })
       .catch(function (error) {
         console.log(error);
