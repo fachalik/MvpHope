@@ -14,7 +14,7 @@ import {
   DetailObat,
   Develop,
   EditProfile,
-  LayananKesehatan
+  LayananKesehatan,
 } from '../pages';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -42,10 +42,26 @@ const HomeStackScreen = (props, {navigation}) => {
         initialParams={props.route.params}
         options={{headerShown: false}}
       />
-      <HomeStack.Screen name="Info Obat" component={InfoObat} />
-      <HomeStack.Screen name="Detail Obat" component={DetailObat} />
-      <HomeStack.Screen name="Develop" component={Develop} />
-      <HomeStack.Screen name="Layanan Kesehatan" component={LayananKesehatan} />
+      <HomeStack.Screen
+        name="Info Obat"
+        component={InfoObat}
+        options={{headerShown: true, headerTitleAlign: 'center'}}
+      />
+      <HomeStack.Screen
+        name="Detail Obat"
+        component={DetailObat}
+        options={{headerShown: true, headerTitleAlign: 'center'}}
+      />
+      <HomeStack.Screen
+        name="Develop"
+        component={Develop}
+        options={{headerShown: true, headerTitleAlign: 'center'}}
+      />
+      <HomeStack.Screen
+        name="Layanan Kesehatan"
+        component={LayananKesehatan}
+        options={{headerShown: true, headerTitleAlign: 'center'}}
+      />
     </HomeStack.Navigator>
   );
 };
@@ -65,6 +81,7 @@ const ChatStackScreen = (props, {navigation}) => {
         options={({route}) => ({
           title: route.name,
           headerShown: true,
+          headerTitleAlign: 'center',
         })}
       />
       <ChatStack.Screen
@@ -73,6 +90,7 @@ const ChatStackScreen = (props, {navigation}) => {
         options={({route}) => ({
           title: route.name,
           headerShown: true,
+          headerTitleAlign: 'center',
         })}
       />
       <ChatStack.Screen
@@ -81,6 +99,7 @@ const ChatStackScreen = (props, {navigation}) => {
         options={({route}) => ({
           title: route.name,
           headerShown: true,
+          headerTitleAlign: 'center',
         })}
       />
     </ChatStack.Navigator>
@@ -98,7 +117,7 @@ const AccountStackScreen = (props, {navigation}) => {
       <AccountStack.Screen
         name="Edit Profile"
         component={EditProfile}
-        options={{headerShown: false}}
+        options={{headerShown: true, headerTitleAlign: 'center'}}
       />
     </AccountStack.Navigator>
   );

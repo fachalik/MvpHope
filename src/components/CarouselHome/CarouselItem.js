@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, Text, Image, Dimensions} from 'react-native';
 import colors from '../../assets/colors';
-
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 const {width, height} = Dimensions.get('window');
 
 const CarouselItem = ({item}) => {
@@ -9,7 +9,7 @@ const CarouselItem = ({item}) => {
     <View style={styles.cardView}>
       <Text style={styles.itemTitle}>{item.title}</Text>
       <View style={{flexDirection:'row',justifyContent:'center'}}>
-        <Image style={{width:80,height:80,alignSelf:'center'}} source={item.image}/>
+        <Image style={{width:80,height:80,alignSelf:'center'}} resizeMode='cover' source={item.image}/>
         <Text style={styles.itemDescription}>{item.description}</Text>
       </View>
     </View>
@@ -19,10 +19,10 @@ const CarouselItem = ({item}) => {
 const styles = StyleSheet.create({
   cardView: {
     flex: 1,
-    width: 330,
-    height: 170,
+    width: wp('80%'),
+    height: 150,
     backgroundColor: 'white',
-    margin: 10,
+    margin: wp('2.5%'),
     borderRadius: 10,
     shadowColor: '#000',
     shadowOffset: {width: 0.5, height: 0.5},
@@ -40,10 +40,6 @@ const styles = StyleSheet.create({
     color: colors.yellow,
     textAlign: 'center',
     fontSize: 22,
-    shadowColor: '#000',
-    shadowOffset: {width: 0.8, height: 0.8},
-    shadowOpacity: 1,
-    shadowRadius: 3,
     marginBottom: 5,
     fontWeight: 'bold',
     elevation: 5,
@@ -54,10 +50,7 @@ const styles = StyleSheet.create({
     padding: 10,
     color: 'black',
     fontSize: 12,
-    shadowColor: '#000',
-    shadowOffset: {width: 0.8, height: 0.8},
-    shadowOpacity: 1,
-    shadowRadius: 3,
+
     elevation: 5,
   },
 });

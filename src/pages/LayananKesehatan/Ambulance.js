@@ -13,6 +13,8 @@ import colors from '../../assets/colors';
 import axios from 'react-native-axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import config from '../../../config';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+
 const Ambulance = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setIsData] = useState([]);
@@ -26,8 +28,8 @@ const Ambulance = () => {
           }}>
           <View
             style={{
-              width: 160,
-              height: 160,
+              width: wp('40%'),
+              height: hp('20%'),
               justifyContent: 'space-evenly',
               alignItems: 'center',
               flexDirection: 'column',

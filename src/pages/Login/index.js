@@ -110,7 +110,7 @@ const Login = ({navigation}) => {
                 onChangeText={val => textInputChangeEmail(val)}
               />
 
-              {data.check_TextUsername ? (
+              {data.check_TextEmail ? (
                 <Feather name="check-circle" size={20} color={color.yellow} />
               ) : null}
             </View>
@@ -140,9 +140,7 @@ const Login = ({navigation}) => {
           </View>
 
           <TouchableOpacity
-            disabled={
-              data.emailIsEmpty && data.passwordIsEmpty ? false : true
-            }
+            disabled={data.emailIsEmpty && data.passwordIsEmpty ? false : true}
             onPress={() => {
               loginHandle(data.email, data.password);
             }}>
@@ -231,18 +229,20 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingVertical: 2,
   },
+  InputText: {
+    flex: 1,
+    alignItems: 'center',
+    width: 270,
+    height: 40,
+    paddingHorizontal: 10,
+    color: color.black,
+  },
   TextInput: {
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 10,
   },
-  InputText: {
-    flex: 1,
-    alignItems: 'center',
-    width: 270,
-    paddingHorizontal: 10,
-    color: color.black,
-  },
+
   buttonMasuk: {
     alignSelf: 'center',
     backgroundColor: color.yellow,

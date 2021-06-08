@@ -19,6 +19,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import {color} from 'react-native-reanimated';
+import {LogoTemp} from '../../assets';
 
 const Account = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -49,16 +50,26 @@ const Account = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.wrapper}>
+        <View style={{marginVertical:20, alignItems:'center'}}>
+            <LogoTemp/>
+        </View>
+        <View
+          style={{
+            borderBottomColor: '#dddddd',
+            borderBottomWidth: 1,
+          }}></View>
         <View style={styles.userInfoSection}>
           <View
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
+              marginVertical:20,
             }}>
             <View style={{flexDirection: 'row'}}>
               <Image source={Avatar} size={80} />
-              <View style={{marginLeft: 20}}>
-                <Title style={[styles.title, {}]}>
+              <View style={{marginLeft: 20, flexDirection: 'column'}}>
+                <Text style={{color: colors.gray_dark}}>Selamat Datang</Text>
+                <Title style={[styles.title]}>
                   {data.first_name === undefined && data.last_name === undefined
                     ? null
                     : data.first_name + ' ' + data.last_name}
@@ -66,6 +77,7 @@ const Account = ({navigation}) => {
               </View>
             </View>
             <TouchableOpacity
+              style={{justifyContent:'center'}}
               onPress={() => {
                 logOutHandle();
               }}>
@@ -81,13 +93,11 @@ const Account = ({navigation}) => {
         <View style={styles.menuWrapper}>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate('Edit Profile')
+              navigation.navigate('Edit Profile');
             }}>
             <View style={{marginTop: 10}}>
               <View style={styles.menu}>
-                <View style={styles.boxIcon}>
                   <Ionicons name="settings" style={styles.icon} size={24} />
-                </View>
                 <Text
                   style={{
                     flex: 0.8,
@@ -124,10 +134,9 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     marginHorizontal: 30,
-    marginVertical: 50,
+    marginVertical: 10,
   },
   userInfoSection: {
-    marginBottom: 25,
   },
   title: {
     fontSize: 24,
@@ -140,6 +149,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   menu: {
+    justifyContent:'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

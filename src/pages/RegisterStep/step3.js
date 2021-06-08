@@ -355,8 +355,7 @@ const RegisterStep3 = ({navigation}) => {
               </View>
             ) : null}
           </View>
-        </View>
-        <View style={styles.button}>
+          <View style={styles.button}>
           <TouchableOpacity
             disabled={
               data.passwordIsEmpty &&
@@ -389,6 +388,7 @@ const RegisterStep3 = ({navigation}) => {
               )}
             </View>
           </TouchableOpacity>
+        </View>
         </View>
       </ScrollView>
       {/* {isLoading ? <Loading loading={isLoading} /> : null} */}
@@ -447,7 +447,10 @@ const styles = StyleSheet.create({
   },
 
   InputText: {
+    flex: 1,
+    alignItems: 'center',
     width: 270,
+    height: 40,
     paddingHorizontal: 10,
     color: color.black,
   },

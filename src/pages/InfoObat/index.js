@@ -48,7 +48,7 @@ const InfoObat = ({route, navigation}) => {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.wrapper}>
-        <Text style={{fontFamily: 'Karla-Bold'}}>Cari Penyakitmu!</Text>
+        <Text style={{fontFamily: 'Karla-Bold'}}>Cari Keluhanmu!</Text>
         <View style={styles.itemlayanan}>
           <DisplayCategory />
         </View>

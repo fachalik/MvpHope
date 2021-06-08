@@ -9,7 +9,7 @@ import {
   ScrollView,
   TextInput,
   Dimensions,
-  Linking
+  Linking,
 } from 'react-native';
 import {
   Avatar,
@@ -21,14 +21,14 @@ import {
   SOS,
   OrangTua,
   Ambulance,
-  TelfonSOS
+  TelfonSOS,
 } from '../../assets/images';
 import colors from '../../assets/colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {dummyData} from './Data';
 import Carousel from '../../components/CarouselHome/Carousel';
 import {Modal, Portal, Provider, Searchbar} from 'react-native-paper';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 const Home = (props, {navigation}) => {
   const [searchQuery, setSearchQuery] = useState('');
   // const [noTeman, setNoTeman] = useState({
@@ -97,7 +97,7 @@ const Home = (props, {navigation}) => {
   //   try {
   //     nomerTeman = await AsyncStorage.getItem('nomerTeman');
   //     console.log(nomerTeman);
-  //     nomerTeman === null ? 
+  //     nomerTeman === null ?
   //     (
   //       setNoTeman({...noTeman, isEmpty: false})
   //     ) : (
@@ -158,7 +158,10 @@ const Home = (props, {navigation}) => {
           {/* emergency call */}
           <View style={styles.headerItem}>
             <TouchableOpacity onPress={showModal}>
-              <Image source={TelfonSOS} style={{marginVertical:10, width:22,height:40}}/>
+              <Image
+                source={TelfonSOS}
+                style={{marginVertical: 10, width: 22, height: 40}}
+              />
               {/* <Icon
                 name="phone"
                 style={{marginVertical: 10, color: colors.yellow}}
@@ -217,7 +220,9 @@ const Home = (props, {navigation}) => {
             onChangeText={onChangeSearch}
           />
         </View>
-        <Carousel data={dummyData} />
+        <View style={styles.CaroselHome}>
+          <Carousel data={dummyData} />
+        </View>
         <View>
           <Text style={styles.title}>Layanan Utama</Text>
         </View>
@@ -233,25 +238,25 @@ const Home = (props, {navigation}) => {
               style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
               <TouchableOpacity
                 onPress={() => {
-                  Linking.openURL(`tel:${'0811112323'}`)
+                  Linking.openURL(`tel:${'0811112323'}`);
                 }}>
                 <Image style={styles.iconEmergency} source={Teman} />
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
-                  Linking.openURL(`tel:${'08123332123'}`)
+                  Linking.openURL(`tel:${'08123332123'}`);
                 }}>
                 <Image style={styles.iconEmergency} source={OrangTua} />
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
-                  Linking.openURL(`tel:${'212'}`)
+                  Linking.openURL(`tel:${'212'}`);
                 }}>
                 <Image style={styles.iconEmergency} source={Ambulance} />
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
-                  Linking.openURL(`tel:${'020'}`)
+                  Linking.openURL(`tel:${'020'}`);
                 }}>
                 <Image style={styles.iconEmergency} source={SOS} />
               </TouchableOpacity>
@@ -320,12 +325,16 @@ const styles = StyleSheet.create({
   searchBar: {
     backgroundColor: 'black',
     height: 40,
-    width: 330,
+    width: wp('80%'),
     borderRadius: 15,
     backgroundColor: '#ECECEC',
     alignSelf: 'center',
     marginVertical: 20,
     flex: 1,
+  },
+  CaroselHome:{
+    flex:1,
+    alignSelf:'center',
   },
   header: {
     flex: 1,
@@ -341,7 +350,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     justifyContent: 'center',
     height: 150,
-    width: 330,
+    width: wp('80%'),
     backgroundColor: colors.soft_gray,
     borderRadius: 20,
     shadowColor: '#000',

@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
   ToastAndroid,
   Alert,
+  Platform,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {NavigationActions} from '@react-navigation/compat';
@@ -181,8 +182,10 @@ const Router = ({navigation}) => {
       dispatch({type: 'RETRIVE_TOKEN', token: userToken});
     }, 1000);
   }, []);
-  if (isSplash) {
-    return <Splash />;
+  if (Platform.OS === 'android') {
+    if (isSplash) {
+      return <Splash />;
+    }
   }
 
   return (

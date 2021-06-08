@@ -14,6 +14,7 @@ import config from '../../../config';
 import colors from '../../assets/colors';
 import BottomSheet from 'reanimated-bottom-sheet';
 import Animated from 'react-native-reanimated';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 const DetailObat = ({route, navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -122,8 +123,8 @@ const DetailObat = ({route, navigation}) => {
           }}>
           <View
             style={{
-              width: 160,
-              height: 160,
+              width: wp('40%'),
+              height: hp('20%'),
               justifyContent: 'space-evenly',
               alignItems: 'center',
               flexDirection: 'column',
@@ -142,7 +143,7 @@ const DetailObat = ({route, navigation}) => {
             </Text>
             <Image
               source={{uri: item.image}}
-              style={{width: 100, height: 100, resizeMode: 'contain'}}
+              style={{width: 100, height: 100, resizeMode: 'cover'}}
             />
 
             <Text style={{fontFamily: 'Karla-Bold', fontSize: 10}}>
@@ -192,10 +193,7 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: colors.gray,
-    shadowColor: '#333333',
-    shadowOffset: {width: -1, height: -3},
     shadowRadius: 2,
-    shadowOpacity: 0.4,
     paddingTop: 20,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
@@ -218,6 +216,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Karla-Regular',
     fontSize: 14,
     marginBottom: 10,
+    textAlign:'justify',
   },
   bigTitle: {
     fontFamily: 'Karla-Bold',

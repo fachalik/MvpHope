@@ -183,10 +183,7 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: colors.gray,
-    shadowColor: '#333333',
-    shadowOffset: {width: -1, height: -3},
-    shadowRadius: 2,
-    shadowOpacity: 0.4,
+
     paddingTop: 20,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
@@ -209,6 +206,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Karla-Regular',
     fontSize: 14,
     marginBottom: 10,
+    textAlign:'justify',
   },
   bigTitle: {
     fontFamily: 'Karla-Bold',
