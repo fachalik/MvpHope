@@ -79,7 +79,7 @@ const Login = ({navigation}) => {
   };
 
   const loginHandle = async (email, password) => {
-    setIsLoading(true);
+    await setIsLoading(true);
     console.log(email, password);
     await SignIn(email, password);
     await setIsLoading(false);
@@ -150,11 +150,7 @@ const Login = ({navigation}) => {
                   ? styles.buttonMasuk
                   : styles.buttonMasukDisable
               }>
-              {isLoading ? (
-                <ActivityIndicator color={'white'} size="large" />
-              ) : (
-                <Text style={styles.buttonTextMasukDisable}>MASUK</Text>
-              )}
+              <Text style={styles.buttonTextMasukDisable}>MASUK</Text>
             </View>
           </TouchableOpacity>
           <View style={styles.other}>
@@ -181,7 +177,7 @@ const Login = ({navigation}) => {
           </View>
         </View>
       </ScrollView>
-      {/* {isLoading ? <Loading loading={isLoading} /> : null} */}
+      {isLoading ? <Loading loading={isLoading} /> : null}
     </KeyboardAvoidingView>
   );
 };

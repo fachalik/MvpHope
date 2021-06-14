@@ -28,13 +28,16 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {dummyData} from './Data';
 import Carousel from '../../components/CarouselHome/Carousel';
 import {Modal, Portal, Provider, Searchbar} from 'react-native-paper';
-import AsyncStorage from '@react-native-async-storage/async-storage';import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-const Home = (props, {navigation}) => {
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+import axios from 'react-native-axios';
+import config from '../../../config';
+const Home = ({navigation}) => {
   const [searchQuery, setSearchQuery] = useState('');
-  // const [noTeman, setNoTeman] = useState({
-  //   nomer: '',
-  //   isEmpty: true,
-  // });
+  const [data, setData] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const onChangeSearch = query => setSearchQuery(query);
   const [visible, setVisible] = useState(false);
@@ -47,6 +50,21 @@ const Home = (props, {navigation}) => {
     borderRadius: 10,
     alignSelf: 'center',
   };
+  useEffect(() => {
+    navigation.addListener('focus', async () => {
+      try {
+        console.log('running');
+        const jsonValue = await AsyncStorage.getItem('UserProfile');
+        await setData(JSON.parse(jsonValue));
+        console.log(JSON.parse(jsonValue));
+        await setIsLoading(false);
+      } catch (e) {
+        //   error reading value
+        console.log(e);
+      }
+    });
+  }, [null]);
+  console.log(data);
 
   const LayananUtama = [
     {
@@ -121,7 +139,7 @@ const Home = (props, {navigation}) => {
         <TouchableOpacity
           key={item.id}
           onPress={() => {
-            props.navigation.navigate(item.request, {request: item.request});
+            navigation.navigate(item.request, {request: item.request});
             console.log(item.request);
           }}>
           <View
@@ -202,7 +220,7 @@ const Home = (props, {navigation}) => {
         {/* nama pengguna */}
         <View style={{alignSelf: 'center', marginVertical: 10}}>
           <Text style={{fontFamily: 'Karla-Regular', fontSize: 22}}>
-            Hi, {props.route.params.first_name}!
+            Hi, {data.first_name}!
           </Text>
         </View>
 
@@ -332,9 +350,9 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     flex: 1,
   },
-  CaroselHome:{
-    flex:1,
-    alignSelf:'center',
+  CaroselHome: {
+    flex: 1,
+    alignSelf: 'center',
   },
   header: {
     flex: 1,

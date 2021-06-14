@@ -1,13 +1,24 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  SafeAreaView,
+} from 'react-native';
 import colors from '../../../assets/colors';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import Akun from './Akun';
+import Biodata from './Biodata';
+import Loading from '../../../components/Loading';
 
-const EditProfile = () => {
+const EditProfile = props => {
   const [choice, setChoice] = useState(true);
+  const [isLoading, setIsloading] = useState(false);
   const On = () => {
     setChoice(false);
   };
@@ -15,8 +26,8 @@ const EditProfile = () => {
     setChoice(true);
   };
   return (
-    <View style={styles.container}>
-      <View style={styles.wrapper}>
+    <SafeAreaView style={styles.container}>
+      <ScrollView>
         <View style={styles.choice}>
           <TouchableOpacity
             onPress={() => {
@@ -43,9 +54,19 @@ const EditProfile = () => {
             </View>
           </TouchableOpacity>
         </View>
-        <View>{choice ? <Text>Akun</Text> : <Text>Biodata</Text>}</View>
-      </View>
-    </View>
+        <View>
+          {choice ? (
+            <Akun props={props.route} />
+          ) : (
+            <Biodata
+              props={props.route}
+              handleIsLoading={isLoading => setIsloading(isLoading)}
+            />
+          )}
+        </View>
+      </ScrollView>
+      {isLoading ? <Loading loading={isLoading} /> : null}
+    </SafeAreaView>
   );
 };
 
@@ -56,24 +77,21 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.white,
   },
-  wrapper: {
-    marginHorizontal: 30,
-  },
   choice: {
     flexDirection: 'row',
     justifyContent: 'center',
     marginTop: 20,
   },
   button: {
-    width: wp('40%'),
-    height: hp('7%'),
+    width: wp('42%'),
+    height: hp('6%'),
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: colors.yellow,
   },
   buttonOff: {
-    width: wp('40%'),
-    height: hp('7%'),
+    width: wp('42%'),
+    height: hp('6%'),
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: colors.gray,

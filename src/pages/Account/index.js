@@ -20,14 +20,21 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import {color} from 'react-native-reanimated';
 import {LogoTemp} from '../../assets';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 const Account = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState({});
   const {SignOut} = useContext(AuthContext);
+
+  console.log('isLoading' + isLoading);
   useEffect(() => {
-    setTimeout(async () => {
+    navigation.addListener('focus', async () => {
       try {
+        console.log('running');
         const jsonValue = await AsyncStorage.getItem('UserProfile');
         await setData(JSON.parse(jsonValue));
         console.log(JSON.parse(jsonValue));
@@ -36,22 +43,23 @@ const Account = ({navigation}) => {
         //   error reading value
         console.log(e);
       }
-    }, 1000);
+    });
   }, [null]);
-  console.log(data);
 
   const logOutHandle = async () => {
-    setIsLoading(true);
+    await setIsLoading(true);
+    await console.log('isloading true')
     await setTimeout(() => {
       SignOut();
     }, 2000);
+    await consolog.log('isloading false')
     await setIsLoading(false);
   };
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.wrapper}>
-        <View style={{marginVertical:20, alignItems:'center'}}>
-            <LogoTemp/>
+        <View style={{marginVertical: 20, alignItems: 'center'}}>
+          <LogoTemp />
         </View>
         <View
           style={{
@@ -63,7 +71,7 @@ const Account = ({navigation}) => {
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
-              marginVertical:20,
+              marginVertical: 20,
             }}>
             <View style={{flexDirection: 'row'}}>
               <Image source={Avatar} size={80} />
@@ -76,13 +84,6 @@ const Account = ({navigation}) => {
                 </Title>
               </View>
             </View>
-            <TouchableOpacity
-              style={{justifyContent:'center'}}
-              onPress={() => {
-                logOutHandle();
-              }}>
-              <Icon name="logout" style={styles.icon} size={24} />
-            </TouchableOpacity>
           </View>
         </View>
         <View
@@ -93,11 +94,11 @@ const Account = ({navigation}) => {
         <View style={styles.menuWrapper}>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate('Edit Profile');
+              navigation.navigate('Edit Profile', data);
             }}>
             <View style={{marginTop: 10}}>
               <View style={styles.menu}>
-                  <Ionicons name="settings" style={styles.icon} size={24} />
+                <Ionicons name="settings" style={styles.icon} size={24} />
                 <Text
                   style={{
                     flex: 0.8,
@@ -118,6 +119,17 @@ const Account = ({navigation}) => {
             </View>
           </TouchableOpacity>
         </View>
+        <View style={styles.buttonKeluar}>
+          <TouchableOpacity
+            style={{justifyContent: 'center'}}
+            onPress={() => {
+              logOutHandle();
+            }}>
+            <Text style={{fontWeight: 'bold', color: colors.yellow}}>
+              KELUAR
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
       {isLoading ? <Loading loading={isLoading} /> : null}
     </SafeAreaView>
@@ -130,14 +142,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.white,
-    marginTop: 10,
   },
   wrapper: {
     marginHorizontal: 30,
     marginVertical: 10,
   },
-  userInfoSection: {
-  },
+  userInfoSection: {},
   title: {
     fontSize: 24,
     fontWeight: 'bold',
@@ -149,7 +159,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   menu: {
-    justifyContent:'center',
+    justifyContent: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -168,6 +178,19 @@ const styles = StyleSheet.create({
     backgroundColor: colors.gray,
     borderRadius: 12,
     marginRight: 30,
+  },
+  buttonKeluar: {
+    alignSelf: 'center',
+    backgroundColor: colors.white,
+    borderWidth: 1,
+    borderColor: colors.yellow,
+    fontWeight: 'bold',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: wp('85%'),
+    height: hp('6%'),
+    borderRadius: 15,
+    marginVertical: 20,
   },
 });
 {

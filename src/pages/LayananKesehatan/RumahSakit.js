@@ -67,7 +67,7 @@ const RumahSakit = props => {
   };
   useEffect(async () => {
     setIsLoading(true);
-    const userToken = await AsyncStorage.getItem('userToken');
+    var userToken = await AsyncStorage.getItem('userToken');
     const RefreshToken = await AsyncStorage.getItem('RefreshToken');
     // await console.log(RefreshToken + ' refresh');
     await axios
