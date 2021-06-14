@@ -15,6 +15,26 @@ import CariDokter from './CariDokter.png';
 import LayananKesehatan from './LayananKesehatan.png';
 import RiwayatPenyakit from './RiwayatPenyakit.png';
 import InfoObat from './InfoObat.png';
+import Alergi from './alergi.png';
+import Ambulance from './Ambulance.png';
+import AsmaIcon from './asmaicon.png';
+import Demam from './Demam.png';
+import Diabetes from './diabetes.png';
+import Kolesterol from './kolestrol.png';
+import Flu from './Flu.png';
+import Hipertensi from './hipertensi.png';
+import Luka from './Luka.png';
+import MaagIcon from './maagicon.png';
+import MulutTenggorokan from './mulutTenggorakan.png';
+import Obat from './Obat.png';
+import OrangTua from './OrangTua.png';
+import SOS from './SOS.png';
+import TelfonSOS from './TelfonSOS.png';
+import Teman from './Teman.png';
+import TulangSendi from './TulangSendi.png';
+import VitaminSupplement from './VitaminSupplement.png';
+import Carousel2 from './Carrousel2.png';
+import Carousel3 from './Carrousel3.png';
 export {
   Avatar,
   SplashBackground,
@@ -33,4 +53,24 @@ export {
   LayananKesehatan,
   RiwayatPenyakit,
   InfoObat,
+  Alergi,
+  Ambulance,
+  AsmaIcon,
+  Demam,
+  Diabetes,
+  Kolesterol,
+  Flu,
+  Hipertensi,
+  Luka,
+  MaagIcon,
+  MulutTenggorokan,
+  Obat,
+  OrangTua,
+  SOS,
+  TelfonSOS,
+  Teman,
+  TulangSendi,
+  VitaminSupplement,
+  Carousel2,
+  Carousel3,
 };

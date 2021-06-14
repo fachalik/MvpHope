@@ -1,4 +1,4 @@
-import React, {useState, useContext, useEffect} from 'react';
+import React, {useState, useContext} from 'react';
 import {
   Button,
   StyleSheet,
@@ -16,6 +16,7 @@ import color from '../../assets/colors';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
 import LinearGradient from 'react-native-linear-gradient';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import BackButton from '../../components/BackButton';
 import {AuthContext} from '../../router/context';
 import Loading from '../../components/Loading';
@@ -25,159 +26,118 @@ import axios from 'react-native-axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const RegisterStep1 = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [alertUsername, setAlertUsername] = useState('');
-  const [alertEmail, setAlertEmail] = useState('');
-  const [alertPassword, setAlertPassword] = useState('');
   const [data, setData] = useState({
-    username: '',
-    email: '',
-    password: '',
-    ConfirmPassword: '',
-    check_TextUsername: false,
-    check_TextEmail: false,
-    secureTextEntry: true,
-    secureTextEntryConfirm: true,
-    usernameIsEmpty: false,
-    emailIsEmpty: false,
-    passwordIsEmpty: false,
-    confirmPasswordIsEmpty: false,
+    FirstName: '',
+    LastName: '',
+    Job: '',
+    DailyActivity: '',
+    check_TextFirstName: false,
+    check_TextLastName: false,
+    check_TextJob: false,
+    check_TextDailyActivity: false,
+    FirstNameIsEmpty: false,
+    LastNameIsEmpty: false,
+    JobIsEmpty: false,
+    DailyActivityIsEmpty: false,
   });
 
   const {SignUp} = useContext(AuthContext);
 
-  const textInputChange = val => {
+  const FirstNameChange = val => {
     if (val.length != 0) {
       setData({
         ...data,
-        username: val,
-        check_TextUsername: true,
-        usernameIsEmpty: true,
+        FirstName: val,
+        check_TextFirstName: true,
+        FirstNameIsEmpty: true,
       });
     } else {
       setData({
         ...data,
-        username: val,
-        check_TextUsername: false,
-        usernameIsEmpty: false,
+        FirstName: val,
+        check_TextFirstName: false,
+        FirstNameIsEmpty: false,
       });
     }
   };
 
-  const textInputChangeEmail = val => {
+  const LasttNameChange = val => {
     if (val.length != 0) {
-      var pattern = new RegExp(
-        /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i,
-      );
-      if (pattern.test(val)) {
-        setData({
-          ...data,
-          email: val,
-          check_TextEmail: true,
-          emailIsEmpty: true,
-        });
-      }
-    } else {
       setData({
         ...data,
-        email: val,
-        check_TextEmail: false,
-        emailIsEmpty: false,
-      });
-    }
-  };
-
-  const handlePassword = val => {
-    if (val.length > 7) {
-      setData({
-        ...data,
-        password: val,
-        passwordIsEmpty: true,
+        LastName: val,
+        check_TextLastName: true,
+        LastNameIsEmpty: true,
       });
     } else {
       setData({
         ...data,
-        password: val,
-        passwordIsEmpty: false,
+        LastName: val,
+        check_TextLastName: false,
+        LastNameIsEmpty: false,
       });
     }
   };
 
-  const handleConfirmPassword = val => {
-    if (val.length > 7) {
+  const JobChange = val => {
+    if (val.length != 0) {
       setData({
         ...data,
-        ConfirmPassword: val,
-        confirmPasswordIsEmpty: true,
+        Job: val,
+        check_TextJob: true,
+        JobIsEmpty: true,
       });
     } else {
       setData({
         ...data,
-        ConfirmPassword: val,
-        confirmPasswordIsEmpty: false,
+        Job: val,
+        check_TextJob: false,
+        JobIsEmpty: false,
       });
     }
   };
 
-  const updateSecureTextEntry = val => {
-    setData({
-      ...data,
-      secureTextEntry: !data.secureTextEntry,
-    });
+  const DailyActivityChange = val => {
+    if (val.length != 0) {
+      setData({
+        ...data,
+        DailyActivity: val,
+        check_TextDailyActivity: true,
+        DailyActivityIsEmpty: true,
+      });
+    } else {
+      setData({
+        ...data,
+        Job: val,
+        check_TextDailyActivity: false,
+        DailyActivityIsEmpty: false,
+      });
+    }
   };
 
-  const updateSecureTextEntryConfirm = val => {
-    setData({
-      ...data,
-      secureTextEntryConfirm: !data.secureTextEntryConfirm,
-    });
-  };
-
-  const RegisterHandle = (username, email, password, ConfirmPassword) => {
+  const RegisterHandle = async (FirstName, LastName, Job, DailyActivity) => {
     setIsLoading(true);
+    await setIsLoading(true);
     setTimeout(async () => {
       try {
         await AsyncStorage.setItem(
           'formStep1',
           JSON.stringify({
-            username: username,
-            email: email,
-            password: password,
-            ConfirmPassword: ConfirmPassword,
+            FirstName: FirstName,
+            LastName: LastName,
+            Job: Job,
+            DailyActivity: DailyActivity,
           }),
         );
+        const jsonValue = await AsyncStorage.getItem('formStep1');
+        await console.log(JSON.parse(jsonValue));
       } catch (e) {
         console.log(e);
       }
-      setIsLoading(false);
+      await setIsLoading(false);
       navigation.navigate('RegisterStep2');
     }, 1000);
-    // console.log(username, email, password, ConfirmPassword);
-    // await axios
-    //   .post(config.API_URL + 'auth/register/', {
-    //     username: username,
-    //     email: email,
-    //     password1: password,
-    //     password2: ConfirmPassword,
-    //   })
-    //   .then(function (response) {
-    //     console.log(response.data);
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error.response.data.username[0]);
-    //     console.log(error.response.data.email[0]);
-    //     console.log(error.response.data.password1);
-    //   });
-    // // await SignUp(username, email, password, ConfirmPassword);
-    // console.log(config.API_URL);
-
-    //GETDATA ASYNCRONUSSTORAGE
-    // try {
-    //   const jsonValue = await AsyncStorage.getItem('formStep1');
-    //   console.log(JSON.parse(jsonValue))
-    // } catch (e) {
-    // //   error reading value
-    //     console.log(e)
-    // }
+    // GETDATA ASYNCRONUSSTORAGEF
   };
   return (
     <KeyboardAvoidingView style={styles.container} behavior="height">
@@ -189,151 +149,119 @@ const RegisterStep1 = ({navigation}) => {
             Buat akun menggunakan email dan username, atau pilih salah satu opsi
             dibawah
           </Text>
+
           <View style={styles.form}>
-            {/* // Input Form for Username */}
+            {/* // Input Form for FirstName */}
             <View style={styles.TextInput}>
-              <Text st>Nama Pengguna</Text>
+              <Text st>Nama Depan</Text>
             </View>
             <View style={styles.ViewInput}>
               <Icon name="user" size={20} color={color.yellow} />
               <TextInput
                 style={styles.InputText}
-                placeholder="Mohon masukkan nama pengguna anda"
+                placeholder="Mohon masukkan nama depan anda"
                 placeholderTextColor="grey"
                 autoCapitalize="none"
-                onChangeText={val => textInputChange(val)}
+                onChangeText={val => FirstNameChange(val)}
               />
 
-              {data.check_TextUsername ? (
+              {data.check_TextFirstName ? (
                 <Feather name="check-circle" size={20} color={color.yellow} />
               ) : null}
             </View>
-            {alertUsername != '' ? (
-              <View style={styles.TextInput}>
-                <Text>{alertUsername}</Text>
-              </View>
-            ) : null}
 
-            {/* // Input Form for Email */}
+            {/* // Input Form for LastName */}
             <View style={styles.TextInput}>
-              <Text style={{fontFamily: 'Karla-Medium'}}>Email</Text>
+              <Text st>Nama Belakang</Text>
             </View>
             <View style={styles.ViewInput}>
-              <Icon name="mail" size={20} color={color.yellow} />
+              <Icon name="user" size={20} color={color.yellow} />
               <TextInput
                 style={styles.InputText}
-                placeholder="Mohon masukkan email anda"
-                keyboardType="email-address"
+                placeholder="Mohon masukkan nama belakang anda"
                 placeholderTextColor="grey"
                 autoCapitalize="none"
-                onChangeText={val => textInputChangeEmail(val)}
+                onChangeText={val => LasttNameChange(val)}
               />
 
-              {data.check_TextEmail ? (
+              {data.check_TextLastName ? (
                 <Feather name="check-circle" size={20} color={color.yellow} />
               ) : null}
             </View>
-            {alertEmail != '' ? (
-              <View style={styles.TextInput}>
-                <Text>{alertEmail}</Text>
-              </View>
-            ) : null}
-
-            {/* // Input Form for Password */}
+            {/* // Input Form for Job */}
             <View style={styles.TextInput}>
-              <Text style={{fontFamily: 'Karla-Medium'}}>Kata sandi</Text>
+              <Text st>Pekerjaan</Text>
             </View>
             <View style={styles.ViewInput}>
-              <Icon name="lock" size={20} color={color.yellow} />
-              <TextInput
-                secureTextEntry={data.secureTextEntry ? true : false}
-                style={styles.InputText}
-                placeholder="Mohon masukkan kata sandi anda"
-                autoCapitalize='none'
-                placeholderTextColor="grey"
-                onChangeText={val => handlePassword(val)}
+              <MaterialIcon
+                name="work-outline"
+                size={20}
+                color={color.yellow}
               />
-              <TouchableOpacity onPress={updateSecureTextEntry}>
-                {data.secureTextEntry ? (
-                  <Feather name="eye-off" size={20} color="grey" />
-                ) : (
-                  <Feather name="eye" size={20} color={color.yellow} />
-                )}
-              </TouchableOpacity>
-            </View>
-            <View style={styles.TextInput}>
-              <Text
-                style={{
-                  fontFamily: 'Karla-Regular',
-                  fontSize: 12,
-                  color: colors.gray_dark,
-                }}>
-                Minimal 8 Karakter dengan huruf besar dan angka
-              </Text>
-            </View>
-            {alertPassword != '' ? (
-              <View style={styles.TextInput}>
-                <Text>{alertPassword}</Text>
-              </View>
-            ) : null}
+              <TextInput
+                style={styles.InputText}
+                placeholder="Mohon masukkan pekerjaan anda"
+                placeholderTextColor="grey"
+                autoCapitalize="none"
+                onChangeText={val => JobChange(val)}
+              />
 
-            {/* // Input Form for ConfirmPassword */}
+              {data.check_TextJob ? (
+                <Feather name="check-circle" size={20} color={color.yellow} />
+              ) : null}
+            </View>
+
+            {/* // Input Form for DailyActivuty */}
             <View style={styles.TextInput}>
-              <Text style={{fontFamily: 'Karla-Medium'}}>
-                Konfirmasi kata sandi
-              </Text>
+              <Text st>Aktivitas Sehari-hari</Text>
             </View>
             <View style={styles.ViewInput}>
-              <Icon name="lock" size={20} color={color.yellow} />
+              <Icon name="calendar" size={20} color={color.yellow} />
               <TextInput
-                secureTextEntry={data.secureTextEntryConfirm ? true : false}
                 style={styles.InputText}
-                autoCapitalize='none'
-                placeholder="Mohon masukkan kata sandi anda"
+                placeholder="Mohon masukkan aktivitas harian anda"
                 placeholderTextColor="grey"
-                onChangeText={val => handleConfirmPassword(val)}
+                autoCapitalize="none"
+                onChangeText={val => DailyActivityChange(val)}
               />
-              <TouchableOpacity onPress={updateSecureTextEntryConfirm}>
-                {data.secureTextEntryConfirm ? (
-                  <Feather name="eye-off" size={20} color="grey" />
-                ) : (
-                  <Feather name="eye" size={20} color={color.yellow} />
-                )}
-              </TouchableOpacity>
+
+              {data.check_TextDailyActivity ? (
+                <Feather name="check-circle" size={20} color={color.yellow} />
+              ) : null}
             </View>
           </View>
         </View>
         <View style={styles.button}>
           <TouchableOpacity
             disabled={
-              data.usernameIsEmpty &&
-              data.passwordIsEmpty &&
-              data.emailIsEmpty &&
-              data.confirmPasswordIsEmpty
+              data.FirstNameIsEmpty &&
+              data.LastNameIsEmpty &&
+              data.JobIsEmpty &&
+              data.DailyActivityIsEmpty
                 ? false
                 : true
             }
             onPress={() => {
               RegisterHandle(
-                data.username,
-                data.email,
-                data.password,
-                data.ConfirmPassword,
+                data.FirstName,
+                data.LastName,
+                data.Job,
+                data.DailyActivity,
               );
             }}>
             <View
               style={
-                data.usernameIsEmpty &&
-                data.passwordIsEmpty &&
-                data.emailIsEmpty &&
-                data.confirmPasswordIsEmpty
+                data.FirstNameIsEmpty &&
+                data.LastNameIsEmpty &&
+                data.JobIsEmpty &&
+                data.DailyActivityIsEmpty
                   ? styles.buttonMasuk
                   : styles.buttonMasukDisable
               }>
               {isLoading ? (
-                <ActivityIndicator color={'white'} size='large' />
+                <ActivityIndicator color={'white'} size="large" />
               ) : (
-                <Text style={styles.buttonTextMasuk}>NEXT</Text>
+                <Text style={styles.buttonTextMasuk}>SELANJUTNYA</Text>
               )}
             </View>
           </TouchableOpacity>
@@ -371,9 +299,9 @@ const styles = StyleSheet.create({
   },
   text: {
     fontFamily: 'Roboto-Regular',
-
     marginTop: 5,
     opacity: 0.4,
+    width: 300,
   },
   form: {
     marginVertical: 10,

@@ -11,8 +11,6 @@ import CarouselItem from './CarouselItem';
 import colors from '../../assets/colors';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const {width, heigth} = Dimensions.get('window');
-let flatlist;
-
 const Carousel = ({data}) => {
   const scrollX = new Animated.Value(0);
   let position = Animated.divide(scrollX, width);

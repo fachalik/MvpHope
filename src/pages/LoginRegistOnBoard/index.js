@@ -13,7 +13,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {LogoTemp} from '../../assets';
 import Carousel from '../../components/Carousel/Carousel';
 import dummyData from '../../components/Carousel/DummyData';
-
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 const OnboardingScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
@@ -32,7 +32,7 @@ const OnboardingScreen = ({navigation}) => {
         <View style={styles.ViewButton}>
           <TouchableOpacity
             style={styles.buttonfooter}
-            onPress={() => navigation.navigate('RegisterStep1')}>
+            onPress={() => navigation.navigate('RegisterStep3')}>
             <View style={styles.textRegist}>
               <Text style={styles.buttonTextLogin}>DAFTAR</Text>
             </View>
@@ -51,24 +51,21 @@ const OnboardingScreen = ({navigation}) => {
 };
 
 export default OnboardingScreen;
-const windowHeight = Dimensions.get('screen').height;
-const windowWidth = Dimensions.get('screen').width;
-const width_button = windowWidth - 40;
 const radius_size = 15;
 const button_height = 50;
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex:1,
     backgroundColor: colors.white,
   },
   header: {
-    flex: 0.8,
+    height: hp('70%'),
     marginTop: 50,
     backgroundColor: colors.white,
-    height: 100,
+    // height: 100,
   },
   footer: {
-    flex: 0.2,
+    height: hp('20%'),
     backgroundColor: colors.white,
     alignItems: 'center',
     justifyContent: 'center',
@@ -116,9 +113,6 @@ const styles = StyleSheet.create({
     color: 'grey',
     marginTop: 5,
   },
-  ViewButton: {
-    marginTop: windowHeight * 0.02,
-  },
   buttonfooter: {
     paddingVertical: 5,
   },
@@ -127,7 +121,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     alignItems: 'center',
     justifyContent: 'center',
-    width: width_button,
+    width: wp('90%'),
     height: button_height,
     borderTopLeftRadius: radius_size,
     borderTopRightRadius: radius_size,
@@ -142,7 +136,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     alignItems: 'center',
     justifyContent: 'center',
-    width: width_button,
+    width: wp('90%'),
     height: button_height,
     borderTopLeftRadius: radius_size,
     borderTopRightRadius: radius_size,

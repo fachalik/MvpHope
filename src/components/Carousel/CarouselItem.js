@@ -1,15 +1,13 @@
 import React from 'react';
-import {StyleSheet, Text, View, Image, Dimensions} from 'react-native';
+import {StyleSheet, Text, View, Image} from 'react-native';
 import colors from '../../assets/colors';
-
-const {width, height} = Dimensions.get('window');
-
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 const CarouselItem = ({item}) => {
   return (
     <View style={styles.slide}>
       <Text style={styles.title}>{item.title}</Text>
-      <Image source={item.image} style={styles.image} />
-      <View style={{}}>
+      <Image source={item.image} resizeMode='cover' style={styles.image} />
+      <View style={styles.textView}>
         <Text style={styles.text}>{item.text}</Text>
       </View>
     </View>
@@ -18,22 +16,24 @@ const CarouselItem = ({item}) => {
 
 const styles = StyleSheet.create({
   slide: {
-    width: width,
-    height: height,
+    alignItems:'center',
+    width: wp('100%'),
+    height: hp('100%'),
     backgroundColor: 'white',
     marginVertical: 10,
   },
   image: {
-    width: width,
-    height: height / 2,
+    height:hp('30%'),
+    width:wp('80%'),
     borderRadius: 10,
-    marginVertical: 10,
+    marginVertical: hp('3%'),
     justifyContent:'center',
     alignSelf:'center',
   },
+
   title: {
     fontSize: 26,
-    fontFamily: 'Karla-Bold',
+    fontFamily: 'Karla-Bold', 
     color: colors.black,
     textAlign: 'center',
     padding: 10,
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'Karla-Regular',
     color: colors.black,
-    textAlign: 'center',
+    textAlign: 'justify',
     marginHorizontal:30,
   },
 });

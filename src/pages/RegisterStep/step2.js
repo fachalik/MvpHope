@@ -25,128 +25,85 @@ import axios from 'react-native-axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const RegisterStep2 = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [alertUsername, setAlertUsername] = useState('');
-  const [alertEmail, setAlertEmail] = useState('');
-  const [alertPassword, setAlertPassword] = useState('');
   const [data, setData] = useState({
-    FirstName: '',
-    LastName: '',
-    Job: '',
-    DailyActivity: '',
-    check_TextFirstName: false,
-    check_TextLastName: false,
-    check_TextJob: false,
-    check_TextDailyActivity: false,
-    FirstNameIsEmpty: false,
-    LastNameIsEmpty: false,
-    JobIsEmpty: false,
-    DailyActivityIsEmpty: false,
+    Height: '',
+    Weight: '',
+    DiseaseHistory: '',
+    check_TextHeight: false,
+    check_TextWeight: false,
+    check_TextDiseaseHistory: false,
+    HeightIsEmpty: false,
+    WeightIsEmpty: false,
+    DiseaseHistoryIsEmpty: false,
   });
 
   const {SignUp} = useContext(AuthContext);
 
-  const FirstNameChange = val => {
+  const HeightChange = val => {
     if (val.length != 0) {
       setData({
         ...data,
-        FirstName: val,
-        check_TextFirstName: true,
-        FirstNameIsEmpty: true,
+        Height: val,
+        check_TextHeight: true,
+        HeightIsEmpty: true,
       });
     } else {
       setData({
         ...data,
-        FirstName: val,
-        check_TextFirstName: false,
-        FirstNameIsEmpty: false,
+        Height: val,
+        check_TextHeight: false,
+        HeightIsEmpty: false,
       });
     }
   };
 
-  const LasttNameChange = val => {
+  const WeightChange = val => {
     if (val.length != 0) {
       setData({
         ...data,
-        LastName: val,
-        check_TextLastName: true,
-        LastNameIsEmpty: true,
+        Weight: val,
+        check_TextWeight: true,
+        WeightIsEmpty: true,
       });
     } else {
       setData({
         ...data,
-        LastName: val,
-        check_TextLastName: false,
-        LastNameIsEmpty: false,
+        Weight: val,
+        check_TextWeight: false,
+        WeightIsEmpty: false,
       });
     }
   };
 
-  const JobChange = val => {
+  const DiseaseHistoryChange = val => {
     if (val.length != 0) {
       setData({
         ...data,
-        Job: val,
-        check_TextJob: true,
-        JobIsEmpty: true,
+        DiseaseHistory: val,
+        check_TextDiseaseHistory: true,
+        DiseaseHistoryIsEmpty: true,
       });
     } else {
       setData({
         ...data,
-        Job: val,
-        check_TextJob: false,
-        JobIsEmpty: false,
+        DiseaseHistory: val,
+        check_TextDiseaseHistory: false,
+        DiseaseHistoryIsEmpty: false,
       });
     }
   };
 
-  const DailyActivityChange = val => {
-    if (val.length != 0) {
-      setData({
-        ...data,
-        DailyActivity: val,
-        check_TextDailyActivity: true,
-        DailyActivityIsEmpty: true,
-      });
-    } else {
-      setData({
-        ...data,
-        Job: val,
-        check_TextDailyActivity: false,
-        DailyActivityIsEmpty: false,
-      });
-    }
-  };
-
-  const RegisterHandle = async (FirstName, LastName, Job, DailyActivity) => {
+  const RegisterHandle = async (Height, Weight, DiseaseHistory) => {
     setIsLoading(true);
-    // console.log(username, email, password, ConfirmPassword);
-    // await axios
-    //   .post(config.API_URL + 'auth/register/', {
-    //     username: username,
-    //     email: email,
-    //     password1: password,
-    //     password2: ConfirmPassword,
-    //   })
-    //   .then(function (response) {
-    //     console.log(response.data);
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error.response.data.username[0]);
-    //     console.log(error.response.data.email[0]);
-    //     console.log(error.response.data.password1);
-    //   });
-    // // await SignUp(username, email, password, ConfirmPassword);
-    // console.log(config.API_URL);
     await setIsLoading(true);
     setTimeout(async () => {
       try {
         await AsyncStorage.mergeItem(
           'formStep1',
           JSON.stringify({
-            FirstName: FirstName,
-            LastName: LastName,
-            Job: Job,
-            DailyActivity: DailyActivity,
+            height: Height,
+            weight: Weight,
+            disease_history: DiseaseHistory,
           }),
         );
         const jsonValue = await AsyncStorage.getItem('formStep1');
@@ -155,7 +112,7 @@ const RegisterStep2 = ({navigation}) => {
         console.log(e);
       }
       await setIsLoading(false);
-        navigation.navigate('RegisterStep3');
+      navigation.navigate('RegisterStep3');
     }, 1000);
     // GETDATA ASYNCRONUSSTORAGEF
   };
@@ -164,136 +121,96 @@ const RegisterStep2 = ({navigation}) => {
       <ScrollView>
         <View style={styles.wrapper}>
           <BackButton navigation={navigation} />
-          <Text style={styles.title}>Informasi Umum</Text>
+          <Text style={styles.title}>Informasi Pribadi</Text>
           <View style={styles.form}>
             {/* // Input Form for FirstName */}
             <View style={styles.TextInput}>
-              <Text st>Nama Awal</Text>
+              <Text st>Tinggi Badan</Text>
             </View>
             <View style={styles.ViewInput}>
               <Icon name="user" size={20} color={color.yellow} />
               <TextInput
                 style={styles.InputText}
-                placeholder="Mohon masukkan nama Awal anda"
+                placeholder="Mohon masukkan tinggi badan anda"
+                keyboardType="decimal-pad"
                 placeholderTextColor="grey"
                 autoCapitalize="none"
-                onChangeText={val => FirstNameChange(val)}
+                onChangeText={val => HeightChange(val)}
               />
 
-              {data.check_TextUsername ? (
+              {data.check_TextHeight ? (
                 <Feather name="check-circle" size={20} color={color.yellow} />
               ) : null}
             </View>
-            {alertUsername != '' ? (
-              <View style={styles.TextInput}>
-                <Text>{alertUsername}</Text>
-              </View>
-            ) : null}
 
             {/* // Input Form for LastName */}
             <View style={styles.TextInput}>
-              <Text st>Nama Akhir</Text>
+              <Text st>Berat Badan</Text>
             </View>
             <View style={styles.ViewInput}>
               <Icon name="user" size={20} color={color.yellow} />
               <TextInput
                 style={styles.InputText}
-                placeholder="Mohon masukkan nama Akhir anda"
+                placeholder="Mohon masukkan berat badan anda"
+                keyboardType="decimal-pad"
                 placeholderTextColor="grey"
                 autoCapitalize="none"
-                onChangeText={val => LasttNameChange(val)}
+                onChangeText={val => WeightChange(val)}
               />
 
-              {data.check_TextUsername ? (
+              {data.check_TextWeight ? (
                 <Feather name="check-circle" size={20} color={color.yellow} />
               ) : null}
             </View>
-            {alertUsername != '' ? (
-              <View style={styles.TextInput}>
-                <Text>{alertUsername}</Text>
-              </View>
-            ) : null}
 
             {/* // Input Form for Job */}
             <View style={styles.TextInput}>
-              <Text st>Pekerjaan</Text>
+              <Text st>Riwayat Penyakit</Text>
             </View>
             <View style={styles.ViewInput}>
               <Icon name="user" size={20} color={color.yellow} />
               <TextInput
                 style={styles.InputText}
-                placeholder="Mohon masukkan pekerjaan anda"
+                placeholder="Mohon masukkan riwayat penyakit anda"
                 placeholderTextColor="grey"
                 autoCapitalize="none"
-                onChangeText={val => JobChange(val)}
+                onChangeText={val => DiseaseHistoryChange(val)}
               />
 
-              {data.check_TextUsername ? (
+              {data.check_TextDiseaseHistory ? (
                 <Feather name="check-circle" size={20} color={color.yellow} />
               ) : null}
             </View>
-            {alertUsername != '' ? (
-              <View style={styles.TextInput}>
-                <Text>{alertUsername}</Text>
-              </View>
-            ) : null}
-
-            {/* // Input Form for DailyActivuty */}
-            <View style={styles.TextInput}>
-              <Text st>Aktivitas Sehari-hariß</Text>
-            </View>
-            <View style={styles.ViewInput}>
-              <Icon name="user" size={20} color={color.yellow} />
-              <TextInput
-                style={styles.InputText}
-                placeholder="Mohon masukkan aktivitas harian anda"
-                placeholderTextColor="grey"
-                autoCapitalize="none"
-                onChangeText={val => DailyActivityChange(val)}
-              />
-
-              {data.check_TextUsername ? (
-                <Feather name="check-circle" size={20} color={color.yellow} />
-              ) : null}
-            </View>
-            {alertUsername != '' ? (
-              <View style={styles.TextInput}>
-                <Text>{alertUsername}</Text>
-              </View>
-            ) : null}
           </View>
         </View>
         <View style={styles.button}>
           <TouchableOpacity
             disabled={
-              data.FirstNameIsEmpty &&
-              data.LastNameIsEmpty &&
-              data.JobIsEmpty &&
-              data.DailyActivityIsEmpty
+              data.HeightIsEmpty &&
+              data.WeightIsEmpty &&
+              data.DiseaseHistoryIsEmpty 
                 ? false
                 : true
             }
             onPress={() => {
               RegisterHandle(
-                data.FirstName,
-                data.LastName,
-                data.Job,
-                data.DailyActivity,
+                data.Height,
+                data.Weight,
+                data.DiseaseHistory,
               );
             }}>
             <View
               style={
-                data.FirstNameIsEmpty &&
-                data.LastNameIsEmpty &&
-                data.JobIsEmpty &&
-                data.DailyActivityIsEmpty
+                data.HeightIsEmpty &&
+                data.WeightIsEmpty &&
+                data.DiseaseHistoryIsEmpty
                   ? styles.buttonMasuk
                   : styles.buttonMasukDisable
               }>
               {isLoading ? (
                 <ActivityIndicator color={'white'} size="large" />
               ) : (
-                <Text style={styles.buttonTextMasuk}>NEXT</Text>
+                <Text style={styles.buttonTextMasuk}>SELANJUTNYA</Text>
               )}
             </View>
           </TouchableOpacity>

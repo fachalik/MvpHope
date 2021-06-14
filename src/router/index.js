@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
   ToastAndroid,
   Alert,
+  Platform,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {NavigationActions} from '@react-navigation/compat';
@@ -22,9 +23,21 @@ import colors from '../assets/colors';
 import {RegistComplete} from '../pages';
 const Router = ({navigation}) => {
   const [isSplash, setIsSplash] = useState(true);
-
+  const [data, setData] = useState({
+    user: {
+      email: '',
+      date_joined: '',
+    },
+    first_name: '',
+    last_name: '',
+    weight: '',
+    height: '',
+    job: '',
+    activities: '',
+    disease_history: '',
+  });
   const intialLoginState = {
-    userName: null,
+    email: null,
     userToken: null,
   };
 
@@ -45,7 +58,6 @@ const Router = ({navigation}) => {
         return {
           ...prevState,
           userName: action.id,
-          userToken: action.token,
         };
       case 'LOGOUT':
         return {
@@ -61,84 +73,63 @@ const Router = ({navigation}) => {
     intialLoginState,
   );
   const authContext = React.useMemo(() => ({
-    SignIn: async (userName, password) => {
+    SignIn: async (email, password) => {
       let userToken;
+      let RefreshToken;
       userToken = null;
-      await axios
-        .post(config.API_URL + 'auth/login/', {
-          username: userName,
-          password: password,
-        })
-        .then(function (response) {
-          console.log(response.data);
-          userToken = response.data.key;
-          AsyncStorage.setItem('userToken', userToken);
-          AsyncStorage.setItem('userName', userName);
-          console.log(userToken);
-        })
-        .catch(function (error) {
-          ToastAndroid.show(
-            'Username dan Password yang anda masukkan tidak terdaftar',
-            ToastAndroid.LONG,
-          );
-        });
-      dispatch({type: 'LOGIN', id: userName, token: userToken});
+      (RefreshToken = null),
+        await axios
+          .post(config.API_URL + 'auth/login/', {
+            email: email,
+            password: password,
+          })
+          .then(function (response) {
+            console.log(response.data);
+            userToken = response.data.access;
+            RefreshToken = response.data.refresh;
+            AsyncStorage.setItem('RefreshToken', RefreshToken);
+            AsyncStorage.setItem('userToken', userToken);
+            console.log(RefreshToken + 'refresh');
+          })
+          .catch(function (error) {
+            ToastAndroid.show(
+              'Email dan Password yang anda masukkan tidak terdaftar',
+              ToastAndroid.LONG,
+            );
+          });
+      if (userToken) {
+        await axios
+          .get(config.API_URL + 'profile/me/', {
+            headers: {Authorization: 'Bearer ' + userToken},
+          })
+          .then(function (response) {
+            console.log(response.data);
+            const getData = response.data;
+            AsyncStorage.setItem('UserProfile', JSON.stringify(response.data));
+            setData({
+              ...data,
+              user: {
+                email: getData.user.email,
+                date_joined: getData.user.date_joined,
+              },
+              first_name: getData.first_name,
+              last_name: getData.last_name,
+              weight: getData.weight,
+              height: getData.height,
+              job: getData.job,
+              activities: getData.activities,
+              disease_history: getData.disease_history,
+            });
+            console.log('userProfile berhasil disimpan');
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
+      dispatch({type: 'LOGIN', id: email, token: userToken});
     },
-    SignUp: async (userName, email, password, Confirmpassword) => {
-      // if (password == Confirmpassword) {
-      //   await axios
-      //     .post(config.API_URL + 'auth/register/', {
-      //       username: userName,
-      //       email: email,
-      //       password1: password,
-      //       password2: Confirmpassword,
-      //     })
-      //     .then(function (response) {
-      //       console.log(response.data);
-      //       ToastAndroid.show(
-      //         'Registrasi Berhasil, silahkan menuju ke menu Masuk',
-      //         ToastAndroid.LONG,
-      //       );
-      //     })
-      //     .catch(function (error) {
-      //       console.log(error.response.data.password1);
-      //       if (error.response.data.username) {
-      //         console.log(error.response.data.username);
-      //         ToastAndroid.show(
-      //           error.response.data.username[0],
-      //           ToastAndroid.LONG,
-      //         );
-      //       } else {
-      //         console.log('username not error');
-      //       }
-      //       if (error.response.data.email) {
-      //         ToastAndroid.show(
-      //           error.response.data.email[0],
-      //           ToastAndroid.LONG,
-      //         );
-      //         console.log(error.response.data.email);
-      //       } else {
-      //         console.log('email not error');
-      //       }
-      //       if (error.response.data.password1) {
-      //         let pass =
-      //           error.response.data.password1[0] +
-      //           ' ' +
-      //           error.response.data.password1[1];
-      //         ToastAndroid.show(pass, ToastAndroid.LONG);
-      //         console.log(pass);
-      //       } else {
-      //         console.log('password not error');
-      //       }
-      //     });
-      // } else {
-      //   ToastAndroid.show(
-      //     'Kata sandi dan Konfirmasi kata sandi tidak cocok',
-      //     ToastAndroid.LONG,
-      //   );
-      // }
-
-      dispatch({type: 'REGIST', id: userName, token: userToken});
+    SignUp: async (email, password, confirmSuccess) => {
+      await dispatch({type: 'REGIST', id: email});
     },
     SignOut: async () => {
       try {
@@ -168,6 +159,22 @@ const Router = ({navigation}) => {
       userToken = null;
       try {
         userToken = await AsyncStorage.getItem('userToken');
+        let profile = await AsyncStorage.getItem('UserProfile');
+        let parseProfile = JSON.parse(profile);
+        setData({
+          ...data,
+          user: {
+            email: parseProfile.user.email,
+            date_joined: parseProfile.user.date_joined,
+          },
+          first_name: parseProfile.first_name,
+          last_name: parseProfile.last_name,
+          weight: parseProfile.weight,
+          height: parseProfile.height,
+          job: parseProfile.job,
+          activities: parseProfile.activities,
+          disease_history: parseProfile.disease_history,
+        });
         console.log(userToken);
       } catch (e) {
         console.log(e);
@@ -175,15 +182,17 @@ const Router = ({navigation}) => {
       dispatch({type: 'RETRIVE_TOKEN', token: userToken});
     }, 1000);
   }, []);
-  if (isSplash) {
-    return <Splash />;
+  if (Platform.OS === 'android') {
+    if (isSplash) {
+      return <Splash />;
+    }
   }
 
   return (
     <AuthContext.Provider value={authContext}>
       <NavigationContainer>
         {loginState.userToken !== null || loginState == undefined ? (
-          <MainStack />
+          <MainStack data={data} />
         ) : (
           <AuthStack />
         )}

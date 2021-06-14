@@ -1,11 +1,16 @@
 import React from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import color from '../../assets/colors';
 
 const BackButton = ({navigation}) => {
-  const GoBack = () => {
-      navigation.pop();
+  const GoBack = async () => {
+    const value = await AsyncStorage.getItem('RegistComplete');
+    value === 'true'
+      ? navigation.navigate('LoginRegistOnBoard')
+      : navigation.pop();
+    await AsyncStorage.removeItem('RegistComplete')
   };
   return (
     <TouchableOpacity onPress={() => GoBack()}>

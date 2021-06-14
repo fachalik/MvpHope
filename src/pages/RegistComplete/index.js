@@ -15,6 +15,14 @@ const RegistComplete = ({navigation}) => {
     <View style={styles.container}>
       <Image source={RegistCompleteImage} style={styles.image} />
       <Text style={styles.text}>Selamat kamu telah berhasil membuat akun</Text>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate('Login');
+        }}>
+        <View style={styles.buttonMasuk}>
+          <Text style={styles.buttonTextMasuk}>LOGIN</Text>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -44,4 +52,24 @@ const styles = StyleSheet.create({
     fontSize: 24,
     textAlign: 'center',
   },
+  buttonMasuk: {
+    marginTop:10,
+    alignSelf: 'center',
+    backgroundColor: colors.yellow,
+    fontWeight: 'bold',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: width_button,
+    height: button_height,
+    borderTopLeftRadius: radius_size,
+    borderTopRightRadius: radius_size,
+    borderBottomLeftRadius: radius_size,
+    borderBottomRightRadius: radius_size,
+  },
+  buttonTextMasuk: {
+    fontSize: 16,
+    fontFamily: 'Roboto-Bold',
+    color: colors.white,
+  },
+
 });

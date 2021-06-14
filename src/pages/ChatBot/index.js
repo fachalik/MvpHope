@@ -13,7 +13,7 @@ import {logo2, Option1, Option2, Option3} from '../../assets';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {color} from 'react-native-reanimated';
 import {ConsultationImage} from '../../assets/images';
-import {Header} from 'react-native/Libraries/NewAppScreen';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 const {width, height} = Dimensions.get('window');
 const ChatBot = ({navigation}) => {
   return (
@@ -22,7 +22,7 @@ const ChatBot = ({navigation}) => {
       <View style={styles.wrapper}>
         <View style={styles.header}>
           <Text style={styles.Title}>Konsultasi</Text>
-          <Image source={ConsultationImage} style={styles.image} />
+          <Image source={ConsultationImage} resizeMode='cover' style={styles.image} />
         </View>
         <View style={styles.footer}>
           <Text style={styles.Text}>
@@ -45,6 +45,14 @@ const ChatBot = ({navigation}) => {
                 <Text style={styles.BoxText}>Chat Dokter</Text>
               </View>
             </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('Konsultasi Psikolog');
+              }}>
+              <View style={styles.Box}>
+                <Text style={styles.BoxText}>Chat Psikolog</Text>
+              </View>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -64,6 +72,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
   },
   header: {
+    height:hp('100%'),
     flex: 0.5,
     marginTop: 50,
   },
@@ -92,8 +101,8 @@ const styles = StyleSheet.create({
     color: colors.gray_dark,
   },
   image: {
-    width: width,
-    height: height / 2.5,
+    width: wp('80%'),
+    height: hp('30%'),
     borderRadius: 10,
     marginVertical: 10,
     justifyContent: 'center',

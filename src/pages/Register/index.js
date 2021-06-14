@@ -361,7 +361,7 @@ const styles = StyleSheet.create({
   },
 
   InputText: {
-    width: 270,
+    width: 210,
     paddingHorizontal: 10,
     color: color.black,
   },

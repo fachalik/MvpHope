@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import color from '../../assets/colors';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -22,29 +23,34 @@ const Login = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = React.useState('');
   const [data, setData] = useState({
-    username: '',
+    email: '',
     password: '',
     ConfirmPassword: '',
-    check_TextUsername: false,
+    check_TextEmail: false,
     secureTextEntry: true,
-    usernameIsEmpty: false,
+    emailIsEmpty: false,
     passwordIsEmpty: false,
   });
   const {SignIn} = React.useContext(AuthContext);
-  const textInputChange = val => {
+  const textInputChangeEmail = val => {
     if (val.length != 0) {
-      setData({
-        ...data,
-        username: val,
-        usernameIsEmpty: true,
-        check_TextUsername: true,
-      });
+      var pattern = new RegExp(
+        /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i,
+      );
+      if (pattern.test(val)) {
+        setData({
+          ...data,
+          email: val,
+          check_TextEmail: true,
+          emailIsEmpty: true,
+        });
+      }
     } else {
       setData({
         ...data,
-        username: val,
-        usernameIsEmpty: false,
-        check_TextUsername: false,
+        email: val,
+        check_TextEmail: false,
+        emailIsEmpty: false,
       });
     }
   };
@@ -72,11 +78,11 @@ const Login = ({navigation}) => {
     });
   };
 
-  const loginHandle = async (username, password, ConfirmPassword) => {
-    setIsLoading(true);
-    console.log(username, password, ConfirmPassword);
-    await SignIn(username, password, ConfirmPassword);
-    setIsLoading(false);
+  const loginHandle = async (email, password) => {
+    await setIsLoading(true);
+    console.log(email, password);
+    await SignIn(email, password);
+    await setIsLoading(false);
   };
 
   return (
@@ -84,7 +90,7 @@ const Login = ({navigation}) => {
       <ScrollView>
         <View style={styles.wrapper}>
           <BackButton navigation={navigation} />
-          <Text style={styles.title}>Selamat Datang!</Text>
+          <Text style={styles.title}>Selamat Datang</Text>
           <Text style={styles.text}>
             Masuk dengan menggunakan e-mail atau salah satu opsi dibawah ini
           </Text>
@@ -94,16 +100,17 @@ const Login = ({navigation}) => {
               <Text style={{fontFamily: 'Karla-Medium'}}>Email</Text>
             </View>
             <View style={styles.ViewInput}>
-              <Icon name="user" size={20} color={color.yellow} />
+              <Icon name="mail" size={20} color={color.yellow} />
               <TextInput
                 style={styles.InputText}
                 placeholder="Mohon masukkan e-mail anda"
                 placeholderTextColor="grey"
+                keyboardType="email-address"
                 autoCapitalize="none"
-                onChangeText={val => textInputChange(val)}
+                onChangeText={val => textInputChangeEmail(val)}
               />
 
-              {data.check_TextUsername ? (
+              {data.check_TextEmail ? (
                 <Feather name="check-circle" size={20} color={color.yellow} />
               ) : null}
             </View>
@@ -119,7 +126,7 @@ const Login = ({navigation}) => {
                 style={styles.InputText}
                 placeholder="Mohon masukkan kata sandi anda"
                 placeholderTextColor="grey"
-                autoCapitalize='none'
+                autoCapitalize="none"
                 onChangeText={val => handlePassword(val)}
               />
               <TouchableOpacity onPress={updateSecureTextEntry}>
@@ -133,40 +140,41 @@ const Login = ({navigation}) => {
           </View>
 
           <TouchableOpacity
-            disabled={
-              data.usernameIsEmpty && data.passwordIsEmpty ? false : true
-            }
+            disabled={data.emailIsEmpty && data.passwordIsEmpty ? false : true}
             onPress={() => {
-              loginHandle(data.username, data.password, data.ConfirmPassword);
+              loginHandle(data.email, data.password);
             }}>
             <View
               style={
-                data.usernameIsEmpty && data.passwordIsEmpty
+                data.emailIsEmpty && data.passwordIsEmpty
                   ? styles.buttonMasuk
                   : styles.buttonMasukDisable
               }>
               <Text style={styles.buttonTextMasukDisable}>MASUK</Text>
             </View>
           </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => navigation.navigate('ForgetPassword')}>
-            <Text style={{alignSelf: 'center', marginVertical: 10}}>
-              Lupa Password?
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-            <Text
-              style={{
-                alignSelf: 'center',
-                marginVertical: 5,
-                fontWeight: 'bold',
-                marginVertical: 5,
-              }}>
-              Belum Punya Akun?{' '}
-              <Text style={{color: color.yellow}}>Daftar</Text>
-            </Text>
-          </TouchableOpacity>
+          <View style={styles.other}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('ForgetPassword')}>
+              <Text
+                style={{
+                  fontWeight: '800',
+                  fontWeight: 'bold',
+                }}>
+                Lupa Password?
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('RegisterStep1')}>
+              <Text
+                style={{
+                  fontWeight: 'bold',
+                }}>
+                Belum Punya Akun?{' '}
+                <Text style={{color: color.yellow}}>Daftar</Text>
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
       {isLoading ? <Loading loading={isLoading} /> : null}
@@ -197,11 +205,10 @@ const styles = StyleSheet.create({
     marginTop: 30,
     fontFamily: 'Roboto-Bold',
     fontSize: 32,
-    alignSelf: 'center',
   },
   text: {
+    width: 250,
     fontFamily: 'Roboto-Regular',
-    textAlign: 'center',
     marginTop: 5,
     opacity: 0.4,
   },
@@ -218,18 +225,20 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingVertical: 2,
   },
+  InputText: {
+    flex: 1,
+    alignItems: 'center',
+    width: 270,
+    height: 40,
+    paddingHorizontal: 10,
+    color: color.black,
+  },
   TextInput: {
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 10,
   },
-  InputText: {
-    flex: 1,
-    alignItems: 'center',
-    width: 270,
-    paddingHorizontal: 10,
-    color: color.black,
-  },
+
   buttonMasuk: {
     alignSelf: 'center',
     backgroundColor: color.yellow,
@@ -265,5 +274,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'Roboto-Bold',
     color: color.white,
+  },
+  other: {
+    marginVertical: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });

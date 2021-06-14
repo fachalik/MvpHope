@@ -5,8 +5,6 @@ import {
   LoginOrRegist,
   LoginRegistOnBoard,
   Login,
-  RegisterStep1,
-  RegisterStep2,
   RegisterStep3,
   ForgetPassword,
   RegistComplete,
@@ -26,18 +24,13 @@ const AuthStack = ({navigation}) => {
         options={{headerShown: false}}
       />
       <Stack.Screen
-        name="RegisterStep1"
-        component={RegisterStep1}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="RegisterStep2"
-        component={RegisterStep2}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
         name="RegisterStep3"
         component={RegisterStep3}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="RegistComplete"
+        component={RegistComplete}
         options={{headerShown: false}}
       />
       <Stack.Screen
