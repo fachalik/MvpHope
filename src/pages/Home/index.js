@@ -35,7 +35,9 @@ import {
 } from 'react-native-responsive-screen';
 import axios from 'react-native-axios';
 import config from '../../../config';
-const Home = ({navigation}) => {
+import {useNavigation} from '@react-navigation/native';
+const Home = props => {
+  const navigation = useNavigation();
   const [searchQuery, setSearchQuery] = useState('');
   const [data, setData] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -139,7 +141,7 @@ const Home = ({navigation}) => {
         <TouchableOpacity
           key={item.id}
           onPress={() => {
-            navigation.navigate(item.request, {request: item.request});
+            props.navigation.navigate(item.request, {request: item.request});
             console.log(item.request);
           }}>
           <View
@@ -175,7 +177,10 @@ const Home = ({navigation}) => {
         <View style={styles.header}>
           {/* emergency call */}
           <View style={styles.headerItem}>
-            <TouchableOpacity onPress={showModal}>
+            <TouchableOpacity
+              onPress={() => {
+                showModal();
+              }}>
               <Image
                 source={TelfonSOS}
                 style={{marginVertical: 10, width: 22, height: 40}}
@@ -220,7 +225,7 @@ const Home = ({navigation}) => {
         {/* nama pengguna */}
         <View style={{alignSelf: 'center', marginVertical: 10}}>
           <Text style={{fontFamily: 'Karla-Regular', fontSize: 22}}>
-            Hi, {data.first_name}!
+            Hi, {props.route.params.first_name}!
           </Text>
         </View>
 

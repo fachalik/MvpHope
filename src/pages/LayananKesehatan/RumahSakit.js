@@ -12,7 +12,11 @@ import colors from '../../assets/colors';
 import axios from 'react-native-axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import config from '../../../config';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import LoadingV2 from '../../components/LoadingV2';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 const RumahSakit = props => {
   const [isLoading, setIsLoading] = useState(false);
@@ -66,7 +70,7 @@ const RumahSakit = props => {
     });
   };
   useEffect(async () => {
-    setIsLoading(true);
+    await setIsLoading(true);
     var userToken = await AsyncStorage.getItem('userToken');
     const RefreshToken = await AsyncStorage.getItem('RefreshToken');
     // await console.log(RefreshToken + ' refresh');

@@ -14,7 +14,11 @@ import config from '../../../config';
 import colors from '../../assets/colors';
 import BottomSheet from 'reanimated-bottom-sheet';
 import Animated from 'react-native-reanimated';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import LoadingV2 from '../../components/LoadingV2';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 const DetailObat = ({route, navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -37,6 +41,8 @@ const DetailObat = ({route, navigation}) => {
         <Text style={styles.bigTitle}>{detail.name}</Text>
         <Text style={styles.title}>Harga</Text>
         <Text style={styles.contents}>{detail.harga}</Text>
+        <Text style={styles.title}>Deskripsi</Text>
+        <Text style={styles.contents}>{detail.deskripsi}</Text>
         <Text style={styles.title}>Manfaat</Text>
         <Text style={styles.contents}>{detail.manfaat}</Text>
         <Text style={styles.title}>Komposisi</Text>
@@ -166,10 +172,10 @@ const DetailObat = ({route, navigation}) => {
         enabledGestureInteraction={true}
       />
       <ScrollView style={styles.wrapper}>
-        <Text style={{fontFamily: 'Karla-Bold'}}>Cari Obatmu!</Text>
-        {isLoading ? <ActivityIndicator color={'black'} size="large" /> : null}
+        <Text style={{fontFamily: 'Karla-Bold'}}>Pilihan produk kesehatan</Text>
         <View style={styles.itemObat}>{!isLoading ? <Obat /> : null}</View>
       </ScrollView>
+      {isLoading ? <LoadingV2 loading={isLoading} /> : null}
     </View>
   );
 };
@@ -216,7 +222,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Karla-Regular',
     fontSize: 14,
     marginBottom: 10,
-    textAlign:'justify',
+    textAlign: 'justify',
   },
   bigTitle: {
     fontFamily: 'Karla-Bold',

@@ -150,8 +150,8 @@ const Biodata = props => {
     // props.handleIsLoading(false)
     await setModalVisible(false);
     await setGoToAccount(true);
-    await props.handleIsLoading(false)
-    await navigation.navigate('Account')
+    await props.handleIsLoading(false);
+    await navigation.navigate('Account');
   };
   const UpdateHistoryHandle = async (
     firstName,
@@ -186,136 +186,70 @@ const Biodata = props => {
         .then(async function (response) {
           // console.log(response.data);
           console.log(response.data);
-          if (Platform.OS === 'ios') {
-            await AsyncStorage.setItem('userToken', response.data.access);
-            userToken = await response.data.access;
-          } else {
-            await AsyncStorage.setItem('userToken', response.data._W);
-            userToken = await response.data._W;
-          }
+          await AsyncStorage.setItem('userToken', response.data.access);
+          userToken = await response.data.access;
         })
         .catch(function (error) {
           console.log(error);
         });
       await console.log(userToken);
-      Platform.OS === 'ios'
-        ? await axios
-            .put(
-              config.API_URL + 'profile/me/',
-              {
-                first_name: firstName,
-                last_name: lastName,
-                weight: parseInt(weight),
-                height: parseInt(height),
-                job: job,
-                activities: activity,
-                disease_history: diseaseHistory,
-              },
-              {headers: {Authorization: 'Bearer ' + userToken}},
-            )
-            .then(function (response) {
-              console.log(response.data);
-              confirmSuccess = response.status;
-              console.log(confirmSuccess);
-            })
-            .catch(function (error) {
-              console.log(error);
-            })
-        : await axios
-            .put(
-              config.API_URL + 'profile/me/',
-              {
-                first_name: firstName,
-                last_name: lastName,
-                weight: parseInt(weight),
-                height: parseInt(height),
-                job: job,
-                activities: activity,
-                disease_history: diseaseHistory,
-              },
-              {headers: {Authorization: 'Bearer ' + userToken._W}},
-            )
-            .then(function (response) {
-              console.log(response.data);
-              confirmSuccess = response.status;
-              console.log(confirmSuccess);
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
-      confirmSuccess === 200
-        ? Platform.OS === 'ios'
-          ? await axios
-              .get(config.API_URL + 'profile/me/', {
-                headers: {Authorization: 'Bearer ' + userToken},
-              })
-              .then(async function (response) {
-                const getData = response.data;
-                await AsyncStorage.setItem(
-                  'UserProfile',
-                  JSON.stringify(response.data),
-                );
-                console.log(getData);
-                await setData({
-                  firstName: getData.first_name,
-                  lastName: getData.last_name,
-                  height: String(getData.height),
-                  weight: String(getData.weight),
-                  job: getData.job,
-                  activity: getData.activities,
-                  diseaseHistory: getData.disease_history,
-                });
-                await setTempData({
-                  firstName: getData.first_name,
-                  lastName: getData.last_name,
-                  height: String(getData.height),
-                  weight: String(getData.weight),
-                  job: getData.job,
-                  activity: getData.activities,
-                  diseaseHistory: getData.disease_history,
-                });
-                console.log('userProfile berhasil disimpan');
-                await setModalVisible(true);
-              })
-              .catch(function (error) {
-                console.log(error);
-              })
-          : await axios
-              .get(config.API_URL + 'profile/me/', {
-                headers: {Authorization: 'Bearer ' + userToken._W},
-              })
-              .then(async function (response) {
-                const getData = response.data;
-                await AsyncStorage.setItem(
-                  'UserProfile',
-                  JSON.stringify(response.data),
-                );
-                console.log(getData);
-                await setData({
-                  firstName: getData.first_name,
-                  lastName: getData.last_name,
-                  height: String(getData.height),
-                  weight: String(getData.weight),
-                  job: getData.job,
-                  activity: getData.activities,
-                  diseaseHistory: getData.disease_history,
-                });
-                await setTempData({
-                  firstName: getData.first_name,
-                  lastName: getData.last_name,
-                  height: String(getData.height),
-                  weight: String(getData.weight),
-                  job: getData.job,
-                  activity: getData.activities,
-                  diseaseHistory: getData.disease_history,
-                });
-                console.log('userProfile berhasil disimpan');
-                await setModalVisible(true);
-              })
-              .catch(function (error) {
-                console.log(error);
-              })
-        : null;
+      await axios
+        .put(
+          config.API_URL + 'profile/me/',
+          {
+            first_name: firstName,
+            last_name: lastName,
+            weight: parseInt(weight),
+            height: parseInt(height),
+            job: job,
+            activities: activity,
+            disease_history: diseaseHistory,
+          },
+          {headers: {Authorization: 'Bearer ' + userToken}},
+        )
+        .then(function (response) {
+          console.log(response.data);
+          confirmSuccess = response.status;
+          console.log(confirmSuccess);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      await axios
+        .get(config.API_URL + 'profile/me/', {
+          headers: {Authorization: 'Bearer ' + userToken},
+        })
+        .then(async function (response) {
+          const getData = response.data;
+          await AsyncStorage.setItem(
+            'UserProfile',
+            JSON.stringify(response.data),
+          );
+          console.log(getData);
+          await setData({
+            firstName: getData.first_name,
+            lastName: getData.last_name,
+            height: String(getData.height),
+            weight: String(getData.weight),
+            job: getData.job,
+            activity: getData.activities,
+            diseaseHistory: getData.disease_history,
+          });
+          await setTempData({
+            firstName: getData.first_name,
+            lastName: getData.last_name,
+            height: String(getData.height),
+            weight: String(getData.weight),
+            job: getData.job,
+            activity: getData.activities,
+            diseaseHistory: getData.disease_history,
+          });
+          console.log('userProfile berhasil disimpan');
+          await setModalVisible(true);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     } catch (e) {
       //   error reading value
       console.log(e);

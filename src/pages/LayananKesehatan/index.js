@@ -102,7 +102,7 @@ const LayananKesehatan = () => {
         callbackNode={fall}
         enabledGestureInteraction={true}
       />
-      <ScrollView style={styles.wrapper}>
+      <View style={styles.wrapper}>
         <Text style={{fontFamily: 'Karla-Bold'}}>Cari Layananmu!</Text>
         <View style={styles.choice}>
           <TouchableOpacity
@@ -131,11 +131,17 @@ const LayananKesehatan = () => {
           </TouchableOpacity>
         </View>
         <View>
+
+        </View>
+      </View>
+      <ScrollView style={styles.wrapper}>
+        <View>
           {choice ? (
             !isLoading ? (
               <RumahSakit
                 handleRumahSakit={detail => setDetail(detail)}
                 handletrigger={handleSnapRumahSakit}
+                handleI
               />
             ) : null
           ) : !isLoading ? (
@@ -156,7 +162,7 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     marginHorizontal: 30,
-    marginVertical: 30,
+    marginVertical: 10,
   },
   choice: {
     flexDirection: 'row',

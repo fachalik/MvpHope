@@ -9,12 +9,14 @@ import {
   ChatBotScreen,
   ChatDoctorScreen,
   ChatPsikologScreen,
-  Search,
   InfoObat,
   DetailObat,
   Develop,
   EditProfile,
   LayananKesehatan,
+  SearchMedicine,
+  KategoriObat,
+  DetailSearchMedicine,
 } from '../pages';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -37,12 +39,6 @@ const HomeStackScreen = (props, {navigation}) => {
         options={{headerShown: false}}
       />
       <HomeStack.Screen
-        name="Search"
-        component={Search}
-        initialParams={props.route.params}
-        options={{headerShown: false}}
-      />
-      <HomeStack.Screen
         name="Info Obat"
         component={InfoObat}
         options={{headerShown: true, headerTitleAlign: 'center'}}
@@ -61,6 +57,43 @@ const HomeStackScreen = (props, {navigation}) => {
         name="Layanan Kesehatan"
         component={LayananKesehatan}
         options={{headerShown: true, headerTitleAlign: 'center'}}
+      />
+      <HomeStack.Screen
+        name="Kategori obat"
+        component={KategoriObat}
+        options={{headerShown: true, headerTitleAlign: 'center'}}
+      />
+      <HomeStack.Screen
+        name="SearchMedicine"
+        component={SearchMedicine}
+        options={{
+          headerShown: false,
+          animationEnabled: true,
+          cardStyle: {backgroundColor: 'white'},
+          cardOverlayEnabled: false,
+          cardStyleInterpolator: ({current: {progress}}) => {
+            return {
+              cardStyle: {
+                opacity: progress.interpolate({
+                  inputRange: [0, 0.5, 0.9, 1],
+                  outputRange: [0, 0.25, 0.7, 1],
+                }),
+              },
+              overlayStyle: {
+                opacity: progress.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [0, 0.5],
+                  extrapolate: 'clamp',
+                }),
+              },
+            };
+          },
+        }}
+      />
+      <HomeStack.Screen
+        name="DetailSearchMedicine"
+        component={DetailSearchMedicine}
+        options={{headerShown: false}}
       />
     </HomeStack.Navigator>
   );
@@ -117,7 +150,11 @@ const AccountStackScreen = (props, {navigation}) => {
       <AccountStack.Screen
         name="Edit Profile"
         component={EditProfile}
-        options={{headerShown: true, headerTitleAlign: 'center'}}
+        options={({route}) => ({
+          title: route.name,
+          headerShown: true,
+          headerTitleAlign: 'center',
+        })}
       />
     </AccountStack.Navigator>
   );
@@ -135,10 +172,10 @@ const MainStack = props => {
         options={({route}) => ({
           tabBarVisible: (route => {
             const routeName = getFocusedRouteNameFromRoute(route) ?? '';
-
             if (
               routeName === 'Konsultasi' ||
-              routeName === 'Konsultasi Dokter'
+              routeName === 'Konsultasi Dokter' ||
+              routeName === 'Konsultasi Psikolog'
             ) {
               return false;
             }
@@ -155,7 +192,35 @@ const MainStack = props => {
           tabBarVisible: (route => {
             const routeName = getFocusedRouteNameFromRoute(route) ?? '';
 
-            if (routeName === 'Search') {
+            if (
+              routeName === 'SearchModal' ||
+              routeName === 'Info Obat' ||
+              routeName === 'Detail Obat' ||
+              routeName === 'Layanan Kesehatan' ||
+              routeName === 'DetailSearchMedicine'
+            ) {
+              return false;
+            }
+
+            return true;
+          })(route),
+        })}
+        tabBarOptions={{
+          style: {
+            position: 'absolute',
+            color: 'red',
+            backgroundColor: 'yellow',
+          },
+        }}
+      />
+      <Tab.Screen
+        name="Account"
+        component={AccountStackScreen}
+        initialParams={props.data}
+        options={({route}) => ({
+          tabBarVisible: (route => {
+            const routeName = getFocusedRouteNameFromRoute(route) ?? '';
+            if (routeName === 'Edit Profile') {
               return false;
             }
 
@@ -163,7 +228,6 @@ const MainStack = props => {
           })(route),
         })}
       />
-      <Tab.Screen name="Account" component={AccountStackScreen} />
     </Tab.Navigator>
   );
 };
