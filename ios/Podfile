@@ -15,6 +15,8 @@ target 'hopeMvp' do
 
 
 
+  pod 'ReactNativeGetLocation', :path => '../node_modules/react-native-get-location'
+
   target 'hopeMvpTests' do
     inherit! :complete
     # Pods for testing

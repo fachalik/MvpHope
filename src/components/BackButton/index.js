@@ -10,7 +10,7 @@ const BackButton = ({navigation}) => {
     value === 'true'
       ? navigation.navigate('LoginRegistOnBoard')
       : navigation.pop();
-    await AsyncStorage.removeItem('RegistComplete')
+    await AsyncStorage.removeItem('RegistComplete');
   };
   return (
     <TouchableOpacity onPress={() => GoBack()}>
@@ -29,5 +29,6 @@ export default BackButton;
 const styles = StyleSheet.create({
   IconStyle: {
     marginTop: 20,
+    zIndex: 2,
   },
 });
