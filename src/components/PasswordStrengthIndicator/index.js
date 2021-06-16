@@ -11,19 +11,19 @@ const PasswordStrengthIndicator = ({
       <Text>
         <PasswordStrengthIndicatorItem
           isValid={minChar}
-          text="Have at least 8 characters"
+          text="Minimum 8 Karakter"
         />
       </Text>
       <Text>
         <PasswordStrengthIndicatorItem
           isValid={number}
-          text="Have at least 1 number"
+          text="Memiliki kurang lebih 1 angka"
         />
       </Text>
       <Text>
         <PasswordStrengthIndicatorItem
           isValid={specialChar}
-          text="Have at least 1 special character"
+          text="Memiliki kurang lebih 1 karakter spesial"
         />
       </Text>
     </View>
