@@ -17,6 +17,10 @@ import {
   SearchMedicine,
   KategoriObat,
   DetailSearchMedicine,
+  SearchLayananKesehatan,
+  DetailSearchLayananKesehatan,
+  SosScreen,
+  InputNoTelp,
 } from '../pages';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -93,6 +97,70 @@ const HomeStackScreen = (props, {navigation}) => {
       <HomeStack.Screen
         name="DetailSearchMedicine"
         component={DetailSearchMedicine}
+        options={{headerShown: false}}
+      />
+      <HomeStack.Screen
+        name="SearchLayananKesehatan"
+        component={SearchLayananKesehatan}
+        options={{
+          headerShown: false,
+          animationEnabled: true,
+          cardStyle: {backgroundColor: 'white'},
+          cardOverlayEnabled: false,
+          cardStyleInterpolator: ({current: {progress}}) => {
+            return {
+              cardStyle: {
+                opacity: progress.interpolate({
+                  inputRange: [0, 0.5, 0.9, 1],
+                  outputRange: [0, 0.25, 0.7, 1],
+                }),
+              },
+              overlayStyle: {
+                opacity: progress.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [0, 0.5],
+                  extrapolate: 'clamp',
+                }),
+              },
+            };
+          },
+        }}
+      />
+      <HomeStack.Screen
+        name="DetailSearchLayananKesehatan"
+        component={DetailSearchLayananKesehatan}
+        options={{headerShown: false}}
+      />
+      <HomeStack.Screen
+        name="SosScreen"
+        component={SosScreen}
+        options={{
+          headerShown: false,
+          animationEnabled: true,
+          cardStyle: {backgroundColor: 'rgba(0,0,0,0.15)'},
+          cardOverlayEnabled: false,
+          cardStyleInterpolator: ({current: {progress}}) => {
+            return {
+              cardStyle: {
+                opacity: progress.interpolate({
+                  inputRange: [0, 0.5, 0.9, 1],
+                  outputRange: [0, 0.25, 0.7, 1],
+                }),
+              },
+              overlayStyle: {
+                opacity: progress.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [0, 0.5],
+                  extrapolate: 'clamp',
+                }),
+              },
+            };
+          },
+        }}
+      />
+      <HomeStack.Screen
+        name="InputNoTelp"
+        component={InputNoTelp}
         options={{headerShown: false}}
       />
     </HomeStack.Navigator>
@@ -193,11 +261,15 @@ const MainStack = props => {
             const routeName = getFocusedRouteNameFromRoute(route) ?? '';
 
             if (
-              routeName === 'SearchModal' ||
+              routeName === 'SearchMedicine' ||
               routeName === 'Info Obat' ||
               routeName === 'Detail Obat' ||
               routeName === 'Layanan Kesehatan' ||
-              routeName === 'DetailSearchMedicine'
+              routeName === 'DetailSearchMedicine' ||
+              routeName === 'DetailSearchLayananKesehatan' ||
+              routeName === 'SearchLayananKesehatan' ||
+              routeName === 'InputNoTelp'
+              // routeName === 'SosScreen'
             ) {
               return false;
             }

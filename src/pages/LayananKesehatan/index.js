@@ -13,8 +13,9 @@ import RumahSakit from './RumahSakit';
 import Ambulance from './Ambulance';
 import BottomSheet from 'reanimated-bottom-sheet';
 import Animated from 'react-native-reanimated';
+import Icon from 'react-native-vector-icons/AntDesign';
 
-const LayananKesehatan = () => {
+const LayananKesehatan = ({route, navigation}) => {
   const [choice, setChoice] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [detail, setDetail] = useState({
@@ -25,9 +26,26 @@ const LayananKesehatan = () => {
     layanan: '',
     layananpoliklinik: [],
   });
-  console.log(detail.layananpoliklinik);
-  detail.layananpoliklinik.map(item => {
-    console.log(item);
+  const [checkBox, setCheckBox] = useState({
+    polBedah: false,
+    polSaraf: false,
+    dokterUmum: false,
+    polGigiSpes: false,
+    polAnak: false,
+    polGizi: false,
+    polMata: false,
+    MCU: false,
+    polRadiologi: false,
+    vaksinasi: false,
+    polJantung: false,
+    polKulit: false,
+    polParu: false,
+    polPenyDalam: false,
+    polJiwa: false,
+    polFisik: false,
+    polTHT: false,
+    polAnestesiologi: false,
+    polKandungan: false,
   });
   const renderInner = () => (
     <View style={styles.panel}>
@@ -43,7 +61,24 @@ const LayananKesehatan = () => {
           <Text style={styles.title}>Layanan</Text>
         )}
         {detail.layanan === undefined ? null : (
-          <Text style={styles.contents}>{detail.layanan}</Text>
+          <FlatList
+            data={detail.layanan}
+            key={detail.layanan}
+            renderItem={({item}) => (
+              <View style={styles.column}>
+                <View key={item} style={styles.row}>
+                  <View style={styles.bullet}>
+                    <Text>{'\u2022' + ' '}</Text>
+                  </View>
+                  <View style={styles.bulletText}>
+                    <Text>
+                      <Text style={styles.contents}>{item}</Text>
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            )}
+          />
         )}
         {detail.layananpoliklinik === undefined ? null : (
           <Text style={styles.title}>Layanan Poliklink</Text>
@@ -70,7 +105,13 @@ const LayananKesehatan = () => {
       </View>
     </View>
   );
-
+  // const renderInnerFilter = () => (
+  //   <View style={styles.panel}>
+  //     <View style={{marginHorizontal: 30}}>
+  //       <Text style={styles.bigTitle}>{}</Text>
+  //     </View>
+  //   </View>
+  // );
   const renderHeader = () => (
     <View style={styles.header}>
       <View style={styles.panelHeader}>
@@ -80,6 +121,7 @@ const LayananKesehatan = () => {
   );
 
   const bs = React.createRef();
+  // const bsFilter = React.createRef();
   const fall = new Animated.Value(1);
 
   const On = () => {
@@ -90,6 +132,10 @@ const LayananKesehatan = () => {
   };
   const handleSnapRumahSakit = () => {
     bs.current.snapTo(0);
+  };
+  const handleFilter = () => {
+    // bsFilter.current.snapTo(0);
+    alert('Filter belum tersedia')
   };
   return (
     <View style={styles.container}>
@@ -102,8 +148,42 @@ const LayananKesehatan = () => {
         callbackNode={fall}
         enabledGestureInteraction={true}
       />
+      {/* <BottomSheet
+        ref={bsFilter}
+        snapPoints={[450, 0]}
+        renderContent={renderInnerFilter}
+        renderHeader={renderHeader}
+        initialSnap={1}
+        callbackNode={fall}
+        enabledGestureInteraction={true}
+      /> */}
       <View style={styles.wrapper}>
-        <Text style={{fontFamily: 'Karla-Bold'}}>Cari Layananmu!</Text>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('SearchLayananKesehatan');
+          }}>
+          <View style={styles.searchBar}>
+            <View style={{marginRight: 10}}>
+              <Icon name="search1" size={20} color={colors.yellow} />
+            </View>
+            <View>
+              <Text>Cari Layanan Kesehatan</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            marginVertical: 10,
+          }}>
+          <Text style={{alignSelf: 'center'}}>Cari layanan kesehatan</Text>
+          <TouchableOpacity
+            style={{backgroundColor: colors.gray, padding: 10}}
+            onPress={() => handleFilter()}>
+            <Text>Filter</Text>
+          </TouchableOpacity>
+        </View>
         <View style={styles.choice}>
           <TouchableOpacity
             onPress={() => {
@@ -130,9 +210,7 @@ const LayananKesehatan = () => {
             </View>
           </TouchableOpacity>
         </View>
-        <View>
-
-        </View>
+        <View></View>
       </View>
       <ScrollView style={styles.wrapper}>
         <View>
@@ -164,10 +242,17 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
     marginVertical: 10,
   },
+  searchBar: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    backgroundColor: colors.soft_gray,
+    padding: 10,
+    borderRadius: 10,
+    marginBottom: 10,
+  },
   choice: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 20,
   },
   button: {
     paddingHorizontal: 50,
@@ -212,7 +297,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Karla-Regular',
     fontSize: 14,
     marginBottom: 10,
-    textAlign:'justify',
+    textAlign: 'justify',
   },
   bigTitle: {
     fontFamily: 'Karla-Bold',

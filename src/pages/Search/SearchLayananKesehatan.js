@@ -18,7 +18,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-const SearchMedicine = ({navigation}) => {
+const SearchLayananKesehatan = ({navigation}) => {
   const [data, setIsData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState({
@@ -32,7 +32,7 @@ const SearchMedicine = ({navigation}) => {
         await setIsLoading(true);
         var userToken = await AsyncStorage.getItem('userToken');
         const RefreshToken = await AsyncStorage.getItem('RefreshToken');
-        await console.log(RefreshToken + ' refresh');
+        // await console.log(RefreshToken + ' refresh');
         await axios
           .post(config.API_URL + 'auth/login/refresh/', {
             refresh: RefreshToken,
@@ -47,12 +47,28 @@ const SearchMedicine = ({navigation}) => {
             console.log(error);
           });
         await axios
-          .get(config.API_URL + 'medicine/', {
+          .get(config.API_URL + 'hospital/', {
             headers: {Authorization: 'Bearer ' + userToken},
           })
           .then(function (response) {
-            // console.log(response)
-            setIsData(response.data);
+            // console.log(response.data);
+            response.data.map(item => {
+              setIsData(data => [...data, item]);
+            });
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        await axios
+          .get(config.API_URL + 'laboratory/', {
+            headers: {Authorization: 'Bearer ' + userToken},
+          })
+          .then(function (response) {
+            // console.log(response.data);
+            response.data.map(item => {
+              setIsData(data => [...data, item]);
+            });
+            // console.log('laboratory ' + response.data);
           })
           .catch(function (error) {
             console.log(error);
@@ -64,7 +80,6 @@ const SearchMedicine = ({navigation}) => {
       }
     });
   }, [null]);
-  console.log(data);
   const textInputchangeQuery = async val => {
     if (val.length != 0) {
       await setQuery({
@@ -95,7 +110,7 @@ const SearchMedicine = ({navigation}) => {
           </TouchableOpacity>
           <TextInput
             style={styles.InputText}
-            placeholder="Cari produk kesehatan"
+            placeholder="Cari layanan kesehatan"
             placeholderTextColor="grey"
             keyboardType="email-address"
             autoCapitalize="none"
@@ -108,13 +123,13 @@ const SearchMedicine = ({navigation}) => {
             </TouchableOpacity>
           ) : null}
         </View>
-        <ScrollView style={{marginTop: 10, height:hp('80%')}}>
+        <ScrollView style={{marginTop: 10, height: hp('80%')}}>
           {!isLoading ? (
             query.text != '' ? (
               data
                 .filter(medicine => {
                   if (query.text == '') {
-                    return medicine;
+                    return (medicine = []);
                   } else if (
                     medicine.name
                       .toLowerCase()
@@ -127,7 +142,7 @@ const SearchMedicine = ({navigation}) => {
                   return (
                     <TouchableOpacity
                       onPress={() =>
-                        navigation.navigate('DetailSearchMedicine', {
+                        navigation.navigate('DetailSearchLayananKesehatan', {
                           request: medicine,
                         })
                       }>
@@ -153,7 +168,7 @@ const SearchMedicine = ({navigation}) => {
   );
 };
 
-export default SearchMedicine;
+export default SearchLayananKesehatan;
 
 const styles = StyleSheet.create({
   container: {

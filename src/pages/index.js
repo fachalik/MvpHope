@@ -21,7 +21,11 @@ import KategoriObat from './InfoObat/Kategori';
 import Develop from './Develop';
 import LayananKesehatan from './LayananKesehatan';
 import SearchMedicine from './Search/SearchMedicine';
-import DetailSearchMedicine from './Search/DetailSearchMedicine'
+import DetailSearchMedicine from './Search/DetailSearchMedicine';
+import SearchLayananKesehatan from './Search/SearchLayananKesehatan';
+import DetailSearchLayananKesehatan from './Search/DetailSearchLayananKesehatan';
+import SosScreen from './SosScreen';
+import InputNoTelp from './InputNoTelp';
 export {
   Home,
   ChatBot,
@@ -46,5 +50,9 @@ export {
   RegisterStep3,
   LayananKesehatan,
   SearchMedicine,
-  DetailSearchMedicine
+  DetailSearchMedicine,
+  SearchLayananKesehatan,
+  DetailSearchLayananKesehatan,
+  SosScreen,
+  InputNoTelp,
 };

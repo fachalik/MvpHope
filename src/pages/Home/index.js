@@ -29,6 +29,7 @@ import {dummyData} from './Data';
 import Carousel from '../../components/CarouselHome/Carousel';
 import {Modal, Portal, Provider, Searchbar} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -42,9 +43,6 @@ const Home = props => {
   const [data, setData] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const onChangeSearch = query => setSearchQuery(query);
-  const [visible, setVisible] = useState(false);
-  const showModal = () => setVisible(true);
-  const hideModal = () => setVisible(false);
   const containerStyle = {
     width: 300,
     height: 100,
@@ -94,47 +92,6 @@ const Home = props => {
       image: LayananKesehatan,
     },
   ];
-
-  // const handleNoteman = val => {
-  //   if (val.length < 5) {
-  //     setNoTeman({
-  //       ...noTeman,
-  //       nomer: val,
-  //       isEmpty: false,
-  //     });
-  //   } else {
-  //     setNoTeman({
-  //       ...noTeman,
-  //       nomer: val,
-  //       isEmpty: true,
-  //     });
-  //   }
-  // };
-
-  // const handleTeman = async () => {
-  //   let nomerTeman;
-  //   nomerTeman = null;
-  //   try {
-  //     nomerTeman = await AsyncStorage.getItem('nomerTeman');
-  //     console.log(nomerTeman);
-  //     nomerTeman === null ?
-  //     (
-  //       setNoTeman({...noTeman, isEmpty: false})
-  //     ) : (
-  //       setNoTeman({...noTeman, isEmpty: true , nomer=nomerTeman}),
-  //       Linking.openURL(`tel:${item.phone_number}`)
-  //     );
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
-
-  // const inputNoteman = async (noTeman) => {
-  //   try {
-  //     await AsyncStorage.setItem('nomerTeman', noTeman)
-  //   } catch (e) {
-  //   }
-  // }
   const displayLayanan = () => {
     return LayananUtama.map(item => {
       return (
@@ -142,7 +99,6 @@ const Home = props => {
           key={item.id}
           onPress={() => {
             props.navigation.navigate(item.request, {request: item.request});
-            console.log(item.request);
           }}>
           <View
             style={{
@@ -179,17 +135,12 @@ const Home = props => {
           <View style={styles.headerItem}>
             <TouchableOpacity
               onPress={() => {
-                showModal();
+                navigation.navigate('SosScreen');
               }}>
               <Image
                 source={TelfonSOS}
                 style={{marginVertical: 10, width: 22, height: 40}}
               />
-              {/* <Icon
-                name="phone"
-                style={{marginVertical: 10, color: colors.yellow}}
-                size={32}
-              /> */}
             </TouchableOpacity>
           </View>
           {/* Avatar */}
@@ -228,21 +179,19 @@ const Home = props => {
             Hi, {props.route.params.first_name}!
           </Text>
         </View>
-
-        {/* search bar */}
-        {/* <TouchableOpacity
-          style={styles.searchBar}
+        <TouchableOpacity
           onPress={() => {
-            navigation.navigate('Search');
-          }}></TouchableOpacity> */}
-        <View style={styles.searchBar}>
-          <Searchbar
-            style={{backgroundColor: 'white'}}
-            inputStyle={{color: 'black', fontSize: 12}}
-            value={searchQuery}
-            onChangeText={onChangeSearch}
-          />
-        </View>
+            navigation.navigate('SearchMedicine');
+          }}>
+          <View style={styles.searchBar}>
+            <View style={{marginRight: 10}}>
+              <AntDesign name="search1" size={20} color={colors.yellow} />
+            </View>
+            <View>
+              <Text>Cari Produk Kesehatan</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
         <View style={styles.CaroselHome}>
           <Carousel data={dummyData} />
         </View>
@@ -251,82 +200,6 @@ const Home = props => {
         </View>
         <View style={styles.ItemLayananUtama}>{displayLayanan()}</View>
       </View>
-      <Provider>
-        <Portal>
-          <Modal
-            visible={visible}
-            onDismiss={hideModal}
-            contentContainerStyle={containerStyle}>
-            <View
-              style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
-              <TouchableOpacity
-                onPress={() => {
-                  Linking.openURL(`tel:${'0811112323'}`);
-                }}>
-                <Image style={styles.iconEmergency} source={Teman} />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  Linking.openURL(`tel:${'08123332123'}`);
-                }}>
-                <Image style={styles.iconEmergency} source={OrangTua} />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  Linking.openURL(`tel:${'212'}`);
-                }}>
-                <Image style={styles.iconEmergency} source={Ambulance} />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  Linking.openURL(`tel:${'020'}`);
-                }}>
-                <Image style={styles.iconEmergency} source={SOS} />
-              </TouchableOpacity>
-            </View>
-            {/* {noTeman.isEmpty ? null : (
-              <View style={styles.form}>
-                <View style={styles.TextInput}>
-                  <Text style={{fontFamily: 'Karla-Medium'}}>
-                    No Telpon Teman
-                  </Text>
-                </View>
-                <View style={styles.ViewInput}>
-                  <Icon name="phone" size={20} color={colors.yellow} />
-                  <TextInput
-                    style={styles.InputText}
-                    placeholder="Mohon nomer teman anda"
-                    placeholderTextColor="grey"
-                    keyboardType="phone-pad"
-                    autoCapitalize="none"
-                    onChangeText={val => {
-                      handleNoteman(val);
-                    }}
-                  />
-                </View>
-                <TouchableOpacity
-                  disabled={noTeman.isEmpty ? true : false}
-                  onPress={() => {
-                    inputNoteman(noTeman.nomer)
-                  }}>
-                  <View
-                    style={
-                      noTeman.isEmpty
-                        ? styles.buttonMasukDisable
-                        : styles.buttonMasuk
-                    }>
-                    {isLoading ? (
-                      <ActivityIndicator color={'white'} size="large" />
-                    ) : (
-                      <Text style={styles.buttonTextMasukDisable}>Input</Text>
-                    )}
-                  </View>
-                </TouchableOpacity>
-              </View>
-            )} */}
-          </Modal>
-        </Portal>
-      </Provider>
     </ScrollView>
   );
 };
@@ -346,14 +219,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
   },
   searchBar: {
-    backgroundColor: 'black',
-    height: 40,
-    width: wp('80%'),
-    borderRadius: 15,
-    backgroundColor: '#ECECEC',
-    alignSelf: 'center',
-    marginVertical: 20,
-    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    backgroundColor: colors.soft_gray,
+    padding: 10,
+    borderRadius: 10,
+    marginBottom: 10,
   },
   CaroselHome: {
     flex: 1,
