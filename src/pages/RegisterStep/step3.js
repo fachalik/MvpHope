@@ -23,7 +23,11 @@ import colors from '../../assets/colors';
 import config from '../../../config';
 import axios from 'react-native-axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import PasswordStrengthIndicator from '../../components/PasswordStrengthIndicator';
+
 const RegisterStep3 = ({navigation}) => {
+  const isNumberRegx = /\d/;
+  const specialCharacterRegx = /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState({
     firstName: '',
@@ -43,6 +47,12 @@ const RegisterStep3 = ({navigation}) => {
     confirmPasswordIsEmpty: false,
     errorConfirmPassword: false,
     errorEmail: false,
+  });
+  const [passwordFocused, setPasswordFocused] = useState(false);
+  const [passwordValidity, setPasswordValidity] = useState({
+    minChar: null,
+    number: null,
+    specialChar: null,
   });
 
   const {SignUp} = useContext(AuthContext);
@@ -112,11 +122,21 @@ const RegisterStep3 = ({navigation}) => {
         password: val,
         passwordIsEmpty: true,
       });
+      setPasswordValidity({
+        minChar: val.length >= 8 ? true : false,
+        number: isNumberRegx.test(val) ? true : false,
+        specialChar: specialCharacterRegx.test(val) ? true : false,
+      });
     } else {
       setData({
         ...data,
         password: val,
         passwordIsEmpty: false,
+      });
+      setPasswordValidity({
+        minChar: val.length >= 8 ? true : false,
+        number: isNumberRegx.test(val) ? true : false,
+        specialChar: specialCharacterRegx.test(val) ? true : false,
       });
     }
   };
@@ -303,6 +323,7 @@ const RegisterStep3 = ({navigation}) => {
                 autoCapitalize="none"
                 placeholderTextColor="grey"
                 onChangeText={val => handlePassword(val)}
+                onFocus={() => setPasswordFocused(true)}
               />
               <TouchableOpacity onPress={updateSecureTextEntry}>
                 {data.secureTextEntry ? (
@@ -313,14 +334,9 @@ const RegisterStep3 = ({navigation}) => {
               </TouchableOpacity>
             </View>
             <View style={styles.TextInput}>
-              <Text
-                style={{
-                  fontFamily: 'Karla-Regular',
-                  fontSize: 12,
-                  color: colors.gray_dark,
-                }}>
-                Minimal 8 Karakter dengan huruf besar dan angka
-              </Text>
+              {passwordFocused && (
+                <PasswordStrengthIndicator validity={passwordValidity} />
+              )}
             </View>
 
             {/* // Input Form for ConfirmPassword */}
@@ -356,39 +372,39 @@ const RegisterStep3 = ({navigation}) => {
             ) : null}
           </View>
           <View style={styles.button}>
-          <TouchableOpacity
-            disabled={
-              data.passwordIsEmpty &&
-              data.emailIsEmpty &&
-              data.confirmPasswordIsEmpty
-                ? false
-                : true
-            }
-            onPress={() => {
-              RegisterHandle(
-                data.firstName,
-                data.lastName,
-                data.email,
-                data.password,
-                data.ConfirmPassword,
-              );
-            }}>
-            <View
-              style={
+            <TouchableOpacity
+              disabled={
                 data.passwordIsEmpty &&
                 data.emailIsEmpty &&
                 data.confirmPasswordIsEmpty
-                  ? styles.buttonMasuk
-                  : styles.buttonMasukDisable
-              }>
-              {isLoading ? (
-                <ActivityIndicator color={'white'} size="large" />
-              ) : (
-                <Text style={styles.buttonTextMasuk}>BUAT AKUN BARU</Text>
-              )}
-            </View>
-          </TouchableOpacity>
-        </View>
+                  ? false
+                  : true
+              }
+              onPress={() => {
+                RegisterHandle(
+                  data.firstName,
+                  data.lastName,
+                  data.email,
+                  data.password,
+                  data.ConfirmPassword,
+                );
+              }}>
+              <View
+                style={
+                  data.passwordIsEmpty &&
+                  data.emailIsEmpty &&
+                  data.confirmPasswordIsEmpty
+                    ? styles.buttonMasuk
+                    : styles.buttonMasukDisable
+                }>
+                {isLoading ? (
+                  <ActivityIndicator color={'white'} size="large" />
+                ) : (
+                  <Text style={styles.buttonTextMasuk}>BUAT AKUN BARU</Text>
+                )}
+              </View>
+            </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
       {/* {isLoading ? <Loading loading={isLoading} /> : null} */}
