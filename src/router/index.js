@@ -133,7 +133,7 @@ const Router = ({navigation}) => {
     },
     SignOut: async () => {
       try {
-        await AsyncStorage.removeItem('userToken');
+        await AsyncStorage.clear();
       } catch (e) {
         console.log(e);
       }

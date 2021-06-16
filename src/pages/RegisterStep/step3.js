@@ -141,8 +141,9 @@ const RegisterStep3 = ({navigation}) => {
     }
   };
 
-  const handleConfirmPassword = val => {
-    if (val.length > 7) {
+  const handleConfirmPassword = (val, password) => {
+    if (val === password) {
+      console.log('betul')
       setData({
         ...data,
         ConfirmPassword: val,
@@ -353,7 +354,7 @@ const RegisterStep3 = ({navigation}) => {
                 autoCapitalize="none"
                 placeholder="Mohon masukkan kata sandi anda"
                 placeholderTextColor="grey"
-                onChangeText={val => handleConfirmPassword(val)}
+                onChangeText={val => handleConfirmPassword(val, data.password)}
               />
               <TouchableOpacity onPress={updateSecureTextEntryConfirm}>
                 {data.secureTextEntryConfirm ? (
@@ -374,9 +375,11 @@ const RegisterStep3 = ({navigation}) => {
           <View style={styles.button}>
             <TouchableOpacity
               disabled={
-                data.passwordIsEmpty &&
                 data.emailIsEmpty &&
-                data.confirmPasswordIsEmpty
+                data.confirmPasswordIsEmpty &&
+                passwordValidity.minChar &&
+                passwordValidity.number &&
+                passwordValidity.specialChar
                   ? false
                   : true
               }
@@ -391,9 +394,11 @@ const RegisterStep3 = ({navigation}) => {
               }}>
               <View
                 style={
-                  data.passwordIsEmpty &&
                   data.emailIsEmpty &&
-                  data.confirmPasswordIsEmpty
+                  data.confirmPasswordIsEmpty &&
+                  passwordValidity.minChar &&
+                  passwordValidity.number &&
+                  passwordValidity.specialChar
                     ? styles.buttonMasuk
                     : styles.buttonMasukDisable
                 }>
