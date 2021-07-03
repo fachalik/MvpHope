@@ -18,7 +18,7 @@ import uuid from 'react-native-uuid';
 const ChatBotScreen = ({navigation}) => {
   const [messages, setMessages] = useState([]);
   const [responTempMsg, setresponTempMsg] = useState([]);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState('');
   const [responseMessage, setResponseMessage] = useState([
     {
       _id: '',
@@ -38,21 +38,52 @@ const ChatBotScreen = ({navigation}) => {
     avatar: logo2,
   };
 
-  useEffect(async () => {
-    let username;
-    username = null;
-    try {
-      username = await AsyncStorage.getItem('userName');
-      setUser(username);
-      console.log(user);
-    } catch (e) {
-      console.log(e);
-    }
-  }, []);
-
   useEffect(() => {
-    setMessages([]);
-  }, []);
+    var username;
+    username = null;
+    navigation.addListener('focus', async () => {
+      try {
+        console.log('running');
+        const jsonValue = await AsyncStorage.getItem('UserProfile');
+        username = JSON.parse(jsonValue).last_name;
+        await setUser(username);
+        await console.log(username);
+        await console.log('nama user adalah : ' + username);
+        await axios
+          .post(config.API_CHAT_URL, {
+            sender: username,
+            message: 'get_conversation',
+          })
+          .then(function (response) {
+            console.log(response.data[0])
+            response.data[0].custom.map(item => {
+              if (!item.text === 'get_conversation' || !item.text === null) {
+                setMessages(previousMessages =>
+                  GiftedChat.append(previousMessages, [
+                    {
+                      _id: uuid.v4(),
+                      text: item.text,
+                      createdAt: new Date(),
+                      user: BOT,
+                    },
+                  ]),
+                );
+              }
+            });
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      } catch (e) {
+        //   error reading value
+        console.log(e);
+      }
+    });
+  }, [null]);
+
+  // useEffect(() => {
+  //   setMessages([]);
+  // }, []);
 
   const onSend = useCallback(async (messages = []) => {
     setMessages(previousMessages =>

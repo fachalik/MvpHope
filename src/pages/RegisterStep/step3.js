@@ -143,7 +143,6 @@ const RegisterStep3 = ({navigation}) => {
 
   const handleConfirmPassword = (val, password) => {
     if (val === password) {
-      console.log('betul')
       setData({
         ...data,
         ConfirmPassword: val,

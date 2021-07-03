@@ -117,7 +117,7 @@ const RumahSakit = props => {
     await setIsLoading(false);
   }, [null]);
 
-  console.log(data);
+  // console.log(data);
   return (
     <View>
       {isLoading ? <ActivityIndicator color={'black'} size="large" /> : null}
