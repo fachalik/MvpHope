@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
@@ -63,10 +64,10 @@ const SearchMedicine = ({navigation}) => {
         console.log(e);
       }
     });
-  }, [null]);
+  }, [navigation]);
   console.log(data);
   const textInputchangeQuery = async val => {
-    if (val.length != 0) {
+    if (val.length !== 0) {
       await setQuery({
         ...query,
         text: val,
@@ -108,12 +109,12 @@ const SearchMedicine = ({navigation}) => {
             </TouchableOpacity>
           ) : null}
         </View>
-        <ScrollView style={{marginTop: 10, height:hp('80%')}}>
+        <ScrollView style={{marginTop: 10, height: hp('80%')}}>
           {!isLoading ? (
-            query.text != '' ? (
+            query.text !== '' ? (
               data
                 .filter(medicine => {
-                  if (query.text == '') {
+                  if (query.text === '') {
                     return medicine;
                   } else if (
                     medicine.name

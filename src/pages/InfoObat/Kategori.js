@@ -1,4 +1,5 @@
-import React, {useState, useEffect} from 'react';
+/* eslint-disable react-native/no-inline-styles */
+import React from 'react';
 import {
   StyleSheet,
   Text,
@@ -10,7 +11,6 @@ import {
 import dummyData from './dummyData';
 import colors from '../../assets/colors';
 const Kategori = ({route, navigation}) => {
-  const request = route.params;
   const DisplayCategory = () => {
     return dummyData.map(item => {
       return (

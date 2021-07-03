@@ -1,19 +1,21 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect} from 'react';
 import {
-  ScrollView,
   StyleSheet,
   Text,
   View,
   TouchableOpacity,
   ActivityIndicator,
-  Image,
-  Linking
+  Linking,
 } from 'react-native';
 import colors from '../../assets/colors';
 import axios from 'react-native-axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import config from '../../../config';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 const Ambulance = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -24,7 +26,7 @@ const Ambulance = () => {
         <TouchableOpacity
           key={item.id}
           onPress={() => {
-            Linking.openURL(`tel:${item.phone_number}`)
+            Linking.openURL(`tel:${item.phone_number}`);
           }}>
           <View
             style={{
@@ -63,37 +65,40 @@ const Ambulance = () => {
       );
     });
   };
-  useEffect(async () => {
-    setIsLoading(true);
-    var userToken = await AsyncStorage.getItem('userToken');
-    const RefreshToken = await AsyncStorage.getItem('RefreshToken');
-    await console.log(RefreshToken + ' refresh');
-    await axios
-      .post(config.API_URL + 'auth/login/refresh/', {
-        refresh: RefreshToken,
-      })
-      .then(function (response) {
-        // console.log(response.data);
-        console.log(response.data);
-        AsyncStorage.setItem('userToken', response.data.access);
-        userToken = response.data.access;
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    await axios
-      .get(config.API_URL + 'ambulance/', {
-        headers: {Authorization: 'Bearer ' + userToken},
-      })
-      .then(function (response) {
-        // console.log(response.data);
-        setIsData(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    await setIsLoading(false);
-  }, [null]);
+  useEffect(() => {
+    const handleRequest = async () => {
+      setIsLoading(true);
+      var userToken = await AsyncStorage.getItem('userToken');
+      const RefreshToken = await AsyncStorage.getItem('RefreshToken');
+      await console.log(RefreshToken + ' refresh');
+      await axios
+        .post(config.API_URL + 'auth/login/refresh/', {
+          refresh: RefreshToken,
+        })
+        .then(function (response) {
+          // console.log(response.data);
+          console.log(response.data);
+          AsyncStorage.setItem('userToken', response.data.access);
+          userToken = response.data.access;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      await axios
+        .get(config.API_URL + 'ambulance/', {
+          headers: {Authorization: 'Bearer ' + userToken},
+        })
+        .then(function (response) {
+          // console.log(response.data);
+          setIsData(response.data);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      await setIsLoading(false);
+    };
+    handleRequest();
+  }, []);
   console.log(data);
   return (
     <View>

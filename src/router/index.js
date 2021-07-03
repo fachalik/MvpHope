@@ -1,17 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  Dimensions,
-  ActivityIndicator,
-  ToastAndroid,
-  Alert,
-  Platform,
-} from 'react-native';
+import {ToastAndroid, Platform} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {NavigationActions} from '@react-navigation/compat';
 import {NavigationContainer} from '@react-navigation/native';
 import {AuthContext} from './context';
 import AuthStack from './AuthStack';
@@ -19,8 +9,6 @@ import MainStack from './MainStack';
 import {Splash} from '../pages';
 import config from '../../config';
 import axios from 'react-native-axios';
-import colors from '../assets/colors';
-import {RegistComplete} from '../pages';
 const Router = ({navigation}) => {
   const [isSplash, setIsSplash] = useState(true);
   const [data, setData] = useState({
@@ -77,26 +65,26 @@ const Router = ({navigation}) => {
       let userToken;
       let RefreshToken;
       userToken = null;
-      (RefreshToken = null),
-        await axios
-          .post(config.API_URL + 'auth/login/', {
-            email: email,
-            password: password,
-          })
-          .then(function (response) {
-            console.log(response.data);
-            userToken = response.data.access;
-            RefreshToken = response.data.refresh;
-            AsyncStorage.setItem('RefreshToken', RefreshToken);
-            AsyncStorage.setItem('userToken', userToken);
-            console.log(RefreshToken + 'refresh');
-          })
-          .catch(function (error) {
-            ToastAndroid.show(
-              'Email dan Password yang anda masukkan tidak terdaftar',
-              ToastAndroid.LONG,
-            );
-          });
+      RefreshToken = null;
+      await axios
+        .post(config.API_URL + 'auth/login/', {
+          email: email,
+          password: password,
+        })
+        .then(function (response) {
+          console.log(response.data);
+          userToken = response.data.access;
+          RefreshToken = response.data.refresh;
+          AsyncStorage.setItem('RefreshToken', RefreshToken);
+          AsyncStorage.setItem('userToken', userToken);
+          console.log(RefreshToken + 'refresh');
+        })
+        .catch(function (error) {
+          ToastAndroid.show(
+            'Email dan Password yang anda masukkan tidak terdaftar',
+            ToastAndroid.LONG,
+          );
+        });
       if (userToken) {
         await axios
           .get(config.API_URL + 'profile/me/', {
@@ -191,7 +179,7 @@ const Router = ({navigation}) => {
   return (
     <AuthContext.Provider value={authContext}>
       <NavigationContainer>
-        {loginState.userToken !== null || loginState == undefined ? (
+        {loginState.userToken !== null || loginState === undefined ? (
           <MainStack data={data} />
         ) : (
           <AuthStack />
@@ -202,4 +190,3 @@ const Router = ({navigation}) => {
 };
 
 export default Router;
-const styles = StyleSheet.create({});

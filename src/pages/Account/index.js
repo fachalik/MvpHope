@@ -1,24 +1,21 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState, useContext, useEffect} from 'react';
 import {
   StyleSheet,
   View,
   Text,
   TouchableOpacity,
-  StatusBar,
   SafeAreaView,
-  ActivityIndicator,
   Image,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Title, Caption, TouchableRipple} from 'react-native-paper';
+import {Title} from 'react-native-paper';
 import {Avatar} from '../../assets';
 import {AuthContext} from '../../router/context';
 import Loading from '../../components/Loading';
 import colors from '../../assets/colors';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FeatherIcon from 'react-native-vector-icons/Feather';
-import {color} from 'react-native-reanimated';
 import {LogoTemp} from '../../assets';
 import {
   widthPercentageToDP as wp,
@@ -32,27 +29,30 @@ const Account = ({navigation}) => {
 
   console.log('isLoading' + isLoading);
   useEffect(() => {
-    navigation.addListener('focus', async () => {
-      try {
-        console.log('running');
-        const jsonValue = await AsyncStorage.getItem('UserProfile');
-        await setData(JSON.parse(jsonValue));
-        console.log(JSON.parse(jsonValue));
-        await setIsLoading(false);
-      } catch (e) {
-        //   error reading value
-        console.log(e);
-      }
-    });
-  }, [null]);
+    const handleRequest = () => {
+      navigation.addListener('focus', async () => {
+        try {
+          console.log('running');
+          const jsonValue = await AsyncStorage.getItem('UserProfile');
+          await setData(JSON.parse(jsonValue));
+          console.log(JSON.parse(jsonValue));
+          await setIsLoading(false);
+        } catch (e) {
+          //   error reading value
+          console.log(e);
+        }
+      });
+    };
+    handleRequest();
+  }, [navigation]);
 
   const logOutHandle = async () => {
     await setIsLoading(true);
-    await console.log('isloading true')
+    await console.log('isloading true');
     await setTimeout(() => {
       SignOut();
     }, 2000);
-    await consolog.log('isloading false')
+    await console.log('isloading false');
     await setIsLoading(false);
   };
   return (
@@ -65,7 +65,8 @@ const Account = ({navigation}) => {
           style={{
             borderBottomColor: '#dddddd',
             borderBottomWidth: 1,
-          }}></View>
+          }}
+        />
         <View style={styles.userInfoSection}>
           <View
             style={{
@@ -90,7 +91,8 @@ const Account = ({navigation}) => {
           style={{
             borderBottomColor: '#dddddd',
             borderBottomWidth: 1,
-          }}></View>
+          }}
+        />
         <View style={styles.menuWrapper}>
           <TouchableOpacity
             onPress={() => {
@@ -161,7 +163,7 @@ const styles = StyleSheet.create({
   menu: {
     justifyContent: 'center',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    // justifyContent: 'space-between',
     alignItems: 'center',
     marginVertical: 10,
   },

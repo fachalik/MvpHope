@@ -1,14 +1,6 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {
-  Splash,
-  OnboardingScreen,
-  LoginOrRegist,
-  Login,
-  Register,
-  ForgetPassword,
-} from '../pages';
+import {OnboardingScreen} from '../pages';
 import AuthStack from '../router/AuthStack';
 const Stack = createStackNavigator();
 const FirstLaunchStack = ({navigation}) => {
@@ -29,5 +21,3 @@ const FirstLaunchStack = ({navigation}) => {
 };
 
 export default FirstLaunchStack;
-
-const styles = StyleSheet.create({});

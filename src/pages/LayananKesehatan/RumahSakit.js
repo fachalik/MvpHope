@@ -1,6 +1,7 @@
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable no-shadow */
 import React, {useState, useEffect} from 'react';
 import {
-  ScrollView,
   StyleSheet,
   Text,
   View,
@@ -12,7 +13,6 @@ import colors from '../../assets/colors';
 import axios from 'react-native-axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import config from '../../../config';
-import LoadingV2 from '../../components/LoadingV2';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -69,53 +69,56 @@ const RumahSakit = props => {
       );
     });
   };
-  useEffect(async () => {
-    await setIsLoading(true);
-    var userToken = await AsyncStorage.getItem('userToken');
-    const RefreshToken = await AsyncStorage.getItem('RefreshToken');
-    // await console.log(RefreshToken + ' refresh');
-    await axios
-      .post(config.API_URL + 'auth/login/refresh/', {
-        refresh: RefreshToken,
-      })
-      .then(function (response) {
-        // console.log(response.data);
-        console.log(response.data);
-        AsyncStorage.setItem('userToken', response.data.access);
-        userToken = response.data.access;
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    await axios
-      .get(config.API_URL + 'hospital/', {
-        headers: {Authorization: 'Bearer ' + userToken},
-      })
-      .then(function (response) {
-        // console.log(response.data);
-        response.data.map(item => {
-          setIsData(data => [...data, item]);
+  useEffect(() => {
+    const handleRequest = async () => {
+      await setIsLoading(true);
+      var userToken = await AsyncStorage.getItem('userToken');
+      const RefreshToken = await AsyncStorage.getItem('RefreshToken');
+      // await console.log(RefreshToken + ' refresh');
+      await axios
+        .post(config.API_URL + 'auth/login/refresh/', {
+          refresh: RefreshToken,
+        })
+        .then(function (response) {
+          // console.log(response.data);
+          console.log(response.data);
+          AsyncStorage.setItem('userToken', response.data.access);
+          userToken = response.data.access;
+        })
+        .catch(function (error) {
+          console.log(error);
         });
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    await axios
-      .get(config.API_URL + 'laboratory/', {
-        headers: {Authorization: 'Bearer ' + userToken},
-      })
-      .then(function (response) {
-        // console.log(response.data);
-        response.data.map(item => {
-          setIsData(data => [...data, item]);
+      await axios
+        .get(config.API_URL + 'hospital/', {
+          headers: {Authorization: 'Bearer ' + userToken},
+        })
+        .then(function (response) {
+          // console.log(response.data);
+          response.data.map(item => {
+            setIsData(data => [...data, item]);
+          });
+        })
+        .catch(function (error) {
+          console.log(error);
         });
-        console.log('laboratory ' + response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    await setIsLoading(false);
-  }, [null]);
+      await axios
+        .get(config.API_URL + 'laboratory/', {
+          headers: {Authorization: 'Bearer ' + userToken},
+        })
+        .then(function (response) {
+          // console.log(response.data);
+          response.data.map(item => {
+            setIsData(data => [...data, item]);
+          });
+          console.log('laboratory ' + response.data);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      await setIsLoading(false);
+    };
+    handleRequest();
+  }, []);
 
   // console.log(data);
   return (

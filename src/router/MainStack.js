@@ -1,5 +1,4 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
 import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 import {BottomNavigator} from '../components';
 import {
@@ -24,15 +23,13 @@ import {
 } from '../pages';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {useRoute} from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
-const Stack = createStackNavigator();
 const HomeStack = createStackNavigator();
 const ChatStack = createStackNavigator();
 const AccountStack = createStackNavigator();
 
-const HomeStackScreen = (props, {navigation}) => {
+const HomeStackScreen = props => {
   console.log(props.route.params);
   return (
     <HomeStack.Navigator initialRouteName="Home">
@@ -167,8 +164,7 @@ const HomeStackScreen = (props, {navigation}) => {
   );
 };
 
-const ChatStackScreen = (props, {navigation}) => {
-  const route = useRoute();
+const ChatStackScreen = props => {
   return (
     <ChatStack.Navigator initialRouteName="Chatbot">
       <ChatStack.Screen
@@ -207,7 +203,7 @@ const ChatStackScreen = (props, {navigation}) => {
   );
 };
 
-const AccountStackScreen = (props, {navigation}) => {
+const AccountStackScreen = props => {
   return (
     <AccountStack.Navigator initialRouteName="Account">
       <AccountStack.Screen
@@ -305,5 +301,3 @@ const MainStack = props => {
 };
 
 export default MainStack;
-
-const styles = StyleSheet.create({});

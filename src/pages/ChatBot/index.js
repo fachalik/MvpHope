@@ -1,20 +1,13 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  StatusBar,
-  SafeAreaView,
-  Image,
-  Dimensions,
-} from 'react-native';
+import {StyleSheet, Text, View, StatusBar, Image} from 'react-native';
 import colors from '../../assets/colors';
-import {logo2, Option1, Option2, Option3} from '../../assets';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {color} from 'react-native-reanimated';
 import {ConsultationImage} from '../../assets/images';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-const {width, height} = Dimensions.get('window');
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 const ChatBot = ({navigation}) => {
   return (
     <View style={styles.container}>
@@ -22,7 +15,11 @@ const ChatBot = ({navigation}) => {
       <View style={styles.wrapper}>
         <View style={styles.header}>
           <Text style={styles.Title}>Konsultasi</Text>
-          <Image source={ConsultationImage} resizeMode='cover' style={styles.image} />
+          <Image
+            source={ConsultationImage}
+            resizeMode="cover"
+            style={styles.image}
+          />
         </View>
         <View style={styles.footer}>
           <Text style={styles.Text}>
@@ -64,15 +61,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.white,
-
   },
   wrapper: {
-    flex:1,
+    flex: 1,
     marginVertical: 10,
     marginHorizontal: 30,
   },
   header: {
-    height:hp('100%'),
+    height: hp('100%'),
     flex: 0.5,
     marginTop: 50,
   },

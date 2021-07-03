@@ -1,4 +1,6 @@
-import React, {useState, useEffect} from 'react';
+/* eslint-disable no-shadow */
+/* eslint-disable no-lone-blocks */
+import React, {useState} from 'react';
 import {
   StyleSheet,
   Text,

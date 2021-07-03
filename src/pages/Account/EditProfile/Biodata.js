@@ -1,12 +1,14 @@
-import React, {useState, useEffect} from 'react';
+/* eslint-disable no-unused-vars */
+/* eslint-disable radix */
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable no-undef */
+import React, {useState} from 'react';
 import {
   StyleSheet,
   Text,
   View,
-  Image,
   TextInput,
   TouchableOpacity,
-  Platform,
   Modal,
   Pressable,
   SafeAreaView,
@@ -14,17 +16,12 @@ import {
 import axios from 'react-native-axios';
 import config from '../../../../config';
 import colors from '../../../assets/colors';
-import {Avatar} from '../../../assets';
-import Icon from 'react-native-vector-icons/AntDesign';
-import Feather from 'react-native-vector-icons/Feather';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {color} from 'react-native-reanimated';
-import Loading from '../../../components/Loading';
 const Biodata = props => {
   const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(false);

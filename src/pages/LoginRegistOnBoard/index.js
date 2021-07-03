@@ -1,19 +1,20 @@
-import React, {useState, useEffect} from 'react';
+/* eslint-disable react-native/no-inline-styles */
+import React from 'react';
 import {
   StyleSheet,
   Text,
   View,
   StatusBar,
-  Image,
   TouchableOpacity,
-  Dimensions,
 } from 'react-native';
 import colors from '../../assets/colors';
-import LinearGradient from 'react-native-linear-gradient';
 import {LogoTemp} from '../../assets';
 import Carousel from '../../components/Carousel/Carousel';
 import dummyData from '../../components/Carousel/DummyData';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 const OnboardingScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
@@ -55,7 +56,7 @@ const radius_size = 15;
 const button_height = 50;
 const styles = StyleSheet.create({
   container: {
-    flex:1,
+    flex: 1,
     backgroundColor: colors.white,
   },
   header: {
@@ -69,7 +70,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     alignItems: 'center',
     justifyContent: 'center',
-    alignItems: 'center',
   },
 
   RightButton: {

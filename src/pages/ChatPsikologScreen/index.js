@@ -1,13 +1,11 @@
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-shadow */
 import React, {useState, useEffect, useCallback} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {useRoute} from '@react-navigation/native';
+import {StyleSheet, View} from 'react-native';
 import {Bubble, GiftedChat, InputToolbar, Send} from 'react-native-gifted-chat';
-import {MaterialCommunityIcons} from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {FontAwesome} from 'react-native-vector-icons/FontAwesome';
 import colors from '../../assets/colors';
-import {color} from 'react-native-reanimated';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {logo2} from '../../assets';
 const ChatPsikologScreen = ({navigation}) => {
@@ -26,7 +24,7 @@ const ChatPsikologScreen = ({navigation}) => {
         user: BOT,
       },
     ]);
-  }, []);
+  }, [BOT]);
 
   const onSend = useCallback((messages = []) => {
     setMessages(previousMessages =>

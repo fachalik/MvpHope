@@ -1,8 +1,6 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {
-  LoginOrRegist,
   LoginRegistOnBoard,
   Login,
   RegisterStep3,
@@ -43,5 +41,3 @@ const AuthStack = ({navigation}) => {
 };
 
 export default AuthStack;
-
-const styles = StyleSheet.create({});

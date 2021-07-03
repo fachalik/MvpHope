@@ -1,19 +1,11 @@
-import React, {useState, useEffect} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
+/* eslint-disable no-undef */
+/* eslint-disable react-native/no-inline-styles */
+import React, {useState} from 'react';
+import {StyleSheet, Text, View, Image, TextInput} from 'react-native';
 import colors from '../../../assets/colors';
 import {Avatar} from '../../../assets';
-import Icon from 'react-native-vector-icons/AntDesign';
-import Feather from 'react-native-vector-icons/Feather';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 const Akun = props => {
-  const [data, setData] = useState({
+  const [data] = useState({
     email: props.props.params.user.email,
     password: '',
     ConfirmPassword: '',
@@ -22,7 +14,6 @@ const Akun = props => {
     emailIsEmpty: false,
     passwordIsEmpty: false,
   });
-  console.log();
   return (
     <View>
       <View style={styles.wrapper}>

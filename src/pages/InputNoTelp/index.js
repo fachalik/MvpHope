@@ -1,4 +1,6 @@
-import React, {useState, useEffect} from 'react';
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable no-alert */
+import React, {useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -23,7 +25,7 @@ const InputNoTelp = ({navigation}) => {
     noOrtuIsEmpty: true,
   });
   const handleNoteman = val => {
-    if (val.length != 0) {
+    if (val.length !== 0) {
       setData({
         ...data,
         noTeman: val,
@@ -39,7 +41,7 @@ const InputNoTelp = ({navigation}) => {
   };
 
   const handleNoOrtu = val => {
-    if (val.length != 0) {
+    if (val.length !== 0) {
       setData({
         ...data,
         noOrtu: val,

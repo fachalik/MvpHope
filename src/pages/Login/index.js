@@ -1,27 +1,23 @@
-import React, {useState, useEffect} from 'react';
+/* eslint-disable react-native/no-inline-styles */
+import React, {useState} from 'react';
 import {
-  Button,
   StyleSheet,
   Text,
   View,
-  Image,
   Dimensions,
   TextInput,
   TouchableOpacity,
   KeyboardAvoidingView,
   ScrollView,
-  ActivityIndicator,
 } from 'react-native';
 import color from '../../assets/colors';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
-import LinearGradient from 'react-native-linear-gradient';
 import BackButton from '../../components/BackButton';
 import {AuthContext} from '../../router/context';
 import Loading from '../../components/Loading';
 const Login = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = React.useState('');
   const [data, setData] = useState({
     email: '',
     password: '',
@@ -33,7 +29,7 @@ const Login = ({navigation}) => {
   });
   const {SignIn} = React.useContext(AuthContext);
   const textInputChangeEmail = val => {
-    if (val.length != 0) {
+    if (val.length !== 0) {
       var pattern = new RegExp(
         /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i,
       );
@@ -56,7 +52,7 @@ const Login = ({navigation}) => {
   };
 
   const handlePassword = val => {
-    if (val.length != 0) {
+    if (val.length !== 0) {
       setData({
         ...data,
         password: val,
@@ -71,7 +67,7 @@ const Login = ({navigation}) => {
     }
   };
 
-  const updateSecureTextEntry = val => {
+  const updateSecureTextEntry = () => {
     setData({
       ...data,
       secureTextEntry: !data.secureTextEntry,
@@ -158,7 +154,6 @@ const Login = ({navigation}) => {
               onPress={() => navigation.navigate('ForgetPassword')}>
               <Text
                 style={{
-                  fontWeight: '800',
                   fontWeight: 'bold',
                 }}>
                 Lupa Password?

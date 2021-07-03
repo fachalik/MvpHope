@@ -1,13 +1,15 @@
-import React, {useState, useEffect} from 'react';
+/* eslint-disable no-shadow */
+/* eslint-disable no-lone-blocks */
+/* eslint-disable no-unused-vars */
+/* eslint-disable react-native/no-inline-styles */
+import React, {useState} from 'react';
 import {
   ScrollView,
   StyleSheet,
   Text,
   View,
   TouchableOpacity,
-  ActivityIndicator,
   FlatList,
-  Touchable,
 } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import colors from '../../assets/colors';
@@ -91,7 +93,7 @@ const LayananKesehatan = ({route, navigation}) => {
     <View style={styles.panel}>
       <View style={{flexDirection: 'row'}}>
         <View style={{flexDirection: 'row'}}>
-          <CheckBox />
+          <CheckBox />x
           <Text style={{alignSelf: 'center', fontSize: 12}}>
             Poliklink Bedah
           </Text>
@@ -114,7 +116,7 @@ const LayananKesehatan = ({route, navigation}) => {
   const renderHeader = () => (
     <View style={styles.header}>
       <View style={styles.panelHeader}>
-        <View style={styles.panelHandle}></View>
+        <View style={styles.panelHandle} />
       </View>
     </View>
   );
@@ -165,9 +167,7 @@ const LayananKesehatan = ({route, navigation}) => {
             marginVertical: 10,
           }}>
           <Text style={{alignSelf: 'center'}}>Cari layanan kesehatan</Text>
-          <TouchableOpacity
-            style={{backgroundColor: colors.gray, padding: 10}}
-            onPress={() => handleFilter()}>
+          <TouchableOpacity style={{backgroundColor: colors.gray, padding: 10}}>
             <Text>Filter</Text>
           </TouchableOpacity>
         </View>
@@ -197,7 +197,6 @@ const LayananKesehatan = ({route, navigation}) => {
             </View>
           </TouchableOpacity>
         </View>
-        <View></View>
       </View>
       <ScrollView style={styles.wrapper}>
         <View>

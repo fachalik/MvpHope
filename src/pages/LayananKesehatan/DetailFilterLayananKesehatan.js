@@ -1,14 +1,14 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import React from 'react';
+import {StyleSheet, Text, View} from 'react-native';
 
 const DetailFilterLayananKesehatan = () => {
-    return (
-        <View>
-            <Text>Detail</Text>
-        </View>
-    )
-}
+  return (
+    <View>
+      <Text>Detail</Text>
+    </View>
+  );
+};
 
-export default DetailFilterLayananKesehatan
+export default DetailFilterLayananKesehatan;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

@@ -19,7 +19,7 @@ const ForgetPassword = ({navigation}) => {
     check_TextEmail: false,
   });
   const textInputChangeEmail = val => {
-    if (val.length != 0) {
+    if (val.length !== 0) {
       setData({
         ...data,
         email: val,
@@ -57,7 +57,7 @@ const ForgetPassword = ({navigation}) => {
               <Feather name="check-circle" size={20} color={color.yellow} />
             ) : null}
           </View>
-          <TouchableOpacity onPress={() => alert('Kirim Email')}>
+          <TouchableOpacity>
             <LinearGradient
               colors={['#F2C94C', '#F4A186']}
               style={styles.buttonMasuk}>
@@ -74,19 +74,19 @@ export default ForgetPassword;
 const windowWidth = Dimensions.get('screen').width;
 const radius_size = 15;
 const button_height = 50;
-const width_button = windowWidth -60;
-const makeitcenter = windowWidth*0.5;
+const width_button = windowWidth - 60;
+const makeitcenter = windowWidth * 0.5;
 const styles = StyleSheet.create({
   container: {
     height: '100%',
     backgroundColor: color.white,
   },
-  wrapper:{
+  wrapper: {
     marginVertical: 50,
-    marginHorizontal:30,
+    marginHorizontal: 30,
   },
   Row: {
-    marginVertical:makeitcenter,
+    marginVertical: makeitcenter,
     alignItems: 'center',
     justifyContent: 'center',
   },

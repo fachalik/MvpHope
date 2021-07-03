@@ -1,12 +1,6 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState, useEffect} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  Linking,
-} from 'react-native';
+import {StyleSheet, View, TouchableOpacity, Image, Linking} from 'react-native';
 import colors from '../../assets/colors';
 import {
   widthPercentageToDP as wp,
@@ -31,7 +25,7 @@ const SosScreen = ({navigation}) => {
         console.log(e);
       }
     });
-  }, [null]);
+  }, [navigation]);
   console.log(noTeman, noOrtu);
   return (
     <View style={styles.container}>

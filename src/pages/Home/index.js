@@ -1,3 +1,5 @@
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable no-unused-vars */
 import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
@@ -7,9 +9,7 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
-  TextInput,
   Dimensions,
-  Linking,
 } from 'react-native';
 import {
   Avatar,
@@ -17,39 +17,21 @@ import {
   InfoObat,
   RiwayatPenyakit,
   LayananKesehatan,
-  Teman,
-  SOS,
-  OrangTua,
-  Ambulance,
   TelfonSOS,
 } from '../../assets/images';
 import colors from '../../assets/colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {dummyData} from './Data';
 import Carousel from '../../components/CarouselHome/Carousel';
-import {Modal, Portal, Provider, Searchbar} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
-import axios from 'react-native-axios';
-import config from '../../../config';
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {useNavigation} from '@react-navigation/native';
 const Home = props => {
   const navigation = useNavigation();
   const [searchQuery, setSearchQuery] = useState('');
   const [data, setData] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const onChangeSearch = query => setSearchQuery(query);
-  const containerStyle = {
-    width: 300,
-    height: 100,
-    backgroundColor: colors.white,
-    borderRadius: 10,
-    alignSelf: 'center',
-  };
   useEffect(() => {
     navigation.addListener('focus', async () => {
       try {
@@ -63,7 +45,7 @@ const Home = props => {
         console.log(e);
       }
     });
-  }, [null]);
+  }, [navigation]);
   console.log(data);
 
   const LayananUtama = [
@@ -147,7 +129,8 @@ const Home = props => {
           <View style={styles.headerItem}>
             <Image
               source={Avatar}
-              style={{alignSelf: 'center', marginVertical: 2}}></Image>
+              style={{alignSelf: 'center', marginVertical: 2}}
+            />
           </View>
           {/* location */}
           <View
@@ -205,10 +188,8 @@ const Home = props => {
 };
 
 export default Home;
-const windowWidth = Dimensions.get('screen').width;
 const radius_size = 15;
 const button_height = 50;
-const width_button = windowWidth - 60;
 const styles = StyleSheet.create({
   container: {
     flex: 1,

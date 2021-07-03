@@ -1,13 +1,11 @@
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable no-shadow */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, useEffect, useCallback} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {useRoute} from '@react-navigation/native';
+import {StyleSheet, View} from 'react-native';
 import {Bubble, GiftedChat, InputToolbar, Send} from 'react-native-gifted-chat';
-import {MaterialCommunityIcons} from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {FontAwesome} from 'react-native-vector-icons/FontAwesome';
 import colors from '../../assets/colors';
-import {color} from 'react-native-reanimated';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {logo2} from '../../assets';
 import config from '../../../config';
@@ -17,20 +15,7 @@ import uuid from 'react-native-uuid';
 
 const ChatBotScreen = ({navigation}) => {
   const [messages, setMessages] = useState([]);
-  const [responTempMsg, setresponTempMsg] = useState([]);
   const [user, setUser] = useState('');
-  const [responseMessage, setResponseMessage] = useState([
-    {
-      _id: '',
-      text: '',
-      createdAt: new Date(),
-      user: {
-        _id: '',
-        name: '',
-        avatar: '',
-      },
-    },
-  ]);
 
   const BOT = {
     _id: 'bot_' + user,
@@ -55,7 +40,7 @@ const ChatBotScreen = ({navigation}) => {
             message: 'get_conversation',
           })
           .then(function (response) {
-            console.log(response.data[0])
+            console.log(response.data[0]);
             response.data[0].custom.map(item => {
               if (!item.text === 'get_conversation' || !item.text === null) {
                 setMessages(previousMessages =>
@@ -79,7 +64,7 @@ const ChatBotScreen = ({navigation}) => {
         console.log(e);
       }
     });
-  }, [null]);
+  }, [BOT, navigation]);
 
   // useEffect(() => {
   //   setMessages([]);

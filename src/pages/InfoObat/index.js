@@ -1,4 +1,6 @@
-import React, {useState, useEffect} from 'react';
+/* eslint-disable no-unused-vars */
+/* eslint-disable react-native/no-inline-styles */
+import React, {useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,13 +8,8 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
-  FlatList,
-  ActivityIndicator,
 } from 'react-native';
 import dummyData from './dummyData';
-import axios from 'react-native-axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import config from '../../../config';
 import BottomSheet from 'reanimated-bottom-sheet';
 import LoadingV2 from '../../components/LoadingV2';
 import Animated, {color} from 'react-native-reanimated';
@@ -70,7 +67,7 @@ const InfoObat = ({route, navigation}) => {
   const renderHeader = () => (
     <View style={styles.header}>
       <View style={styles.panelHeader}>
-        <View style={styles.panelHandle}></View>
+        <View style={styles.panelHandle} />
       </View>
     </View>
   );

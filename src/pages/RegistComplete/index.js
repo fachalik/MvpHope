@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   buttonMasuk: {
-    marginTop:10,
+    marginTop: 10,
     alignSelf: 'center',
     backgroundColor: colors.yellow,
     fontWeight: 'bold',
@@ -71,5 +71,4 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Bold',
     color: colors.white,
   },
-
 });
