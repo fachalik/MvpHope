@@ -36,6 +36,7 @@ const InfoObat = ({route, navigation}) => {
     efekSamping: '',
     produsen: '',
     perhatian: '',
+    kategori: '',
   });
   const request = route.params;
   console.log(request.request);
@@ -60,6 +61,8 @@ const InfoObat = ({route, navigation}) => {
         <Text style={styles.contents}>{detail.produsen}</Text>
         <Text style={styles.title}>Perhatian</Text>
         <Text style={styles.contents}>{detail.perhatian}</Text>
+        <Text style={styles.title}>Perhatian</Text>
+        <Text style={styles.contents}>{detail.kategori}</Text>
       </View>
     </View>
   );
@@ -90,41 +93,42 @@ const InfoObat = ({route, navigation}) => {
       efekSamping: item.side_effect,
       produsen: item.producer,
       perhatian: item.consideration,
+      kategori: item.medicine_group,
     });
   };
   const bs = React.createRef();
   const fall = new Animated.Value(1);
-  useEffect(async () => {
-    setIsLoading(true);
-    var userToken = await AsyncStorage.getItem('userToken');
-    const RefreshToken = await AsyncStorage.getItem('RefreshToken');
-    await console.log(RefreshToken + ' refresh');
-    await axios
-      .post(config.API_URL + 'auth/login/refresh/', {
-        refresh: RefreshToken,
-      })
-      .then(function (response) {
-        // console.log(response.data);
-        console.log(response.data);
-        AsyncStorage.setItem('userToken', response.data.access);
-        userToken = response.data.access;
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    await axios
-      .get(config.API_URL + 'medicine/?kind=AS', {
-        headers: {Authorization: 'Bearer ' + userToken},
-      })
-      .then(function (response) {
-        // console.log(response.data);
-        setIsData(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    await setIsLoading(false);
-  }, [null]);
+  // useEffect(async () => {
+  //   setIsLoading(true);
+  //   var userToken = await AsyncStorage.getItem('userToken');
+  //   const RefreshToken = await AsyncStorage.getItem('RefreshToken');
+  //   await console.log(RefreshToken + ' refresh');
+  //   await axios
+  //     .post(config.API_URL + 'auth/login/refresh/', {
+  //       refresh: RefreshToken,
+  //     })
+  //     .then(function (response) {
+  //       // console.log(response.data);
+  //       console.log(response.data);
+  //       AsyncStorage.setItem('userToken', response.data.access);
+  //       userToken = response.data.access;
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error);
+  //     });
+  //   await axios
+  //     .get(config.API_URL + 'medicine/?kind=AS', {
+  //       headers: {Authorization: 'Bearer ' + userToken},
+  //     })
+  //     .then(function (response) {
+  //       // console.log(response.data);
+  //       setIsData(response.data);
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error);
+  //     });
+  //   await setIsLoading(false);
+  // }, [null]);
   const Obat = () => {
     return data.map(item => {
       return (
