@@ -1,11 +1,11 @@
 const colors = {
-    black:'#000000',
-    gray_dark:'#666666',
-    soft_gray:'#FAF9F9',
-    gray:'#e5e5e5',
-    blue:'#1C215D',
-    white:'#FFFFFF',
-    yellow:'#F9A826',
-    yellow_shadow:'#db8b0b',
-}
+  white: '#F9F9F9',
+  black: '#000000',
+  orange: '#F9A825',
+  soft_orange: '#EBBC6E',
+  gray: '#C2C2C2',
+  gray_dark: '#7C7C7C',
+  soft_grayOrange: '#F7F6F1',
+  backgroundColor: '#FFFFFF',
+};
 export default colors;

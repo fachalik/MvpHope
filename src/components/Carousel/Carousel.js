@@ -1,3 +1,6 @@
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable no-undef */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, useEffect} from 'react';
 import {
   View,
@@ -64,7 +67,7 @@ const Carousel = ({data}) => {
                   opacity,
                   height: 10,
                   width: 10,
-                  backgroundColor: colors.yellow,
+                  backgroundColor: colors.orange,
                   margin: 8,
                   borderRadius: 5,
                 }}
@@ -81,7 +84,7 @@ const Carousel = ({data}) => {
 };
 
 const styles = StyleSheet.create({
-  dotView: {flexDirection: 'row', justifyContent: 'center',marginTop:-60},
+  dotView: {flexDirection: 'row', justifyContent: 'center', marginTop: -60},
 });
 
 export default Carousel;
