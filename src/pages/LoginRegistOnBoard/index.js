@@ -1,19 +1,19 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
   View,
   StatusBar,
+  Image,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 import colors from '../../assets/colors';
+import LinearGradient from 'react-native-linear-gradient';
 import {LogoTemp} from '../../assets';
 import Carousel from '../../components/Carousel/Carousel';
 import dummyData from '../../components/Carousel/DummyData';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 const OnboardingScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
@@ -51,23 +51,25 @@ const OnboardingScreen = ({navigation}) => {
 };
 
 export default OnboardingScreen;
-const radius_size = 5;
+const radius_size = 15;
 const button_height = 50;
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: colors.backgroundColor,
+    flex:1,
+    backgroundColor: colors.white,
   },
   header: {
     height: hp('70%'),
     marginTop: 50,
-    backgroundColor: colors.backgroundColor,
+    backgroundColor: colors.white,
+    // height: 100,
   },
   footer: {
     height: hp('20%'),
-    backgroundColor: colors.backgroundColor,
+    backgroundColor: colors.white,
     alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
   },
 
   RightButton: {
@@ -121,31 +123,37 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: wp('90%'),
     height: button_height,
-    borderRadius: radius_size,
-    borderWidth: 2,
+    borderTopLeftRadius: radius_size,
+    borderTopRightRadius: radius_size,
+    borderBottomLeftRadius: radius_size,
+    borderBottomRightRadius: radius_size,
+    borderWidth: 3,
     borderColor: '#F2C94C',
   },
 
   textRegist: {
-    backgroundColor: colors.orange,
+    backgroundColor: colors.yellow,
     fontWeight: 'bold',
     alignItems: 'center',
     justifyContent: 'center',
     width: wp('90%'),
     height: button_height,
-    borderRadius: radius_size,
+    borderTopLeftRadius: radius_size,
+    borderTopRightRadius: radius_size,
+    borderBottomLeftRadius: radius_size,
+    borderBottomRightRadius: radius_size,
     borderColor: '#F2C94C',
   },
 
   buttonTextRegister: {
     fontSize: 16,
-    fontFamily: 'Karla-Bold',
+    fontFamily: 'Roboto-Bold',
     color: '#F9DB7E',
     // color: colors.white,
   },
   buttonTextLogin: {
     fontSize: 16,
-    fontFamily: 'Karla-Bold',
+    fontFamily: 'Roboto-Bold',
     color: colors.white,
     // color: '#F9DB7E',
   },

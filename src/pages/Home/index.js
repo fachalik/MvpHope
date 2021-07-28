@@ -7,7 +7,9 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  TextInput,
   Dimensions,
+  Linking,
 } from 'react-native';
 import {
   Avatar,
@@ -15,18 +17,26 @@ import {
   InfoObat,
   RiwayatPenyakit,
   LayananKesehatan,
+  Teman,
+  SOS,
+  OrangTua,
+  Ambulance,
   TelfonSOS,
 } from '../../assets/images';
 import colors from '../../assets/colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {dummyData} from './Data';
 import Carousel from '../../components/CarouselHome/Carousel';
+import {Modal, Portal, Provider, Searchbar} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+import axios from 'react-native-axios';
+import config from '../../../config';
 import {useNavigation} from '@react-navigation/native';
-import {getListAmbulance} from '../../services';
-
 const Home = props => {
   const navigation = useNavigation();
   const [searchQuery, setSearchQuery] = useState('');
@@ -40,15 +50,11 @@ const Home = props => {
     borderRadius: 10,
     alignSelf: 'center',
   };
-
   useEffect(() => {
     navigation.addListener('focus', async () => {
       try {
         console.log('running');
         const jsonValue = await AsyncStorage.getItem('UserProfile');
-        // const Token = await AsyncStorage.getItem('userToken');
-        // console.log(Token);
-        // console.log(getListAmbulance(Token));
         await setData(JSON.parse(jsonValue));
         console.log(JSON.parse(jsonValue));
         await setIsLoading(false);
@@ -57,7 +63,7 @@ const Home = props => {
         console.log(e);
       }
     });
-  }, [navigation]);
+  }, [null]);
   console.log(data);
 
   const LayananUtama = [

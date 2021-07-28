@@ -1,21 +1,24 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
+  Button,
   StyleSheet,
   Text,
   View,
+  Image,
   Dimensions,
   TextInput,
   TouchableOpacity,
   KeyboardAvoidingView,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import color from '../../assets/colors';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
+import LinearGradient from 'react-native-linear-gradient';
 import BackButton from '../../components/BackButton';
 import {AuthContext} from '../../router/context';
 import Loading from '../../components/Loading';
-import colors from '../../assets/colors';
 const Login = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = React.useState('');
@@ -51,6 +54,7 @@ const Login = ({navigation}) => {
       });
     }
   };
+
   const handlePassword = val => {
     if (val.length != 0) {
       setData({
@@ -66,12 +70,14 @@ const Login = ({navigation}) => {
       });
     }
   };
+
   const updateSecureTextEntry = val => {
     setData({
       ...data,
       secureTextEntry: !data.secureTextEntry,
     });
   };
+
   const loginHandle = async (email, password) => {
     await setIsLoading(true);
     console.log(email, password);
@@ -86,7 +92,7 @@ const Login = ({navigation}) => {
           <BackButton navigation={navigation} />
           <Text style={styles.title}>Selamat Datang</Text>
           <Text style={styles.text}>
-            Masuk dengan menggunakan e-mail atau salah satu opsi dibawah
+            Masuk dengan menggunakan e-mail atau salah satu opsi dibawah ini
           </Text>
           <View style={styles.form}>
             {/* // Input Form for Username */}
@@ -94,6 +100,7 @@ const Login = ({navigation}) => {
               <Text style={{fontFamily: 'Karla-Medium'}}>Email</Text>
             </View>
             <View style={styles.ViewInput}>
+              <Icon name="mail" size={20} color={color.yellow} />
               <TextInput
                 style={styles.InputText}
                 placeholder="Mohon masukkan e-mail anda"
@@ -113,6 +120,7 @@ const Login = ({navigation}) => {
               <Text style={{fontFamily: 'Karla-Medium'}}>Kata sandi</Text>
             </View>
             <View style={styles.ViewInput}>
+              <Icon name="lock" size={20} color={color.yellow} />
               <TextInput
                 secureTextEntry={data.secureTextEntry ? true : false}
                 style={styles.InputText}
@@ -147,28 +155,23 @@ const Login = ({navigation}) => {
           </TouchableOpacity>
           <View style={styles.other}>
             <TouchableOpacity
-              onPress={() => navigation.navigate('RegisterStep1')}>
-              <Text
-                style={{
-                  fontFamily: 'Karla-Regular',
-                  marginVertical: 10,
-                }}>
-                Belum Punya Akun Hope?{' '}
-                <Text
-                  style={{color: color.orange, fontFamily: 'Karla-SemiBold'}}>
-                  Daftar Sekarang
-                </Text>
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
               onPress={() => navigation.navigate('ForgetPassword')}>
               <Text
                 style={{
-                  fontFamily: 'Karla-SemiBold',
-                  color: colors.orange,
-                  marginVertical: 10,
+                  fontWeight: '800',
+                  fontWeight: 'bold',
                 }}>
                 Lupa Password?
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('RegisterStep1')}>
+              <Text
+                style={{
+                  fontWeight: 'bold',
+                }}>
+                Belum Punya Akun?{' '}
+                <Text style={{color: color.yellow}}>Daftar</Text>
               </Text>
             </TouchableOpacity>
           </View>
@@ -181,7 +184,7 @@ const Login = ({navigation}) => {
 
 export default Login;
 const windowWidth = Dimensions.get('screen').width;
-const radius_size = 5;
+const radius_size = 15;
 const button_height = 50;
 const width_button = windowWidth - 60;
 const styles = StyleSheet.create({
@@ -200,13 +203,12 @@ const styles = StyleSheet.create({
   },
   title: {
     marginTop: 30,
-    fontFamily: 'Poppins-Bold',
-    fontSize: 34,
+    fontFamily: 'Roboto-Bold',
+    fontSize: 32,
   },
   text: {
-    width: 300,
-    fontFamily: 'Karla-SemiBold',
-    fontSize: 16,
+    width: 250,
+    fontFamily: 'Roboto-Regular',
     marginTop: 5,
     opacity: 0.4,
   },
@@ -217,11 +219,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 10,
-    borderWidth: 1,
+    borderWidth: 2,
     marginTop: 10,
-    borderColor: color.gray,
-    borderRadius: 5,
-    paddingVertical: 5,
+    borderColor: color.yellow,
+    borderRadius: 10,
+    paddingVertical: 2,
   },
   InputText: {
     flex: 1,
@@ -245,7 +247,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: width_button,
     height: button_height,
-    borderRadius: radius_size,
+    borderTopLeftRadius: radius_size,
+    borderTopRightRadius: radius_size,
+    borderBottomLeftRadius: radius_size,
+    borderBottomRightRadius: radius_size,
   },
   buttonMasukDisable: {
     alignSelf: 'center',
@@ -255,7 +260,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: width_button,
     height: button_height,
-    borderRadius: radius_size,
+    borderTopLeftRadius: radius_size,
+    borderTopRightRadius: radius_size,
+    borderBottomLeftRadius: radius_size,
+    borderBottomRightRadius: radius_size,
   },
   buttonTextMasuk: {
     fontSize: 16,
@@ -264,13 +272,12 @@ const styles = StyleSheet.create({
   },
   buttonTextMasukDisable: {
     fontSize: 16,
-    fontFamily: 'Karla-Bold',
+    fontFamily: 'Roboto-Bold',
     color: color.white,
   },
   other: {
-    alignItems: 'center',
     marginVertical: 10,
-    flexDirection: 'column',
-    justifyContent: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });

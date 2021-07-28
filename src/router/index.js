@@ -1,6 +1,17 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, ToastAndroid, Platform} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Dimensions,
+  ActivityIndicator,
+  ToastAndroid,
+  Alert,
+  Platform,
+} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {NavigationActions} from '@react-navigation/compat';
 import {NavigationContainer} from '@react-navigation/native';
 import {AuthContext} from './context';
 import AuthStack from './AuthStack';
@@ -8,7 +19,8 @@ import MainStack from './MainStack';
 import {Splash} from '../pages';
 import config from '../../config';
 import axios from 'react-native-axios';
-
+import colors from '../assets/colors';
+import {RegistComplete} from '../pages';
 const Router = ({navigation}) => {
   const [isSplash, setIsSplash] = useState(true);
   const [data, setData] = useState({
@@ -141,35 +153,35 @@ const Router = ({navigation}) => {
     };
   }, []);
   console.log(loginState.userToken);
-  // useEffect(() => {
-  //   setTimeout(async () => {
-  //     let userToken;
-  //     userToken = null;
-  //     try {
-  //       userToken = await AsyncStorage.getItem('userToken');
-  //       let profile = await AsyncStorage.getItem('UserProfile');
-  //       let parseProfile = JSON.parse(profile);
-  //       setData({
-  //         ...data,
-  //         user: {
-  //           email: parseProfile.user.email,
-  //           date_joine d: parseProfile.user.date_joined,
-  //         },
-  //         first_name: parseProfile.first_name,
-  //         last_name: parseProfile.last_name,
-  //         weight: parseProfile.weight,
-  //         height: parseProfile.height,
-  //         job: parseProfile.job,
-  //         activities: parseProfile.activities,
-  //         disease_history: parseProfile.disease_history,
-  //       });
-  //       console.log(userToken);
-  //     } catch (e) {
-  //       console.log(e);
-  //     }
-  //     dispatch({type: 'RETRIVE_TOKEN', token: userToken});
-  //   }, 1000);
-  // });
+  useEffect(() => {
+    setTimeout(async () => {
+      let userToken;
+      userToken = null;
+      try {
+        userToken = await AsyncStorage.getItem('userToken');
+        let profile = await AsyncStorage.getItem('UserProfile');
+        let parseProfile = JSON.parse(profile);
+        setData({
+          ...data,
+          user: {
+            email: parseProfile.user.email,
+            date_joined: parseProfile.user.date_joined,
+          },
+          first_name: parseProfile.first_name,
+          last_name: parseProfile.last_name,
+          weight: parseProfile.weight,
+          height: parseProfile.height,
+          job: parseProfile.job,
+          activities: parseProfile.activities,
+          disease_history: parseProfile.disease_history,
+        });
+        console.log(userToken);
+      } catch (e) {
+        console.log(e);
+      }
+      dispatch({type: 'RETRIVE_TOKEN', token: userToken});
+    }, 1000);
+  }, []);
   if (Platform.OS === 'android') {
     if (isSplash) {
       return <Splash />;
