@@ -11,9 +11,6 @@ import {
   MulutTenggorokan,
   Kolesterol,
   TulangSendi,
-  Diet,
-  Mata,
-  Kulit,
 } from '../../assets';
 const CodeMedicine = [
   {
@@ -75,21 +72,6 @@ const CodeMedicine = [
     sfMedicinefor: 'TSO',
     medicinefor: 'Tulang, Sendi, dan Otot',
     image: TulangSendi,
-  },
-  {
-    sfMedicinefor: 'DT',
-    medicinefor: 'Diet',
-    image: Diet,
-  },
-  {
-    sfMedicinefor: 'MA',
-    medicinefor: 'Mata',
-    image: Mata,
-  },
-  {
-    sfMedicinefor: 'KU',
-    medicinefor: 'Kulit',
-    image: Kulit,
   },
 ];
 

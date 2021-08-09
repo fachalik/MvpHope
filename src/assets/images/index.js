@@ -33,12 +33,8 @@ import TelfonSOS from './TelfonSOS.png';
 import Teman from './Teman.png';
 import TulangSendi from './TulangSendi.png';
 import VitaminSupplement from './VitaminSupplement.png';
-import Carousel1 from './Carrousel1.png';
 import Carousel2 from './Carrousel2.png';
 import Carousel3 from './Carrousel3.png';
-import Diet from './Diet.png';
-import Mata from './Mata.png';
-import Kulit from './Kulit.png';
 export {
   Avatar,
   SplashBackground,
@@ -75,10 +71,6 @@ export {
   Teman,
   TulangSendi,
   VitaminSupplement,
-  Carousel1,
   Carousel2,
   Carousel3,
-  Diet,
-  Mata,
-  Kulit,
 };

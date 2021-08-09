@@ -7,9 +7,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   FlatList,
-  Touchable,
 } from 'react-native';
-import CheckBox from '@react-native-community/checkbox';
 import colors from '../../assets/colors';
 import RumahSakit from './RumahSakit';
 import Ambulance from './Ambulance';
@@ -28,7 +26,27 @@ const LayananKesehatan = ({route, navigation}) => {
     layanan: '',
     layananpoliklinik: [],
   });
-
+  const [checkBox, setCheckBox] = useState({
+    polBedah: false,
+    polSaraf: false,
+    dokterUmum: false,
+    polGigiSpes: false,
+    polAnak: false,
+    polGizi: false,
+    polMata: false,
+    MCU: false,
+    polRadiologi: false,
+    vaksinasi: false,
+    polJantung: false,
+    polKulit: false,
+    polParu: false,
+    polPenyDalam: false,
+    polJiwa: false,
+    polFisik: false,
+    polTHT: false,
+    polAnestesiologi: false,
+    polKandungan: false,
+  });
   const renderInner = () => (
     <View style={styles.panel}>
       <View style={{marginHorizontal: 30}}>
@@ -87,30 +105,13 @@ const LayananKesehatan = ({route, navigation}) => {
       </View>
     </View>
   );
-  const renderInnerFilter = () => (
-    <View style={styles.panel}>
-      <View style={{flexDirection: 'row'}}>
-        <View style={{flexDirection: 'row'}}>
-          <CheckBox />
-          <Text style={{alignSelf: 'center', fontSize: 12}}>
-            Poliklink Bedah
-          </Text>
-        </View>
-        <View style={{flexDirection: 'row'}}>
-          <CheckBox />
-          <Text style={{alignSelf: 'center', fontSize: 12}}>
-            Poliklink Jantung dan pembuluh darah
-          </Text>
-        </View>
-        <View style={{flexDirection: 'row'}}>
-          <CheckBox />
-          <Text style={{alignSelf: 'center', fontSize: 12}}>
-            Poliklink Jantung dan pembuluh darah
-          </Text>
-        </View>
-      </View>
-    </View>
-  );
+  // const renderInnerFilter = () => (
+  //   <View style={styles.panel}>
+  //     <View style={{marginHorizontal: 30}}>
+  //       <Text style={styles.bigTitle}>{}</Text>
+  //     </View>
+  //   </View>
+  // );
   const renderHeader = () => (
     <View style={styles.header}>
       <View style={styles.panelHeader}>
@@ -120,7 +121,7 @@ const LayananKesehatan = ({route, navigation}) => {
   );
 
   const bs = React.createRef();
-  const bsFilter = React.createRef();
+  // const bsFilter = React.createRef();
   const fall = new Animated.Value(1);
 
   const On = () => {
@@ -132,7 +133,10 @@ const LayananKesehatan = ({route, navigation}) => {
   const handleSnapRumahSakit = () => {
     bs.current.snapTo(0);
   };
-
+  const handleFilter = () => {
+    // bsFilter.current.snapTo(0);
+    alert('Filter belum tersedia')
+  };
   return (
     <View style={styles.container}>
       <BottomSheet
@@ -144,6 +148,15 @@ const LayananKesehatan = ({route, navigation}) => {
         callbackNode={fall}
         enabledGestureInteraction={true}
       />
+      {/* <BottomSheet
+        ref={bsFilter}
+        snapPoints={[450, 0]}
+        renderContent={renderInnerFilter}
+        renderHeader={renderHeader}
+        initialSnap={1}
+        callbackNode={fall}
+        enabledGestureInteraction={true}
+      /> */}
       <View style={styles.wrapper}>
         <TouchableOpacity
           onPress={() => {

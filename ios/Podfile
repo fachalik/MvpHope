@@ -17,8 +17,6 @@ target 'hopeMvp' do
 
   pod 'ReactNativeGetLocation', :path => '../node_modules/react-native-get-location'
 
-  pod 'RNCCheckbox', :path => '../node_modules/@react-native-community/checkbox'
-
   target 'hopeMvpTests' do
     inherit! :complete
     # Pods for testing

@@ -26,8 +26,6 @@ import SearchLayananKesehatan from './Search/SearchLayananKesehatan';
 import DetailSearchLayananKesehatan from './Search/DetailSearchLayananKesehatan';
 import SosScreen from './SosScreen';
 import InputNoTelp from './InputNoTelp';
-import FilterLayananKesehatan from './LayananKesehatan/FilterLayananKesehatan'
-import DetailFilterLayananKesehatan from './LayananKesehatan/DetailFilterLayananKesehatan'
 export {
   Home,
   ChatBot,
@@ -57,6 +55,4 @@ export {
   DetailSearchLayananKesehatan,
   SosScreen,
   InputNoTelp,
-  FilterLayananKesehatan,
-  DetailFilterLayananKesehatan
 };

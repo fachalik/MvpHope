@@ -34,7 +34,6 @@ const DetailObat = ({route, navigation}) => {
     efekSamping: '',
     produsen: '',
     perhatian: '',
-    kategori: '',
   });
   const renderInner = () => (
     <View style={styles.panel}>
@@ -58,8 +57,6 @@ const DetailObat = ({route, navigation}) => {
         <Text style={styles.contents}>{detail.produsen}</Text>
         <Text style={styles.title}>Perhatian</Text>
         <Text style={styles.contents}>{detail.perhatian}</Text>
-        <Text style={styles.title}>Kategori Obat</Text>
-        <Text style={styles.contents}>{detail.kategori}</Text>
       </View>
     </View>
   );
@@ -86,7 +83,6 @@ const DetailObat = ({route, navigation}) => {
       efekSamping: item.side_effect,
       produsen: item.producer,
       perhatian: item.consideration,
-      kategori: item.medicine_group,
     });
   };
   const bs = React.createRef();
